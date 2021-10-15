@@ -3,7 +3,7 @@ syntax on
 set splitbelow
 set wrap
 set number
-set clipboard=unnamed #plus
+set clipboard=unnamed "plus
 
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!
