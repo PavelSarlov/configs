@@ -3,6 +3,7 @@ syntax on
 set splitbelow
 set wrap
 set number
+set clipboard=unnamedplus
 
 let g:racer_cmd="/home/psarlov/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
