@@ -5,6 +5,10 @@ set wrap
 set number
 set clipboard=unnamedplus
 
+cnoremap w!! w !sudo tee % >/dev/null
+nnoremap <C-S> :w!
+nnoremap <C-Q> :qa!
+
 let g:racer_cmd="/home/psarlov/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
 let NERDTreeShowHidden=1
