@@ -15,7 +15,7 @@ set splitbelow
 set wrap
 set number
 set clipboard^=unnamed,unnamedplus
-set softtabstop=4 shiftwidth=4 expandtab autoindent
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set showtabline=2
 set autoread
 
