@@ -1,9 +1,17 @@
+" General stuff
 syntax on
 
+set encoding=utf-8 fileencoding=utf-8
+set nobackup nowritebackup noswapfile noundofile
+set ignorecase smartcase incsearch hlsearch
+set title ruler
+set wildmenu
+set showmode
 set splitbelow
 set wrap
 set number
-set clipboard=unnamed "plus
+set clipboard^=unnamed,unnamedplus
+set softtabstop=4 shiftwidth=4 expandtab autoindent
 
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!
@@ -17,14 +25,7 @@ autocmd VimEnter * wincmd p
 autocmd VimEnter * terminal
 autocmd VimEnter * wincmd k
 
-
-
-
-
-
-
-
-
+" Plugins
 call plug#begin()
 
 Plug 'Valloric/YouCompleteMe'
