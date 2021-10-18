@@ -25,12 +25,14 @@ function! Format()
         let g:formatter = "gcc"
     elseif index(["xml", "dtd"], &filetype) >= 0
         let g:formatter = "!xmllint --format % >formatted && mv formatted %"
+    elseif index(["rs", "rust"], &filetype) >= 0
+        let g:formatter = "!rustfmt %"
     endif
 
     if g:formatter != ""
-	execute "silent" . g:formatter
-	execute "silent e!"
-	execute "redraw!"
+		execute "silent" . g:formatter
+		execute "silent e!"
+		execute "redraw!"
     endif
 endfunction
 
