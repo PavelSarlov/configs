@@ -16,6 +16,10 @@ set softtabstop=4 shiftwidth=4 expandtab autoindent
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!
 nnoremap <C-Q> :qa!
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
 
 let g:racer_cmd="/home/psarlov/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
