@@ -15,14 +15,14 @@ set splitbelow
 set wrap
 set number
 set clipboard^=unnamed,unnamedplus
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
 set showtabline=2
 set autoread
 
 function! Format()
     let g:formatter = "" 
     if index(["c", "cpp"], &filetype) >= 0
-        let g:formatter = "gcc"
+        let g:formatter = "!clang-format % >formatted && mv formatted %"
     elseif index(["xml", "dtd"], &filetype) >= 0
         let g:formatter = "!xmllint --format % >formatted && mv formatted %"
     elseif index(["rs", "rust"], &filetype) >= 0
@@ -30,8 +30,8 @@ function! Format()
     endif
 
     if g:formatter != ""
-		execute "silent" . g:formatter
-		execute "silent e!"
+		execute "silent " . g:formatter
+		execute "e!"
 		execute "redraw!"
     endif
 endfunction
@@ -43,13 +43,14 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
-nnoremap <S-I> :silent call Format()<CR>
+nnoremap <S-I> :call Format()<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew<CR>
 nnoremap <C-W> :tabclose<CR>
 nnoremap <C-PageUp> :tabnext<CR>
 nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
+xnoremap p pgvy
 vnoremap <Tab> :s/^/\t/g<CR>
 vnoremap <S-Tab> :s/^\t//g<CR>
 
