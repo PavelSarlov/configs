@@ -1,6 +1,6 @@
 " General stuff
 syntax on
-filetype plugin on
+filetype plugin indent on
 
 autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
 autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
@@ -51,8 +51,8 @@ nnoremap <C-PageUp> :tabnext<CR>
 nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
 xnoremap p pgvy
-vnoremap <Tab> :s/^/\t/g<CR>
-vnoremap <S-Tab> :s/^\t//g<CR>
+execute 'vnoremap <Tab> :s/^/\t/g<CR>'
+execute 'vnoremap <S-Tab> :s/^\t//g<CR>'
 
 let g:racer_cmd="/home/psarlov/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
