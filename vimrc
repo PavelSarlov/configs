@@ -51,8 +51,8 @@ nnoremap <C-PageUp> :tabnext<CR>
 nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
 xnoremap p pgvy
-execute 'vnoremap <Tab> :s/^/\t/g<CR>'
-execute 'vnoremap <S-Tab> :s/^\t//g<CR>'
+vnoremap <Tab> :><CR>
+vnoremap <S-Tab> :<<CR>
 
 let g:racer_cmd="/home/psarlov/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
@@ -69,4 +69,5 @@ call plug#begin()
 	Plug 'https://github.com/preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 	Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
 	Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
+  Plug 'rust-lang/rust.vim'
 call plug#end()
