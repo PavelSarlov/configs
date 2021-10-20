@@ -50,6 +50,7 @@ nnoremap <C-W> :tabclose<CR>
 nnoremap <C-PageUp> :tabnext<CR>
 nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
+nnoremap <C-A> ggVG 
 xnoremap p pgvy
 vnoremap <Tab> :><CR>
 vnoremap <S-Tab> :<<CR>
