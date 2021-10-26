@@ -15,7 +15,7 @@ set splitbelow
 set wrap
 set number
 set clipboard^=unnamed,unnamedplus
-set tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set showtabline=2
 set autoread
 
@@ -63,7 +63,7 @@ autocmd VimEnter * resize 15 | wincmd k
 
 " Plugins
 call plug#begin()
-	Plug 'Valloric/YouCompleteMe'
+	Plug 'ycm-core/YouCompleteMe'
 	Plug 'racer-rust/vim-racer'
 	Plug 'tyru/open-browser.vim' " opens url in browser
 	Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
