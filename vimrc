@@ -16,7 +16,6 @@ set wrap
 set number
 set clipboard^=unnamed,unnamedplus
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
-set showtabline=2
 set autoread
 
 function! Format()
@@ -46,9 +45,9 @@ nnoremap <C-L> <C-W>l
 nnoremap <S-I> :call Format()<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew \| call Layout()<CR>
-nnoremap <C-W> :tabclose<CR>
-nnoremap <C-PageUp> :tabnext<CR>
-nnoremap <C-PageDown> :tabprevious<CR>
+" nnoremap <C-W> :tabclose<CR>
+" nnoremap <C-PageUp> :tabnext<CR>
+" nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
 nnoremap <C-A> ggVG 
 xnoremap p pgvy
@@ -64,11 +63,12 @@ autocmd VimEnter * resize 15 | wincmd k
 " Plugins
 call plug#begin()
     Plug 'Valloric/YouCompleteMe'
-	Plug 'racer-rust/vim-racer'
-	Plug 'tyru/open-browser.vim' " opens url in browser
-	Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
-	Plug 'https://github.com/preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-	Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
-	Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
-  Plug 'rust-lang/rust.vim'
+    Plug 'racer-rust/vim-racer'
+    Plug 'tyru/open-browser.vim' " opens url in browser
+    Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
+    Plug 'https://github.com/preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+    Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
+    Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
+    Plug 'rust-lang/rust.vim'
+    Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
