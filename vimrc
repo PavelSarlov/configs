@@ -63,7 +63,7 @@ autocmd VimEnter * resize 15 | wincmd k
 
 " Plugins
 call plug#begin()
-	Plug 'ycm-core/YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe'
 	Plug 'racer-rust/vim-racer'
 	Plug 'tyru/open-browser.vim' " opens url in browser
 	Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
