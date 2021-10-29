@@ -19,17 +19,21 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set autoread
 
 function! Format()
-  let g:formatter = "" 
+  let g:formatter = ""
+  let g:format_args = "% >/tmp/formatted && mv /tmp/formatted %"
+  
   if index(["c", "cpp"], &filetype) >= 0
-    let g:formatter = "!clang-format % >formatted && mv formatted %"
+    let g:formatter = "!clang-formatter"
   elseif index(["xml", "dtd"], &filetype) >= 0
-    let g:formatter = "!xmllint --format % >formatted && mv formatted %"
+    let g:formatter = "!xmllint"
+    let g:format_args = "--format " . g:format_args 
   elseif index(["rs", "rust"], &filetype) >= 0
-    let g:formatter = "!rustfmt %"
+    let g:formatter = "!rustfmt"
+    let g:format_args = "%"
   endif
 
   if g:formatter != ""
-		execute "silent " . g:formatter
+		execute "silent " . g:formatter . " " . g:format_args
 		execute "e!"
 		execute "redraw!"
   endif
@@ -49,7 +53,7 @@ nnoremap <C-T> :tabnew \| call Layout()<CR>
 " nnoremap <C-PageUp> :tabnext<CR>
 " nnoremap <C-PageDown> :tabprevious<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
-nnoremap <C-A> ggVG 
+nnoremap <C-A> ggVG
 xnoremap p pgvy
 vnoremap <Tab> :><CR>
 vnoremap <S-Tab> :<<CR>
