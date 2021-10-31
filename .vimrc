@@ -42,10 +42,6 @@ endfunction
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!<CR>
 nnoremap <C-Q> :qa!<CR>
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
 nnoremap <S-I> :call Format()<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew \| call Layout()<CR>
