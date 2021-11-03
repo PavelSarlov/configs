@@ -3,6 +3,7 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 #region utils
 nal -Name sudo -Value "runas /user:domain\administrator"
 nal -Name grep -Value "sls"
+nal -Name reboot -Value "Restart-Computer -Force"
 
 function dirname([string]$FilePath) {
     Split-Path -Path "$FilePath" -Resolve

@@ -29,11 +29,33 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set autoread
 set nocompatible
 set backspace=2
-set shell=powershell
+
+if has("win64") || has("win32")
+    let g:format_args = "% >formatted && mv formatted % -Force"
+    let g:DEFAULTSHELL="powershell"
+    
+    if executable("pwsh")
+        let g:DEFAULTSHELL="pwsh"
+    endif
+    
+    execute "set shell=" . g:DEFAULTSHELL
+endif
+
+if has("unix")
+    let g:format_args = "% >formatted && mv formatted %"
+    
+    " WSL yank support
+    " let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+    " if executable(s:clip)
+    "     augroup WSLYank
+    "         autocmd!
+    "         autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+    "     augroup END
+    " endif
+endif
 
 function! Format()
-  let g:formatter = ""
-  let g:format_args = "% >/tmp/formatted && mv /tmp/formatted %"
+    let g:formatter = ""
   
   if index(["c", "cpp"], &filetype) >= 0
     let g:formatter = "!clang-formatter"
@@ -46,9 +68,9 @@ function! Format()
   endif
 
   if g:formatter != ""
-		execute "silent " . g:formatter . " " . g:format_args
-		execute "e!"
-		execute "redraw!"
+    execute "silent " . g:formatter . " " . g:format_args
+    execute "e!"
+    execute "redraw!"
   endif
 endfunction
 
@@ -65,16 +87,10 @@ nnoremap <C-A> ggVG
 " nnoremap <C-PageUp> :tabnext<CR>
 " nnoremap <C-PageDown> :tabprevious<CR>
 
-" WSL yank support
-" let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-" if executable(s:clip)
-"     augroup WSLYank
-"         autocmd!
-"         autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-"     augroup END
-" endif
+if executable("racer")
+    let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
+endif
 
-let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
 let $RUST_SRC_PATH="/usr/local/src/rustc/src"
 let NERDTreeShowHidden=1
 autocmd VimEnter * NERDTree | wincmd l | terminal
