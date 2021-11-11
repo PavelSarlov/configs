@@ -29,6 +29,7 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set autoread
 set nocompatible
 set backspace=2
+set virtualedit=all
 
 if has("win64") || has("win32")
     let g:format_args = "% >formatted && mv formatted % -Force"
@@ -91,7 +92,12 @@ if executable("racer")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
 endif
 
-let $RUST_SRC_PATH="/usr/local/src/rustc/src"
-let NERDTreeShowHidden=1
-autocmd VimEnter * NERDTree | wincmd l | terminal
-autocmd VimEnter * resize 15 | wincmd k
+if exists(":NERDTree")
+    let g:NERDTreeShowHidden=1
+    let g:NERDTreeChDirMode=2
+endif
+
+augroup layout
+    autocmd VimEnter * NERDTree | wincmd l | terminal
+    autocmd VimEnter * resize 15 | wincmd k
+augroup END
