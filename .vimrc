@@ -31,6 +31,7 @@ set nocompatible
 set backspace=2
 set virtualedit=all
 set visualbell
+set t_vb=
 
 if has("win64") || has("win32")
     set ff=dos
@@ -87,7 +88,7 @@ nnoremap <S-I> :call Format()<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
-nnoremap <C-X> <C-V>
+" nnoremap <C-X> <C-V>
 nnoremap <C-A> ggVG
 " nnoremap <C-W> :tabclose<CR>
 " nnoremap <C-PageUp> :tabnext<CR>
