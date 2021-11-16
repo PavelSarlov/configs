@@ -15,6 +15,9 @@ syntax on
 " autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
 " autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
 
+" highlight Normal ctermfg=lightgrey ctermbg=black
+colorscheme desert
+
 set encoding=utf-8 fileencoding=utf-8
 set nobackup nowritebackup noswapfile noundofile
 set ignorecase smartcase incsearch hlsearch
@@ -96,6 +99,10 @@ nnoremap <C-A> ggVG
 
 if executable("racer")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
+endif
+
+if executable("rustc")
+    let g:rustc_path="${HOME}/.cargo/bin/rustc"
 endif
 
 if exists(":NERDTree")
