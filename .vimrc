@@ -12,8 +12,8 @@ call plug#end()
 filetype plugin indent on
 syntax on
 
-" autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
-" autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
+autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
 
 " highlight Normal ctermfg=lightgrey ctermbg=black
 colorscheme desert
@@ -67,21 +67,31 @@ endif
 function! Format()
     let g:formatter = ""
   
-  if index(["c", "cpp"], &filetype) >= 0
-    let g:formatter = "!clang-formatter"
-  elseif index(["xml", "dtd"], &filetype) >= 0
-    let g:formatter = "!xmllint"
-    let g:format_args = "--format " . g:format_args 
-  elseif index(["rs", "rust"], &filetype) >= 0
-    let g:formatter = "!rustfmt"
-    let g:format_args = "%"
-  endif
+    if index(["c", "cpp"], &filetype) >= 0
+        let g:formatter = "!clang-formatter"
+    elseif index(["xml", "dtd"], &filetype) >= 0
+        let g:formatter = "!xmllint"
+        let g:format_args = "--format " . g:format_args 
+    elseif index(["rs", "rust"], &filetype) >= 0
+        let g:formatter = "!rustfmt"
+        let g:format_args = "%"
+    elseif index(["html","css","javascript","json","js"], &filetype) >= 0
+        let l:format = &filetype
+        if "javascript" == &filetype
+            let l:format = "js"
+        endif
+        let g:formatter = "!beautify"
+        let g:format_args = "-f " . l:format . " -o formatted % && mv formatted %"
+    elseif index(["python", "py"], &filetype) >= 0
+        let g:formatter = "!black"
+        let g:format_args = "%"
+    endif
 
-  if g:formatter != ""
-    execute "silent " . g:formatter . " " . g:format_args
-    execute "e!"
-    execute "redraw!"
-  endif
+    if g:formatter != ""
+        execute "silent " . g:formatter . " " . g:format_args
+        execute "e!"
+        execute "redraw!"
+    endif
 endfunction
 
 cnoremap w!! w !sudo tee % >/dev/null
