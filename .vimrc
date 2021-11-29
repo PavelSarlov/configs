@@ -97,12 +97,12 @@ endfunction
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!<CR>
 nnoremap <C-Q> :qa!<CR>
-nnoremap <S-I> :call Format()<CR>
+nnoremap <S-F> :call Format()<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
-" nnoremap <C-X> <C-V>
 nnoremap <C-A> ggVG
+" nnoremap <C-X> <C-V>
 " nnoremap <C-W> :tabclose<CR>
 " nnoremap <C-PageUp> :tabnext<CR>
 " nnoremap <C-PageDown> :tabprevious<CR>
