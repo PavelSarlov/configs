@@ -1,9 +1,9 @@
 call plug#begin("~/.vim/plugged")
 Plug 'tyru/open-browser.vim' " opens url in browser
-Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
-Plug 'https://github.com/preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
-Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
+Plug 'tpope/vim-surround' " Surrounding ysw)
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'ap/vim-css-color' " CSS Color Preview
+Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Valloric/YouCompleteMe'
@@ -102,17 +102,13 @@ nnoremap <C-F> /
 nnoremap <C-T> :tabnew<CR>
 nnoremap <Tab> :nohl \| redraw!<CR> 
 nnoremap <C-A> ggVG
-" nnoremap <C-X> <C-V>
-" nnoremap <C-W> :tabclose<CR>
-" nnoremap <C-PageUp> :tabnext<CR>
-" nnoremap <C-PageDown> :tabprevious<CR>
 
-if executable("racer")
+if executable("racer.exe")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
 endif
 
-if executable("rustc")
-    let g:rustc_path="${HOME}/.cargo/bin/rustc"
+if executable("rustc.exe")
+    let g:rustc_path="${WINHOME}/.cargo/bin/rustc"
 endif
 
 if exists(":NERDTree")
