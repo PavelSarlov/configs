@@ -19,7 +19,7 @@ case $CMD in
         ;;
     run)
         if [ $# -gt 1 ]; then
-            MAIN="$1"
+            MAIN="$2"
         fi
 
         if [ ! $(find . -maxdepth 1 -name "car.conf") ]; then
@@ -32,7 +32,7 @@ case $CMD in
 
         $JC -d "target/" $(find src/ -name "*.java")
 
-        $JDK -cp "$(find target/ -name "Main.class" | xargs dirname)" $MAIN
+        $JDK -cp "$(find target/ -name "$MAIN.class" | xargs dirname)" $MAIN
         ;;
     init)
         echo "[project]" >car.conf
