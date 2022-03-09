@@ -14,6 +14,7 @@ case $CMD in
         echo "Build and run simple JAVA project"
         echo "Commands:"
         echo "  -> run ?MainClass? - builds and runs project in current directory"
+        echo "  -> init - initialize project in current directory"
         echo "  -> help - outputs this text"
         ;;
     run)

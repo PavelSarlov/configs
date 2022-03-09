@@ -16,7 +16,7 @@ autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl Non
 autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
 
 " highlight Normal ctermfg=lightgrey ctermbg=black
-colorscheme desert
+colorscheme slate
 
 set encoding=utf-8 fileencoding=utf-8
 set nobackup nowritebackup noswapfile noundofile
