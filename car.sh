@@ -4,7 +4,10 @@ JC=javac.exe
 JDK=java.exe
 MAIN=Main
 CMD=help
-JAR_PATH="$(echo dependencies/*.jar | sed 's/ /;/g')"
+
+if [ -d dependencies ]; then 
+    JAR_PATH="$(echo dependencies/*.jar | sed 's/ /;/g')"
+fi
 
 if [ ! $# -eq 0 ]; then
     CMD=$1
@@ -48,9 +51,9 @@ case $CMD in
 
         source_files=$(find src/ -name "*.java")
 
-        $JC -cp "$JAR_PATH;src/" -d "target/" $source_files
+        $JC -cp "src/;$JAR_PATH" -d "target/" $source_files
 
-        $JDK -cp "$JAR_PATH;$(find target/ -name "$MAIN.class" | xargs dirname)" $MAIN
+        $JDK -cp "target/;$JAR_PATH" $MAIN
         ;;
 
     test)
