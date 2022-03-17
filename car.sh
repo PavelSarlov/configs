@@ -18,7 +18,7 @@ case $CMD in
         echo "Build and run simple JAVA project"
         echo "Commands:"
         echo "  -> init - initialize project in current directory"
-        echo "  -> run ?MainClass? - builds and runs project in current directory"
+        echo "  -> run ?MainClass? [args..] - builds and runs project in current directory"
         echo "  -> test ?TestClass[es]? - builds and tests project in current directory (requires junit-4.x in the dependencies folder)"
         echo "  -> help - outputs this text"
         ;;
@@ -33,6 +33,10 @@ case $CMD in
 
         if [ ! -d "./src" ]; then 
             mkdir src
+        fi
+
+        if [ ! -d "./dependencies" ]; then
+            mkdir dependencies
         fi
         ;;
 
@@ -53,7 +57,7 @@ case $CMD in
 
         $JC -cp "src/;$JAR_PATH" -d "target/" $source_files
 
-        $JDK -cp "target/;$JAR_PATH" $MAIN
+        $JDK -cp "target/;$JAR_PATH" $MAIN ${@:3:$#}
         ;;
 
     test)
