@@ -7,16 +7,18 @@ Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Valloric/YouCompleteMe'
+Plug 'morhetz/gruvbox'
+Plug 'Chiel92/vim-autoformat'
 call plug#end()
 
 filetype plugin indent on
 syntax on
 
-autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
-autocmd FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
-
-" highlight Normal ctermfg=lightgrey ctermbg=black
-colorscheme zellner
+augroup file_change
+    au!
+    au FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+    au FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
+augroup END
 
 set encoding=utf-8 fileencoding=utf-8
 set nobackup nowritebackup noswapfile noundofile
@@ -36,23 +38,24 @@ set virtualedit=all
 set visualbell
 set t_vb=
 
+set background=dark
+autocmd vimenter * ++nested colorscheme gruvbox
+highlight Normal ctermfg=lightgrey ctermbg=black
+
 if has("win64") || has("win32")
     set ff=dos
 
-    let g:format_args = "% >formatted && mv formatted % -Force"
     let g:DEFAULTSHELL="powershell"
-    
+
     if executable("pwsh")
         let g:DEFAULTSHELL="pwsh"
     endif
-    
+
     execute "set shell=" . g:DEFAULTSHELL
 endif
 
 if has("unix")
     set ff=unix
-
-    let g:format_args = "% >formatted && mv formatted %"
 
     " WSL yank support
     let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
@@ -64,44 +67,17 @@ if has("unix")
     endif
 endif
 
-function! Format()
-    let g:formatter = ""
-  
-    if index(["c", "cpp"], &filetype) >= 0
-        let g:formatter = "!clang-formatter"
-    elseif index(["xml", "dtd"], &filetype) >= 0
-        let g:formatter = "!xmllint"
-        let g:format_args = "--format " . g:format_args 
-    elseif index(["rs", "rust"], &filetype) >= 0
-        let g:formatter = "!rustfmt"
-        let g:format_args = "%"
-    elseif index(["html","css","javascript","json","js"], &filetype) >= 0
-        let l:format = &filetype
-        if "javascript" == &filetype
-            let l:format = "js"
-        endif
-        let g:formatter = "!beautify"
-        let g:format_args = "-f " . l:format . " -o formatted % && mv formatted %"
-    elseif index(["python", "py"], &filetype) >= 0
-        let g:formatter = "!black"
-        let g:format_args = "%"
-    endif
-
-    if g:formatter != ""
-        execute "silent " . g:formatter . " " . g:format_args
-        execute "e!"
-        execute "redraw!"
-    endif
-endfunction
-
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <C-S> :w!<CR>
-nnoremap <C-Q> :qa!<CR>
-nnoremap <S-F> :call Format()<CR>
+nnoremap <S-Q> :qa!<CR>
+nnoremap <C-Q> :tabclose!<CR>
+nnoremap <S-F> :Autoformat<CR>
 nnoremap <C-F> /
 nnoremap <C-T> :tabnew<CR>
-nnoremap <Tab> :nohl \| redraw!<CR> 
+nnoremap <Tab> :nohl \| redraw!<CR>
 nnoremap <C-A> ggVG
+nnoremap <C-K> :tabnext<CR>
+nnoremap <C-J> :tabprevious<CR>
 
 if executable("racer.exe")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
@@ -117,6 +93,8 @@ if exists(":NERDTree")
 endif
 
 augroup layout
-    autocmd VimEnter * NERDTree | wincmd l | terminal
-    autocmd VimEnter * resize 15 | wincmd k
+    au!
+    au VimEnter,TabNew * NERDTree | wincmd l | terminal
+    au VimEnter,TabNew * resize 15 | wincmd k
 augroup END
+
