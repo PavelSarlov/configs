@@ -147,6 +147,8 @@ endif
 "======================= coc configs =======================
 "===========================================================
 
+let g:coc_global_extension = ['coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-rls', 'coc-java', 'coc-phpls', 'coc-clangd']
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
