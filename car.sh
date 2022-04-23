@@ -1,8 +1,6 @@
 #!/bin/bash
 
 MVN=$(which mvn)
-JC=$(which javac.exe)
-JDK=$(which java.exe)
 CMD=help
 
 if [ -z "$MVN" ]; then
@@ -20,7 +18,8 @@ case $CMD in
         echo "Commands:"
         echo "  -> init  - initialize project in current directory
     -n <project_name> => name of the project (default is 'demo')
-    -g <group_name> => id of the group (default is 'com.example')"
+    -a <artifact_id> => id of the artifact (default is 'demo')
+    -g <group_id> => id of the group (default is 'com.example')"
         echo "  -> build - cleans target and resolves dependencies"
         echo "  -> run   - builds and runs project in current directory
     -f <main_class> => marks the main class (default is 'com.example.demo.DemoApplication')
@@ -31,12 +30,17 @@ case $CMD in
         ;;
 
     init)
+        projName=demo
         artifactId=demo
         groupId=com.example
 
         while [ ! -z $1 ]; do
             case $1 in
                 -n)
+                    shift 1
+                    projName=$([ -z $1 ] && echo $projName || echo $1)
+                    ;;
+                -a)
                     shift 1
                     artifactId=$([ -z $1 ] && echo $artifactId || echo $1)
                     ;;
@@ -56,8 +60,8 @@ case $CMD in
             -d type=maven-project \
             -d language=java \
             -d bootVersion=2.6.7 \
-            -d baseDir=$artifactId \
-            -d name=$artifactId \
+            -d baseDir=$projName \
+            -d name=$projName \
             -d artifactId=$artifactId \
             -d groupId=$groupId \
             -d description= \
