@@ -1,6 +1,5 @@
 call plug#begin("~/.local/share/nvim/site/plugged")
 Plug 'tyru/open-browser.vim' " opens url in browser
-Plug 'tpope/vim-surround' " Surrounding ysw)
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'ap/vim-css-color' " CSS Color Preview
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
@@ -9,6 +8,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'morhetz/gruvbox'
 Plug 'Chiel92/vim-autoformat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " highlight and indent
@@ -51,7 +51,7 @@ set showmode
 set splitbelow
 set wrap
 set number
-set clipboard^=unnamed,unnamedplus
+set clipboard+=unnamed,unnamedplus
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
 set autoread
 set backspace=2
@@ -61,7 +61,7 @@ set t_vb=
 set hidden
 set updatetime=300
 set shortmess+=c
-set signcolumn=yes   
+set signcolumn=yes
 
 if has("win64") || has("win32")
     set ff=dos
@@ -92,6 +92,10 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap <silent> <C-s> :w!<CR>
 nnoremap <silent> <C-q> :q!<CR>
 nnoremap <silent> <A-q> :qa!<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
+tnoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
+inoremap <silent> <C-q> <C-\><C-n>:q!<CR>
+inoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
 nnoremap <silent> <A-w> :tabclose!<CR>
 nnoremap <silent> <S-f> :Autoformat<CR>
 nnoremap <silent> <C-f> /
@@ -152,14 +156,14 @@ let g:coc_global_extension = ['coc-tsserver', 'coc-css', 'coc-html', 'coc-json',
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
@@ -179,11 +183,42 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
 endfunction
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"===================================================================
+"======================= tree-sitter configs =======================
+"===================================================================
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
+
+    -- Install languages synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+
+    -- List of parsers to ignore installing
+    ignore_install = { },
+
+    highlight = {
+        -- `false` will disable the whole extension
+        enable = true,
+
+        -- list of language that will be disabled
+        disable = { },
+
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
+        },
+    }
+EOF
