@@ -52,9 +52,16 @@ set splitbelow
 set wrap
 set number
 set clipboard+=unnamed,unnamedplus
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
-set autoread
+set tabstop=4 
+set softtabstop=4 
+set shiftwidth=4 
 set backspace=2
+set expandtab
+set smarttab
+set autoread
+autocmd BufReadPost * set autoindent
+autocmd BufReadPost * set smartindent
+autocmd BufReadPost * set cindent    
 set virtualedit=all
 set visualbell
 set t_vb=
