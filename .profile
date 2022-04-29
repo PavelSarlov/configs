@@ -29,4 +29,4 @@ fi
 export LESS="$LESS -R -Q"
 . "$HOME/.cargo/env"
 
-export PATH=$PATH:/usr/local/go/bin
+export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 >/dev/null | egrep 'java.home' | sed -E 's/.* = //g')"

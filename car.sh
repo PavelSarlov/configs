@@ -1,10 +1,12 @@
 #!/bin/bash
 
-MVN=$(which mvn)
+MVN="$(which mvn)"
+export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 >/dev/null | egrep 'java.home' | sed -E 's/.* = //g')"
 CMD=help
 
 if [ -z "$MVN" ]; then
-    echo "ERROR: Maven is not installed."
+    echo "[ERROR]: Maven is not installed."
+    exit 1
 fi
 
 if [ ! $# -eq 0 ]; then
@@ -79,18 +81,18 @@ case $CMD in
     run)
         XLINT=$(which xmllint)
         if [ -z $XLINT ]; then
-            echo "Make sure that xmllint is installed"
+            echo "[ERROR]: Make sure that xmllint is installed"
             exit 1
         fi
 
         if [ ! -f pom.xml ]; then
-            echo "Make sure the project 'pom.xml' is present"
+            echo "[ERROR]: Make sure the project 'pom.xml' is present"
             exit 1
         fi
 
-        ARCT=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='artifactId']/text()" pom.xml) 
         GRP=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='groupId']/text()" pom.xml)
-        MAIN=${GRP}.${ARCT}.DemoApplication
+        ARCT=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='artifactId']/text()" pom.xml) 
+        MAIN=DemoApplication
 
         ARGS=
 
@@ -115,7 +117,9 @@ case $CMD in
             shift 1
         done
 
-        $MVN exec:java -Dexec.mainClass="$MAIN" -Dexec.args="$ARGS"
+        MAINPATH="${GRP}.${ARCT}.${MAIN}"
+
+        "$MVN" exec:java -Dexec.mainClass="$MAINPATH" -Dexec.args="$ARGS"
         ;;
 
     test)
@@ -135,11 +139,11 @@ case $CMD in
             shift 1
         done
         
-        $MVN test -Dtest="$TEST"
+        "$MVN" test -Dtest="$TEST"
         ;;
 
     build)
-        $MVN clean install -U
+        "$MVN" clean install -U
         ;;
     *)
         echo "Invalid command $1"
