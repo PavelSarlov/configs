@@ -6,7 +6,6 @@ Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'morhetz/gruvbox'
-Plug 'Chiel92/vim-autoformat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
@@ -104,7 +103,6 @@ tnoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
 inoremap <silent> <C-q> <C-\><C-n>:q!<CR>
 inoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
 nnoremap <silent> <A-w> :tabclose!<CR>
-nnoremap <silent> <S-f> :Autoformat<CR>
 nnoremap <silent> <C-f> /
 nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> <Tab> :nohl \| redraw!<CR>
@@ -200,13 +198,15 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=0 Format    :call     CocActionAsync('format')
+nnoremap <silent><nowait> <S-f> :Format<CR>
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold      :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR        :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+nnoremap <silent><nowait> <A-i> :OR<CR>
 
 " Mappings for CoCList
 " Show all diagnostics.
