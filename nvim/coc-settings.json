@@ -6,6 +6,8 @@
     "java.completion.enabled": true,
     "java.import.maven.enabled": true,
     "java.signatureHelp.enabled": true,
+    "java.trace.server": "verbose",
+    "java.configuration.updateBuildConfiguration": "automatic",
 
     // language servers
     "languageserver": {
@@ -15,7 +17,9 @@
                 "c",
                 "cpp",
                 "objc",
-                "objcpp"
+                "objcpp",
+                "h",
+                "hpp"
             ],
             "rootPatterns": [
                 ".ccls",
@@ -30,5 +34,18 @@
                 }
             }
         }
-    }
+    },
+
+    // explorer
+    "explorer.width": 25,
+    "explorer.focus": false,
+    "explorer.buffer.tabOnly": true,
+    "explorer.buffer.showHiddenBuffers": true,
+    "explorer.file.showHiddenFiles": true,
+    "explorer.file.cdCommand": "cd",
+    "explorer.file.column.indent.chars": " ",
+    "explorer.file.column.indent.indentLine": true,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.icon.source": "nerdfont.vim",
+    "explorer.git.enable": true
 }

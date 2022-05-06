@@ -1,13 +1,11 @@
 call plug#begin("~/.local/share/nvim/site/plugged")
-Plug 'tyru/open-browser.vim' " opens url in browser
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'ap/vim-css-color' " CSS Color Preview
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'lambdalisue/nerdfont.vim'
 call plug#end()
 
 " highlight and indent
@@ -30,12 +28,14 @@ augroup END
 
 augroup layout
     au!
-    au VimEnter,TabNew * NERDTree | wincmd l
+    au VimEnter,TabNew * CocCommand explorer 
+    au VimEnter,TabNew * wincmd l
     if has("nvim")
         au VimEnter,TabNew * split
     endif
     au VimEnter,TabNew * terminal
-    au VimEnter,TabNew * resize 15 | wincmd k
+    au VimEnter,TabNew * resize 15
+    au VimEnter,TabNew * wincmd k
 augroup END
 
 " autocomplete features
@@ -68,6 +68,7 @@ set hidden
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+set guifont=FontAwesome
 
 if has("win64") || has("win32")
     set ff=dos
@@ -234,34 +235,3 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
-
-"===================================================================
-"======================= tree-sitter configs =======================
-"===================================================================
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = "maintained",
-
-    -- Install languages synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    -- List of parsers to ignore installing
-    ignore_install = { },
-
-    highlight = {
-        -- `false` will disable the whole extension
-        enable = true,
-
-        -- list of language that will be disabled
-        disable = { },
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-        },
-    }
-EOF
