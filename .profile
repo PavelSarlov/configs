@@ -30,3 +30,5 @@ export LESS="$LESS -R -Q"
 . "$HOME/.cargo/env"
 
 export JAVA_HOME="$(java -XshowSettings:properties -version 2>&1 >/dev/null | egrep 'java.home' | sed -E 's/.* = //g')"
+
+export PATH="$PATH:~/.npm/bin/"
