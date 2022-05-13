@@ -1,5 +1,5 @@
 call plug#begin("~/.local/share/nvim/site/plugged")
-Plug 'ap/vim-css-color' " CSS Color Preview
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -14,6 +14,8 @@ call plug#end()
 set nocompatible
 filetype plugin indent on
 syntax on
+
+set termguicolors
 
 set background=dark
 augroup colorscheme_setup
@@ -270,4 +272,12 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+EOF
+
+"===========================================================
+"======================= colorizer =========================
+"===========================================================
+
+lua << EOF
+    require'colorizer'.setup()
 EOF
