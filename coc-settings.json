@@ -1,0 +1,52 @@
+ {
+    // java
+    "codeLens.enable": true,
+    "java.referencesCodeLens.enabled": true,
+    "java.implementationsCodeLens.enabled": true,
+    "java.completion.enabled": true,
+    "java.import.maven.enabled": true,
+    "java.signatureHelp.enabled": true,
+    "java.trace.server": "verbose",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/home/psarlov/.config/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
+
+    // language servers
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp",
+                "h",
+                "hpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    },
+
+    // explorer
+    "explorer.width": 25,
+    "explorer.focus": false,
+    "explorer.buffer.tabOnly": true,
+    "explorer.buffer.showHiddenBuffers": true,
+    "explorer.file.showHiddenFiles": true,
+    "explorer.file.cdCommand": "cd",
+    "explorer.file.column.indent.chars": " ",
+    "explorer.file.column.indent.indentLine": true,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.icon.source": "nerdfont.vim",
+    "explorer.git.enable": true
+}

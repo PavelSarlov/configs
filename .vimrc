@@ -16,8 +16,8 @@ filetype plugin indent on
 syntax on
 
 set termguicolors
-
 set background=dark
+
 augroup colorscheme_setup
     au!
     au VimEnter * ++nested colorscheme gruvbox
@@ -32,7 +32,7 @@ augroup END
 
 augroup layout
     au!
-    au VimEnter,TabNew * CocCommand explorer 
+    au VimEnter,TabNew * CocCommand explorer --width 40
     au VimEnter,TabNew * wincmd l
     if has("nvim")
         au VimEnter,TabNew * split
@@ -161,7 +161,7 @@ endif
 "======================= coc configs =======================
 "===========================================================
 
-let g:coc_global_extension = ['coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-rls', 'coc-java', 'coc-phpls', 'coc-clangd']
+let g:coc_global_extension = ['coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-xml', 'coc-rls', 'coc-java', 'coc-java-lombok', 'coc-phpls', 'coc-clangd']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -247,7 +247,7 @@ endif
 lua << EOF
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { },
+  ensure_installed = "all",
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
