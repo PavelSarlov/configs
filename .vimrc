@@ -8,6 +8,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'aperezdc/vim-template'
 call plug#end()
 
 " highlight and indent
@@ -115,15 +116,6 @@ nnoremap <silent> <C-a> ggVG
 nnoremap <silent> <C-k> :tabnext<CR>
 nnoremap <silent> <C-j> :tabprevious<CR>
 
-" self-closing brackets / quote
-" inoremap <silent> " ""<Left>
-" inoremap <silent> ' ''<Left>
-" inoremap <silent> ( ()<Left>
-" inoremap <silent> [ []<Left>
-" inoremap <silent> { {}<Left>
-" inoremap <silent> {<CR> {<CR>}<Esc>O
-" inoremap <silent> {;<CR> {<CR>};<Esc>O
-
 " splits management
 tnoremap <silent> <Esc> <C-\><C-n>
 tnoremap <silent> <A-h> <C-\><C-n><C-w>h
@@ -161,7 +153,18 @@ endif
 "======================= coc configs =======================
 "===========================================================
 
-let g:coc_global_extension = ['coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-xml', 'coc-rls', 'coc-java', 'coc-java-lombok', 'coc-phpls', 'coc-clangd']
+let g:coc_global_extension = [
+    \'coc-tsserver', 
+    \'coc-css', 
+    \'coc-html', 
+    \'coc-json', 
+    \'coc-xml', 
+    \'coc-rls', 
+    \'coc-java', 
+    \'coc-java-lombok', 
+    \'coc-phpls',
+    \'coc-clangd',
+    \'coc-explorer']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
