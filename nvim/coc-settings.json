@@ -8,6 +8,7 @@
     "java.signatureHelp.enabled": true,
     "java.trace.server": "verbose",
     "java.configuration.updateBuildConfiguration": "automatic",
+    "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/home/psarlov/.config/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
 
     // language servers
     "languageserver": {
