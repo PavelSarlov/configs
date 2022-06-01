@@ -48,5 +48,12 @@
     "explorer.file.column.indent.indentLine": true,
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.source": "nerdfont.vim",
-    "explorer.git.enable": true
+    "explorer.git.enable": true,
+
+    // tsserver
+    "javascript.suggest.autoImports": true, 
+    "typescript.suggest.autoImports": true,
+
+    // prettier
+    "prettier.tabWidth": 4
 }
