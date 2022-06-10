@@ -10,6 +10,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'aperezdc/vim-template'
 Plug 'petertriho/nvim-scrollbar'
+Plug 'godlygeek/tabular'
+Plug 'gpanders/editorconfig.nvim'
 call plug#end()
 
 " highlight and indent
