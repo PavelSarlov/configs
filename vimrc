@@ -139,6 +139,11 @@ nnoremap <silent> <A-r> <C-w>r
 nnoremap <silent> <A-,> <C-w><
 nnoremap <silent> <A-.> <C-w>>
 
+" no yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+vnoremap <leader>p "_dP
+
 if executable("racer.exe")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
 endif
