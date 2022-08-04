@@ -103,6 +103,9 @@ if has("unix")
     endif
 endif
 
+nnoremap <silent> <A-a> <C-a>
+nnoremap <silent> <A-x> <C-x>
+
 cmap w!! w !sudo tee % >/dev/null
 nnoremap <silent> <C-s> :w!<CR>
 nnoremap <silent> <C-q> :q!<CR>
@@ -176,23 +179,32 @@ let g:coc_global_extension = [
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
     let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1):
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump
+" inoremap <silent><expr> <TAB>
+"     \ coc#pum#visible() ? coc#_select_confirm() :
+"     \ coc#expandableOrJumpable() ?
+"     \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"     \ <SID>check_back_space() ? "\<TAB>" :
+"     \ coc#refresh()
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -306,8 +318,7 @@ let g:templates_directory=[
             \"~/.config/nvim/templates"]
 
 "===========================================================
-"======================= templates =========================
-"===========================================================
+"======================= scrollbar ========================= ===========================================================
 
 lua << EOF
 require("scrollbar").setup({

@@ -1,4 +1,4 @@
- {
+{
     // java
     "codeLens.enable": true,
     "java.referencesCodeLens.enabled": true,
@@ -9,7 +9,6 @@
     "java.trace.server": "verbose",
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/home/psarlov/.config/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
-
     // language servers
     "languageserver": {
         "ccls": {
@@ -36,7 +35,6 @@
             }
         }
     },
-
     // explorer
     "explorer.width": 25,
     "explorer.focus": false,
@@ -49,11 +47,14 @@
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.source": "nerdfont.vim",
     "explorer.git.enable": true,
-
     // tsserver
-    "javascript.suggest.autoImports": true, 
     "typescript.suggest.autoImports": true,
-
+    "typescript.suggest.paths": true,
+    "typescript.format.enabled": true,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+    "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
+    "typescript.preferences.quoteStyle": "single",
+    "typescript.preferences.includePackageJsonAutoImports": "on",
     // prettier
     "prettier.tabWidth": 4
 }
