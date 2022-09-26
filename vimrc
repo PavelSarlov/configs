@@ -8,10 +8,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'aperezdc/vim-template'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'godlygeek/tabular'
 Plug 'gpanders/editorconfig.nvim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'akinsho/git-conflict.nvim'
 call plug#end()
 
 " highlight and indent
@@ -38,12 +42,12 @@ augroup layout
     au!
     au VimEnter,TabNew * CocCommand explorer --width 40
     au VimEnter,TabNew * wincmd l
-    if has("nvim")
-        au VimEnter,TabNew * split
-    endif
-    au VimEnter,TabNew * terminal
-    au VimEnter,TabNew * resize 15
-    au VimEnter,TabNew * wincmd k
+    " if has("nvim")
+    "     au VimEnter,TabNew * split
+    " endif
+    " au VimEnter,TabNew * terminal
+    " au VimEnter,TabNew * resize 15
+    " au VimEnter,TabNew * wincmd k
 augroup END
 
 " autocomplete features
@@ -77,6 +81,7 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 set guifont=FontAwesome
+set relativenumber
 
 if has("win64") || has("win32")
     set ff=dos
@@ -108,16 +113,16 @@ nnoremap <silent> <A-x> <C-x>
 
 cmap w!! w !sudo tee % >/dev/null
 nnoremap <silent> <C-s> :w!<CR>
-nnoremap <silent> <C-q> :q!<CR>
-nnoremap <silent> <A-q> :qa!<CR>
-tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
-tnoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
-inoremap <silent> <C-q> <C-\><C-n>:q!<CR>
-inoremap <silent> <A-q> <C-\><C-n>:qa!<CR>
-nnoremap <silent> <A-w> :tabclose!<CR>
+nnoremap <silent> <C-q> :conf q<CR>
+nnoremap <silent> <A-q> :conf qa<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:conf q<CR> 
+tnoremap <silent> <A-q> <C-\><C-n>:conf qa<CR>
+inoremap <silent> <C-q> <C-\><C-n>:conf q<CR> 
+inoremap <silent> <A-q> <C-\><C-n>:conf qa<CR>
+nnoremap <silent> <A-w> :conf tabclose<CR>
 nnoremap <silent> <C-f> /
 nnoremap <silent> <C-t> :tabnew<CR>
-nnoremap <silent> <Tab> :nohl \| redraw!<CR>
+nnoremap <silent> <S-Tab> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
 nnoremap <silent> <C-k> :tabnext<CR>
 nnoremap <silent> <C-j> :tabprevious<CR>
@@ -318,7 +323,8 @@ let g:templates_directory=[
             \"~/.config/nvim/templates"]
 
 "===========================================================
-"======================= scrollbar ========================= ===========================================================
+"======================= scrollbar =========================
+"===========================================================
 
 lua << EOF
 require("scrollbar").setup({
@@ -408,4 +414,22 @@ require("scrollbar").setup({
         search = false, -- Requires hlslens to be loaded, will run require("scrollbar.handlers.search").setup() for you
     },
 })
+EOF
+
+"==============================================================
+"======================= git-conflict =========================
+"==============================================================
+
+
+lua << EOF
+require('git-conflict').setup(
+ {
+  default_mappings = true, -- disable buffer local mapping created by this plugin
+  disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+  highlights = { -- They must have background color, otherwise the default color will be used
+    incoming = 'DiffText',
+    current = 'DiffAdd',
+  }
+}
+)
 EOF
