@@ -16,6 +16,11 @@ Plug 'gpanders/editorconfig.nvim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'akinsho/git-conflict.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
 " highlight and indent
@@ -25,12 +30,6 @@ syntax on
 
 set termguicolors
 set background=dark
-
-augroup colorscheme_setup
-    au!
-    au VimEnter * ++nested colorscheme gruvbox
-    au VimEnter * highlight Normal ctermfg=lightgray ctermbg=None guibg=None
-augroup END
 
 augroup file_change
     au!
@@ -42,12 +41,6 @@ augroup layout
     au!
     au VimEnter,TabNew * CocCommand explorer --width 40
     au VimEnter,TabNew * wincmd l
-    " if has("nvim")
-    "     au VimEnter,TabNew * split
-    " endif
-    " au VimEnter,TabNew * terminal
-    " au VimEnter,TabNew * resize 15
-    " au VimEnter,TabNew * wincmd k
 augroup END
 
 " autocomplete features
@@ -151,6 +144,7 @@ nnoremap <silent> <A-.> <C-w>>
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 vnoremap <leader>p "_dP
+
 
 if executable("racer.exe")
     let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
@@ -433,3 +427,62 @@ require('git-conflict').setup(
 }
 )
 EOF
+
+"==============================================================
+"======================= catppuccin ===========================
+"==============================================================
+
+let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
+
+lua << EOF
+require("catppuccin").setup()
+EOF
+
+colorscheme catppuccin
+
+"==============================================================
+"======================= lualine ==============================
+"==============================================================
+
+lua << END
+require('lualine').setup({
+ options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+})
+END

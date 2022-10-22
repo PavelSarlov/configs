@@ -55,14 +55,11 @@
   "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "typescript.preferences.quoteStyle": "single",
   "typescript.preferences.includePackageJsonAutoImports": "on",
-  "typescript.updateImportsOnFileMove.enable": true
+  "typescript.updateImportsOnFileMove.enable": true,
   // prettier
-  // "prettier.configPath": "./",
-  // "prettier.useEditorConfig": false
-  // "prettier.proseWrap": "preserve",
-  // "prettier.bracketSameLine": false,
-  // "prettier.bracketSpacing": true,
-  // "prettier.semi": true,
-  // "prettier.singleQuote": true,
-  // "prettier.jsxSingleQuote": true,
+  "prettier.bracketSameLine": false,
+  "prettier.bracketSpacing": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true
 }
