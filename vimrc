@@ -4,17 +4,17 @@ Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'morhetz/gruvbox'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'aperezdc/vim-template'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'godlygeek/tabular'
 Plug 'gpanders/editorconfig.nvim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'akinsho/git-conflict.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'sindrets/diffview.nvim'
@@ -163,18 +163,43 @@ endif
 "======================= coc configs =======================
 "===========================================================
 
-let g:coc_global_extension = [
-    \'coc-tsserver', 
-    \'coc-css', 
-    \'coc-html', 
-    \'coc-json', 
-    \'coc-xml', 
-    \'coc-rls', 
-    \'coc-java', 
-    \'coc-java-lombok', 
-    \'coc-phpls',
-    \'coc-clangd',
-    \'coc-explorer']
+let g:coc_global_extensions = [
+    \ 'coc-cmake',
+    \ 'coc-emmet',
+    \ 'coc-git',
+    \ 'coc-highlight',
+    \ 'coc-jedi',
+    \ 'coc-sh',
+    \ 'coc-vimlsp',
+    \ 'coc-clangd',
+    \ 'coc-syntax',
+    \ 'coc-pairs',
+    \ 'coc-diagnostic',
+    \ 'coc-explorer',
+    \ 'coc-flutter-tools',
+    \ 'coc-gitignore',
+    \ 'coc-css', 
+    \ 'coc-html', 
+    \ 'coc-json', 
+    \ 'coc-lists',
+    \ 'coc-prettier',
+    \ 'coc-pyright',
+    \ 'coc-python',
+    \ 'coc-snippets',
+    \ 'coc-sourcekit',
+    \ 'coc-stylelint',
+    \ 'coc-tasks',
+    \ 'coc-translator',
+    \ 'coc-xml', 
+    \ 'coc-rls', 
+    \ 'coc-java', 
+    \ 'coc-java-lombok', 
+    \ 'coc-phpls',
+    \ 'coc-tslint-plugin',
+    \ 'coc-tsserver',
+    \ 'coc-vetur',
+    \ 'coc-yaml',
+    \ 'coc-yank']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
