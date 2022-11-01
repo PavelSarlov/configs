@@ -3,7 +3,6 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'morhetz/gruvbox'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -508,3 +507,9 @@ require('lualine').setup({
   extensions = {}
 })
 END
+
+"==============================================================
+"======================= ctrlp ================================
+"==============================================================
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
