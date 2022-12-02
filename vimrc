@@ -1,29 +1,3 @@
-" vim-plug
-call plug#begin()
-Plug 'norcalli/nvim-colorizer.lua'
-Plug 'tpope/vim-commentary' " For Commenting gcc & gc
-Plug 'rust-lang/rust.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-Plug 'aperezdc/vim-template'
-Plug 'petertriho/nvim-scrollbar'
-Plug 'godlygeek/tabular'
-Plug 'gpanders/editorconfig.nvim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'akinsho/git-conflict.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-lua/popup.nvim'
-call plug#end()
-
 if has("win64") || has("win32")
     set ff=dos
 
@@ -51,20 +25,51 @@ if has("unix")
     endif
 endif
 
-let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions'
-let g:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
+let g:PLUGGEDDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'plugged'
+
+" vim-plug
+call plug#begin(g:PLUGGEDDIR)
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'tpope/vim-commentary' " For Commenting gcc & gc
+Plug 'rust-lang/rust.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'aperezdc/vim-template'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'godlygeek/tabular'
+Plug 'gpanders/editorconfig.nvim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'akinsho/git-conflict.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'nvim-lualine/lualine.nvim'
+call plug#end()
+
+set ssop-=options    " do not store global and local values in a session
+set ssop-=folds      " do not store folds
+
+let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions' 
 
 function! MakeSession()
-  if (filewritable(g:SESSIONDIR) != 2)
-    exe 'silent !mkdir -p ' g:SESSIONDIR
-    redraw!
+  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd())
+  if (filewritable(g:SESSIONDIR))
+      exe 'silent !mkdir -p ' . g:SESSIONDIR
+      redraw!
   endif
-  exe "mksession! " . g:SESSIONPATH
+  exe "mksession! " . s:SESSIONPATH
 endfunction
 
 function! LoadSession()
-  if (filereadable(g:SESSIONPATH))
-    exe 'source ' g:SESSIONPATH
+  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd())
+  if (filereadable(s:SESSIONPATH))
+    exe 'source ' s:SESSIONPATH
   else
     echo "No session loaded."
   endif
