@@ -1,3 +1,4 @@
+" vim-plug
 call plug#begin()
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
@@ -20,25 +21,50 @@ Plug 'sindrets/diffview.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-lua/popup.nvim'
 call plug#end()
 
-au BufNewFile,BufRead *.ejs set filetype=html
+if has("win64") || has("win32")
+    set ff=dos
+
+    let g:DEFAULTSLASH="\\"
+
+    set shell=powershell
+
+    if(executable('pwsh'))
+        set shell=pwsh
+    endif
+endif
+
+if has("unix")
+    set ff=unix
+
+    let g:DEFAULTSLASH="/"
+
+    " WSL yank support
+    let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+    if executable(s:clip)
+        augroup WSLYank
+            autocmd!
+            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+        augroup END
+    endif
+endif
+
+let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions'
+let g:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
 
 function! MakeSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-  if (filewritable(b:sessiondir) != 2)
-    exe 'silent !mkdir -p ' b:sessiondir
+  if (filewritable(g:SESSIONDIR) != 2)
+    exe 'silent !mkdir -p ' g:SESSIONDIR
     redraw!
   endif
-  let b:filename = b:sessiondir . '/session.vim'
-  exe "mksession! " . b:filename
+  exe "mksession! " . g:SESSIONPATH
 endfunction
 
 function! LoadSession()
-  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-  let b:sessionfile = b:sessiondir . "/session.vim"
-  if (filereadable(b:sessionfile))
-    exe 'source ' b:sessionfile
+  if (filereadable(g:SESSIONPATH))
+    exe 'source ' g:SESSIONPATH
   else
     echo "No session loaded."
   endif
@@ -49,6 +75,9 @@ if(argc() == 0)
     au VimEnter * nested :call LoadSession()
 endif
 au VimLeave * :call MakeSession()
+
+
+au BufNewFile,BufRead *.ejs set filetype=html
 
 " highlight and indent
 set nocompatible
@@ -96,31 +125,6 @@ set shortmess+=c
 set signcolumn=yes
 set guifont=FontAwesome
 set relativenumber
-
-if has("win64") || has("win32")
-    set ff=dos
-
-    let g:DEFAULTSHELL="powershell"
-
-    if executable("pwsh")
-        let g:DEFAULTSHELL="pwsh"
-    endif
-
-    execute "set shell=" . g:DEFAULTSHELL
-endif
-
-if has("unix")
-    set ff=unix
-
-    " WSL yank support
-    let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-    if executable(s:clip)
-        augroup WSLYank
-            autocmd!
-            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-        augroup END
-    endif
-endif
 
 nnoremap <silent> <A-a> <C-a>
 nnoremap <silent> <A-x> <C-x>
