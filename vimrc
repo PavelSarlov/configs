@@ -8,6 +8,10 @@ if has("win64") || has("win32")
     if(executable('pwsh'))
         set shell=pwsh
     endif
+
+    set shellcmdflag=-command
+    set shellquote=\"
+    set shellxquote=
 endif
 
 if has("unix")
@@ -52,22 +56,21 @@ Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'nvim-lualine/lualine.nvim'
 call plug#end()
 
-set ssop-=options    " do not store global and local values in a session
-set ssop-=folds      " do not store folds
+set sessionoptions=curdir,help,tabpages
 
 let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions' 
 
 function! MakeSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd())
-  if (filewritable(g:SESSIONDIR))
-      exe 'silent !mkdir -p ' . g:SESSIONDIR
-      redraw!
+  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
+  if (filewritable(g:SESSIONDIR) != 2)
+    call system('mkdir -p ' . g:SESSIONDIR)
+    redraw!
   endif
   exe "mksession! " . s:SESSIONPATH
 endfunction
 
 function! LoadSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd())
+  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
   if (filereadable(s:SESSIONPATH))
     exe 'source ' s:SESSIONPATH
   else
