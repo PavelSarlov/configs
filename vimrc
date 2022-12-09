@@ -57,14 +57,25 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 augroup filetypes
-    au!
-    au BufRead,BufNewFile *.ejs set filetype=html
-    au BufRead,BufNewFile *.json set filetype=jsonc
+  au!
+  au BufRead,BufNewFile *.ejs set filetype=html
+  au BufRead,BufNewFile *.json set filetype=jsonc
+augroup END
+
+function! StripTrailingWhitespaces()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
+endfunction
+
+augroup write
+  au BufWritePre * :call StripTrailingWhitespaces()
 augroup END
 
 set sessionoptions=curdir,help,tabpages
 
-let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions' 
+let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions'
 
 function! MakeSession()
   let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
@@ -118,16 +129,16 @@ set splitbelow
 set wrap
 set number
 set clipboard+=unnamed,unnamedplus
-set tabstop=2 
-set softtabstop=2 
-set shiftwidth=2 
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set backspace=2
 set expandtab
 set smarttab
 set autoread
 autocmd BufReadPost * set autoindent
 autocmd BufReadPost * set smartindent
-autocmd BufReadPost * set cindent    
+autocmd BufReadPost * set cindent
 set virtualedit=all
 set visualbell
 set t_vb=
@@ -168,7 +179,7 @@ tnoremap <silent> <A--> <Esc><C-w>-
 tnoremap <silent> <A-r> <Esc><C-w>r
 tnoremap <silent> <A-,> <Esc><C-w><
 tnoremap <silent> <A-.> <Esc><C-w>>
-tnoremap <silent> <C-q> <Esc>:conf q<CR> 
+tnoremap <silent> <C-q> <Esc>:conf q<CR>
 tnoremap <silent> <A-q> <Esc>:conf qa<CR>
 
 inoremap <silent> <A-s> <Esc><C-w>s
@@ -183,7 +194,7 @@ inoremap <silent> <A--> <Esc><C-w>-
 inoremap <silent> <A-r> <Esc><C-w>r
 inoremap <silent> <A-,> <Esc><C-w><
 inoremap <silent> <A-.> <Esc><C-w>>
-inoremap <silent> <C-q> <Esc>:conf q<CR> 
+inoremap <silent> <C-q> <Esc>:conf q<CR>
 inoremap <silent> <A-q> <Esc>:conf qa<CR>
 
 nnoremap <silent> <A-s> <C-w>s
@@ -235,9 +246,9 @@ let g:coc_global_extensions = [
     \ 'coc-diagnostic',
     \ 'coc-explorer',
     \ 'coc-gitignore',
-    \ 'coc-css', 
-    \ 'coc-html', 
-    \ 'coc-json', 
+    \ 'coc-css',
+    \ 'coc-html',
+    \ 'coc-json',
     \ 'coc-lists',
     \ 'coc-prettier',
     \ 'coc-pyright',
@@ -247,10 +258,10 @@ let g:coc_global_extensions = [
     \ 'coc-stylelint',
     \ 'coc-tasks',
     \ 'coc-translator',
-    \ 'coc-xml', 
-    \ 'coc-rls', 
-    \ 'coc-java', 
-    \ 'coc-java-lombok', 
+    \ 'coc-xml',
+    \ 'coc-rls',
+    \ 'coc-java',
+    \ 'coc-java-lombok',
     \ 'coc-phpls',
     \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
@@ -642,4 +653,3 @@ nnoremap <silent>ct :diffget //3<CR>
 nnoremap <silent>cb :call GacceptBoth()<CR>
 nnoremap <silent>cs :only<CR>
 nnoremap <silent>cu :diffupdate<CR>
-
