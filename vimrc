@@ -100,9 +100,9 @@ set termguicolors
 set background=dark
 
 augroup file_change
-    au!
-    au FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
-    au FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
+  au!
+  au FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+  au FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
 augroup END
 
 " autocomplete features
@@ -147,18 +147,21 @@ nnoremap <silent> <A-a> <C-a>
 nnoremap <silent> <A-x> <C-x>
 nnoremap <silent> <S-Tab> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
+nnoremap <silent> <C-t> :term<CR>i
 
 " tabs
-nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> <C-k> :tabnext<CR>
 nnoremap <silent> <C-j> :tabprevious<CR>
-nnoremap <silent> <A-w> <Esc>:conf tabclose<CR>
+tnoremap <silent> <A-t> <C-\><C-n>:tabedit %<CR>
+inoremap <silent> <A-t> <Esc>:tabedit %<CR>
+nnoremap <silent> <A-t> :tabedit %<CR>
+tnoremap <silent> <A-w> <C-\><C-n>:conf tabclose<CR>
+inoremap <silent> <A-w> <Esc>:conf tabclose<CR>
+nnoremap <silent> <A-w> :conf tabclose<CR>
 
 " splits management
-
 tnoremap <silent> <A-s> <C-\><C-n><C-w>s
 tnoremap <silent> <A-v> <C-\><C-n><C-w>v
-tnoremap <silent> <A-t> <C-\><C-n>:tabedit %<CR>
 tnoremap <silent> <A-h> <C-\><C-n><C-w>h
 tnoremap <silent> <A-j> <C-\><C-n><C-w>j
 tnoremap <silent> <A-k> <C-\><C-n><C-w>k
@@ -173,7 +176,6 @@ tnoremap <silent> <A-q> <C-\><C-n>:conf qa<CR>
 
 inoremap <silent> <A-s> <Esc><C-w>s
 inoremap <silent> <A-v> <Esc><C-w>v
-inoremap <silent> <A-t> <Esc>:tabedit %<CR>
 inoremap <silent> <A-h> <Esc><C-w>h
 inoremap <silent> <A-j> <Esc><C-w>j
 inoremap <silent> <A-k> <Esc><C-w>k
@@ -188,7 +190,6 @@ inoremap <silent> <A-q> <Esc>:conf qa<CR>
 
 nnoremap <silent> <A-s> <C-w>s
 nnoremap <silent> <A-v> <C-w>v
-nnoremap <silent> <A-t> :tabedit %<CR>
 nnoremap <silent> <A-h> <C-w>h
 nnoremap <silent> <A-j> <C-w>j
 nnoremap <silent> <A-k> <C-w>k
@@ -208,16 +209,16 @@ vnoremap <leader>p "_dP
 
 
 if executable("racer.exe")
-    let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
+  let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
 endif
 
 if executable("rustc.exe")
-    let g:rustc_path="${WINHOME}/.cargo/bin/rustc"
+  let g:rustc_path="${WINHOME}/.cargo/bin/rustc"
 endif
 
 if exists(":NERDTree")
-    let g:NERDTreeShowHidden=1
-    let g:NERDTreeChDirMode=2
+  let g:NERDTreeShowHidden=1
+  let g:NERDTreeChDirMode=2
 endif
 
 "===========================================================
@@ -225,39 +226,37 @@ endif
 "===========================================================
 
 let g:coc_global_extensions = [
-    \ 'coc-cmake',
-    \ 'coc-emmet',
-    \ 'coc-highlight',
-    \ 'coc-sh',
-    \ 'coc-vimlsp',
-    \ 'coc-clangd',
-    \ 'coc-syntax',
-    \ 'coc-diagnostic',
-    \ 'coc-explorer',
-    \ 'coc-gitignore',
-    \ 'coc-css', 
-    \ 'coc-html', 
-    \ 'coc-json', 
-    \ 'coc-lists',
-    \ 'coc-prettier',
-    \ 'coc-pyright',
-    \ 'coc-python',
-    \ 'coc-snippets',
-    \ 'coc-sourcekit',
-    \ 'coc-stylelint',
-    \ 'coc-tasks',
-    \ 'coc-translator',
-    \ 'coc-xml', 
-    \ 'coc-rls', 
-    \ 'coc-java', 
-    \ 'coc-java-lombok', 
-    \ 'coc-phpls',
-    \ 'coc-tslint-plugin',
-    \ 'coc-tsserver',
-    \ 'coc-vetur',
-    \ 'coc-yaml',
-    \ 'coc-lua',
-    \ 'coc-yank']
+  \ 'coc-omnisharp',
+  \ 'coc-cmake',
+  \ 'coc-emmet',
+  \ 'coc-highlight',
+  \ 'coc-sh',
+  \ 'coc-vimlsp',
+  \ 'coc-clangd',
+  \ 'coc-syntax',
+  \ 'coc-diagnostic',
+  \ 'coc-explorer',
+  \ 'coc-gitignore',
+  \ 'coc-css', 
+  \ 'coc-html', 
+  \ 'coc-json', 
+  \ 'coc-lists',
+  \ 'coc-prettier',
+  \ 'coc-pyright',
+  \ 'coc-python',
+  \ 'coc-snippets',
+  \ 'coc-sourcekit',
+  \ 'coc-stylelint',
+  \ 'coc-xml', 
+  \ 'coc-rls', 
+  \ 'coc-java', 
+  \ 'coc-java-lombok', 
+  \ 'coc-phpls',
+  \ 'coc-tslint-plugin',
+  \ 'coc-tsserver',
+  \ 'coc-yaml',
+  \ 'coc-lua',
+  \ 'coc-yank']
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
