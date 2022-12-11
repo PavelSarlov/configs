@@ -29,7 +29,8 @@ if has("unix")
     endif
 endif
 
-let g:PLUGGEDDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'plugged'
+let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
+let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
 
 " vim-plug
 call plug#begin(g:PLUGGEDDIR)
@@ -64,7 +65,7 @@ augroup END
 
 set sessionoptions=curdir,help,tabpages
 
-let g:SESSIONDIR = $HOME . g:DEFAULTSLASH . '.vim' . g:DEFAULTSLASH . 'sessions' 
+let g:SESSIONDIR = g:VIMHOME . g:DEFAULTSLASH . 'sessions' 
 
 function! MakeSession()
   let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
@@ -224,6 +225,10 @@ endif
 "===========================================================
 "======================= coc configs =======================
 "===========================================================
+
+
+let g:coc_data_home = g:VIMHOME . g:DEFAULTSLASH . "coc"
+let g:coc_config_home = g:VIMHOME
 
 let g:coc_global_extensions = [
   \ 'coc-omnisharp',

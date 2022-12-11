@@ -8,7 +8,8 @@
   "java.signatureHelp.enabled": true,
   "java.trace.server": "verbose",
   "java.configuration.updateBuildConfiguration": "automatic",
-  "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/home/psarlov/.config/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
+  "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"~/.vim/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
+
   // language servers
   "languageserver": {
     "csharp-ls": {
@@ -33,6 +34,7 @@
       }
     }
   },
+
   // explorer
   "explorer.width": 25,
   "explorer.focus": false,
@@ -45,6 +47,7 @@
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.source": "nerdfont.vim",
   "explorer.git.enable": true,
+
   // javascript
   "javascript.suggest.autoImports": true,
   "javascript.suggest.paths": true,
@@ -52,6 +55,7 @@
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
   "javascript.preferences.quoteStyle": "single",
+
   // tsserver
   "typescript.suggest.autoImports": true,
   "typescript.suggest.paths": true,
@@ -61,10 +65,16 @@
   "typescript.preferences.quoteStyle": "single",
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.updateImportsOnFileMove.enable": true,
+
   // prettier
   "prettier.bracketSameLine": false,
   "prettier.bracketSpacing": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.jsxSingleQuote": true
+  "prettier.jsxSingleQuote": true,
+
+  // omnisharp
+  "omnisharp.version": "latest",
+  "omnisharp.trace.server": "verbose",
+  "omnisharp.debug.server": true
 }
