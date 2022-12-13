@@ -43,7 +43,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'aperezdc/vim-template'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'godlygeek/tabular'
@@ -261,6 +260,8 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-yaml',
   \ 'coc-lua',
+  \ 'coc-webview',
+  \ 'coc-markdown-preview-enhanced',
   \ 'coc-yank']
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
