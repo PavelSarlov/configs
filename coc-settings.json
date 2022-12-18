@@ -76,5 +76,9 @@
   // omnisharp
   "omnisharp.version": "latest",
   "omnisharp.trace.server": "verbose",
-  "omnisharp.debug.server": true
+  "omnisharp.debug.server": true,
+  "snippets.ultisnips.pythonPrompt": false,
+
+  // python
+  "python.formatting.provider": "black",
 }

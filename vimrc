@@ -247,7 +247,6 @@ let g:coc_global_extensions = [
   \ 'coc-lists',
   \ 'coc-prettier',
   \ 'coc-pyright',
-  \ 'coc-python',
   \ 'coc-snippets',
   \ 'coc-sourcekit',
   \ 'coc-stylelint',
