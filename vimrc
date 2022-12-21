@@ -9,10 +9,6 @@ if has("win64") || has("win32")
       set shell=pwsh
     endif
 
-    if(executable('bash'))
-      set shell=bash
-    endif
-
     set shellcmdflag=-command
     set shellquote=\"
     set shellxquote=
