@@ -5,8 +5,12 @@ if has("win64") || has("win32")
 
     set shell=powershell
 
-    if(executable('pwsh'))
+    if executable('pwsh')
       set shell=pwsh
+    endif
+
+    if executable('bash')
+      set shell=bash
     endif
 
     set shellcmdflag=-command

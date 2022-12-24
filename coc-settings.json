@@ -81,4 +81,7 @@
 
   // python
   "python.formatting.provider": "black",
+
+  // powershell
+  "powershell.integratedConsole.showOnStartup": false
 }

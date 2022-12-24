@@ -110,7 +110,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export WINHOME=/mnt/c/Users/$(whoami)
 export LS_COLORS=$LS_COLORS:'ow=1;34:'
 stty -ixon
 bind 'set completion-ignore-case on'
+
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+  export WINHOME=/mnt/c/Users/$(whoami)
+  PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "`wslpath -w "$PWD"`"'
+fi
+
+if [[ $(grep -i MINGW /proc/version) ]]; then
+  export WINHOME=/c/Users/$(whoami)
+  PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "`cygpath -w "$PWD"`"'
+fi
+
