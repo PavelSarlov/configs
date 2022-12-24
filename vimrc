@@ -625,7 +625,7 @@ END
 "======================= ctrlp ================================
 "==============================================================
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git|target|dist|obj|bin'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|target\|dist\|obj\|bin'
 let g:ctrlp_show_hidden = 1
 
 "==============================================================
