@@ -234,6 +234,7 @@ let g:coc_data_home = g:VIMHOME . g:DEFAULTSLASH . "coc"
 let g:coc_config_home = g:VIMHOME
 
 let g:coc_global_extensions = [
+  \ 'coc-db',
   \ 'coc-omnisharp',
   \ 'coc-powershell',
   \ 'coc-cmake',
