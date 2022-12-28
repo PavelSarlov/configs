@@ -19,17 +19,14 @@
     },
     "ccls": {
       "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp", "h", "hpp"],
-      "rootPatterns": [
-        ".ccls",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
+      "filetypes": ["c", "cpp", "objc", "objcpp", "h", "hpp", "cuda"],
+      "rootPatterns": [".ccls", "compile_commands.json"],
       "initializationOptions": {
         "cache": {
-          "directory": "/tmp/ccls"
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
         }
       }
     }
@@ -83,5 +80,5 @@
   "python.formatting.provider": "black",
 
   // powershell
-  "powershell.integratedConsole.showOnStartup": false
+  "powershell.integratedConsole.showOnStartup": false,
 }

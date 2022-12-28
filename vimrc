@@ -242,7 +242,6 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ 'coc-sh',
   \ 'coc-vimlsp',
-  \ 'coc-clangd',
   \ 'coc-syntax',
   \ 'coc-diagnostic',
   \ 'coc-explorer',
