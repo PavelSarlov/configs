@@ -17,19 +17,6 @@
       "filetypes": ["cs"],
       "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
     },
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp", "h", "hpp", "cuda"],
-      "rootPatterns": [".ccls", "compile_commands.json"],
-      "initializationOptions": {
-        "cache": {
-          "directory": ".ccls-cache"
-        },
-        "client": {
-          "snippetSupport": true
-        }
-      }
-    }
   },
 
   // explorer

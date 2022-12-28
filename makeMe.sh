@@ -1,49 +1,34 @@
 #!/bin/bash
+  
+PROJECT="$(basename "$(pwd)")"
 
-function generateCcls() {
-    echo "clang
-%h -x c++-header
-%cpp -std=c++17
-%c -std=c17
--Wall
--Wno-narrowing
--Wno-unused-result
--Wno-sign-compare
--Werror
--Wshadow
--pedantic
--Wextra
--I./include
-" >.ccls
+function generateCMakeLists() {
+  echo "cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_COMPILER \"g++\")
+set(CMAKE_C_COMPILER \"gcc\")
+
+project(\"$PROJECT\" VERSION 1.0)
+aux_source_directory(source SRC_FILES)
+add_executable(\"$PROJECT\" \${SRC_FILES})" >CMakeLists.txt
+
+  if [[ ! -d build ]]; then
+    mkdir build
+  fi
+  cd build
+  cmake -G "MinGW Makefiles" -S ../
+  make
 }
 
-if [[ $1 =~ ccls ]]; then
-    generateCcls
-    exit 0
+function run() {
+  if [ -x "./build/$PROJECT" ]; then
+    "./build/$PROJECT"
+  fi
+}
+
+if [[ $1 =~ make ]]; then
+  generateCMakeLists
+elif [ $# -eq 0 ] || [[ $1 =~ run ]]; then
+  run
 fi
-
-OUT="target/$(pwd | sed -E 's/ /\\ /g' | xargs basename).exe"
-CC="$(which g++.exe)"
-FLAGS="-O2\
-    -g\
-    -Wall\
-    -Wno-narrowing\
-    -Wno-unused-result\
-    -Wno-sign-compare\
-    -Werror\
-    -Wshadow\
-    -pedantic\
-    -Wextra\
-    --std=c++17\
-    -I "./include"\
-    "
-
-SRC="$(find "source/" -name "*.cpp")"
-
-if [ ! -d target/ ]; then
-    mkdir target
-fi
-
-$CC $FLAGS -o $OUT $SRC
-
-chmod +x $OUT
