@@ -29,7 +29,7 @@ target_include_directories(\"$PROJECT\" PUBLIC \${CMAKE_CURRENT_SOURCE_DIR}/incl
     mkdir build
   fi
   cd build
-  cmake -G "MinGW Makefiles" -S ../
+  cmake -S ../
   mv compile_commands.json ../
   make
 }
