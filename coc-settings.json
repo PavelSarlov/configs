@@ -16,7 +16,7 @@
       "command": "csharp-ls",
       "filetypes": ["cs"],
       "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
-    },
+    }
   },
 
   // explorer
@@ -56,6 +56,12 @@
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
+  "prettier.useEditorConfig": false,
+  "prettier.endOfLine": 160,
+
+  // html
+  "html.format.wrapLineLength": 160,
+  "html.format.preserveNewLines": true,
 
   // omnisharp
   "omnisharp.version": "latest",
@@ -67,5 +73,5 @@
   "python.formatting.provider": "black",
 
   // powershell
-  "powershell.integratedConsole.showOnStartup": false,
+  "powershell.integratedConsole.showOnStartup": false
 }
