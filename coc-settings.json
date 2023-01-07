@@ -57,7 +57,6 @@
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
   "prettier.useEditorConfig": false,
-  "prettier.endOfLine": 160,
 
   // html
   "html.format.wrapLineLength": 160,
