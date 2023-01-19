@@ -1,44 +1,18 @@
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Import-Module posh-git
+Set-Alias more "$(where.exe less)"
 
-#region utils
-nal -Name sudo -Value "runas /user:domain\administrator"
-nal -Name grep -Value "sls"
-nal -Name reboot -Value "Restart-Computer -Force"
+function prompt
+{
+  $loc = Get-Location
 
-function dirname([string]$FilePath) {
-    Split-Path -Path "$FilePath" -Resolve
+  $prompt = & $GitPromptScriptBlock
+
+  $prompt += "$([char]27)]9;12$([char]7)"
+  if ($loc.Provider.Name -eq "FileSystem")
+  {
+    $prompt += "$([char]27)]9;9;`"$($loc.ProviderPath)`"$([char]27)\"
+  }
+
+  $prompt
 }
-function basename([string]$FilePath) {
-    Split-Path -Path "$FilePath" -Leaf
-}
-
-function touch([string]$FilePath) {
-    if(Test-Path "$FilePath") {
-        (Get-ChildItem "$FilePath").LastWriteTime = Get-Date
-    }
-    else {
-        New-Item -ItemType file -Path "$FilePath"
-    }
-}
-
-function test([string]$FilePath, [string]$FileType = "") {
-    [string]$Type = "Any"
-    switch($FileType) {
-        "d" {$Type = "Container"}
-        "f" {$Type = "Leaf"}
-        default {}
-    }
-    Test-Path -Path $FilePath -PathType $Type 
-}
-#endregion
-
-# Chocolatey profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
-
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-(& "C:\Users\muchd\anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-#endregion
