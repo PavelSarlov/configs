@@ -1,5 +1,6 @@
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Import-Module posh-git
+Import-Module NuGet
 Set-Alias more "$(where.exe less)"
 
 function prompt
