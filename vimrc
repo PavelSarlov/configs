@@ -141,6 +141,7 @@ set shortmess+=c
 set signcolumn=yes
 set guifont=FontAwesome
 set relativenumber
+set cul
 
 " misc
 cmap w!! w !sudo tee % >/dev/null
