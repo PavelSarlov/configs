@@ -58,6 +58,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'OmniSharp/omnisharp-vim'
 call plug#end()
 
 augroup filetypes
