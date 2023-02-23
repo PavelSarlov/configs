@@ -268,6 +268,7 @@ let g:coc_global_extensions = [
   \ 'coc-lua',
   \ 'coc-webview',
   \ 'coc-markdown-preview-enhanced',
+  \ 'coc-elixir',
   \ 'coc-yank']
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -627,7 +628,7 @@ END
 "======================= ctrlp ================================
 "==============================================================
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|target\|dist\|obj\|bin'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|target\|dist\|obj\|bin\|build'
 let g:ctrlp_show_hidden = 1
 
 "==============================================================
