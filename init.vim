@@ -1,62 +1,70 @@
 if has("win64") || has("win32")
-  set ff=dos
+    set ff=dos
 
-  let g:DEFAULTSLASH="\\"
+    let g:DEFAULTSLASH="\\"
 
-  set shell=powershell
+    set shell=powershell
 
-  if executable('pwsh')
-    set shell=pwsh
-  endif
+    if executable('pwsh')
+      set shell=pwsh
+    endif
 
-  set shellcmdflag=-command
-  set shellquote=\"
-  set shellxquote=
+    if executable('bash')
+      set shell=bash
+    endif
 
-  let g:VIMHOME = $HOME . g:DEFAULTSLASH . 'vimfiles'
+    set shellcmdflag=-command
+    set shellquote=\"
+    set shellxquote=
 endif
-
 
 if has("unix")
-  set ff=unix
+    set ff=unix
 
-  let g:DEFAULTSLASH="/"
+    let g:DEFAULTSLASH="/"
 
-  " WSL yank support
-  let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-  if executable(s:clip)
-    augroup WSLYank
-      autocmd!
-      autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-    augroup END
-  endif
-
-  let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
+    " WSL yank support
+    let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+    if executable(s:clip)
+        augroup WSLYank
+            autocmd!
+            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+        augroup END
+    endif
 endif
 
+let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
 let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
 
 " vim-plug
 call plug#begin(g:PLUGGEDDIR)
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'aperezdc/vim-template'
-Plug 'godlygeek/tabular'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'aperezdc/vim-template'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'godlygeek/tabular'
+Plug 'gpanders/editorconfig.nvim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'tpope/vim-fugitive'
+Plug 'OmniSharp/omnisharp-vim'
 call plug#end()
 
 augroup filetypes
-  au!
-  au BufRead,BufNewFile *.ejs set filetype=html
-  au BufRead,BufNewFile *.json set filetype=jsonc
+    au!
+    au BufRead,BufNewFile *.ejs set filetype=html
+    au BufRead,BufNewFile *.json set filetype=jsonc
 augroup END
 
 set sessionoptions=curdir,help,tabpages
@@ -128,13 +136,13 @@ autocmd BufReadPost * set cindent
 set virtualedit=all
 set visualbell
 set t_vb=
-set novisualbell
 set hidden
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 set guifont=FontAwesome
 set relativenumber
+set cul
 
 " misc
 cmap w!! w !sudo tee % >/dev/null
@@ -145,7 +153,7 @@ nnoremap <silent> <A-a> <C-a>
 nnoremap <silent> <A-x> <C-x>
 nnoremap <silent> <S-Tab> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
-nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>
+nnoremap <silent> <C-t> :term<CR>i
 
 " tabs
 nnoremap <silent> <C-k> :tabnext<CR>
@@ -206,40 +214,10 @@ vnoremap <leader>d "_d
 vnoremap <leader>p "_dP
 
 
-"==============================================================
-"======================= ctrlp ================================
-"==============================================================
-
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|target\|dist\|obj\|bin'
-let g:ctrlp_show_hidden = 1
-
-"==============================================================
-"======================= fugitive =============================
-"==============================================================
-
-function! GacceptBoth()
-  let lastTheirs = search('>\{7\}','bWn')
-  let ours = search('<\{7\}', 'b', lastTheirs ? lastTheirs : 1)
-
-  if (!ours)
-    return
-  endif
-
-  let theirs = search('>\{7\}', 'W')
-
-  execute ours . ',' theirs . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
-endfunction
-
-nnoremap <silent>cm :tabedit % \| Gvdiffsplit!<CR>
-nnoremap <silent>co :diffget //2<CR>
-nnoremap <silent>ct :diffget //3<CR>
-nnoremap <silent>cb :call GacceptBoth()<CR>
-nnoremap <silent>cs :only<CR>
-nnoremap <silent>cu :diffupdate<CR>
-
 "===========================================================
 "======================= coc configs =======================
 "===========================================================
+
 
 let g:coc_data_home = g:VIMHOME . g:DEFAULTSLASH . "coc"
 let g:coc_config_home = g:VIMHOME
@@ -277,6 +255,7 @@ let g:coc_global_extensions = [
   \ 'coc-lua',
   \ 'coc-webview',
   \ 'coc-markdown-preview-enhanced',
+  \ 'coc-elixir',
   \ 'coc-yank']
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -429,3 +408,237 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+"===========================================================
+"======================= treesitter ========================
+"===========================================================
+
+lua << EOF
+require('nvim-treesitter.configs').setup {
+  -- A list of parser names, or "all"
+  ensure_installed = "all",
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+"===========================================================
+"======================= colorizer =========================
+"===========================================================
+
+lua << EOF
+require('colorizer').setup()
+EOF
+
+"===========================================================
+"======================= templates =========================
+"===========================================================
+
+let g:templates_directory=[
+            \"~/.config/nvim/templates"]
+
+"===========================================================
+"======================= scrollbar =========================
+"===========================================================
+
+lua << EOF
+require("scrollbar").setup({
+    show = true,
+    show_in_active_only = false,
+    set_highlights = true,
+    folds = 1000, -- handle folds, set to number to disable folds if no. of lines in buffer exceeds this
+    max_lines = false, -- disables if no. of lines in buffer exceeds this
+    handle = {
+        text = " ",
+        color = nil,
+        cterm = nil,
+        highlight = "CursorColumn",
+        hide_if_all_visible = true, -- Hides handle if all lines are visible
+    },
+    marks = {
+        Search = {
+            text = { "-", "=" },
+            priority = 0,
+            color = nil,
+            cterm = nil,
+            highlight = "Search",
+        },
+        Error = {
+            text = { "-", "=" },
+            priority = 1,
+            color = nil,
+            cterm = nil,
+            highlight = "DiagnosticVirtualTextError",
+        },
+        Warn = {
+            text = { "-", "=" },
+            priority = 2,
+            color = nil,
+            cterm = nil,
+            highlight = "DiagnosticVirtualTextWarn",
+        },
+        Info = {
+            text = { "-", "=" },
+            priority = 3,
+            color = nil,
+            cterm = nil,
+            highlight = "DiagnosticVirtualTextInfo",
+        },
+        Hint = {
+            text = { "-", "=" },
+            priority = 4,
+            color = nil,
+            cterm = nil,
+            highlight = "DiagnosticVirtualTextHint",
+        },
+        Misc = {
+            text = { "-", "=" },
+            priority = 5,
+            color = nil,
+            cterm = nil,
+            highlight = "Normal",
+        },
+    },
+    excluded_buftypes = {
+        "terminal",
+    },
+    excluded_filetypes = {
+        "prompt",
+        "TelescopePrompt",
+    },
+    autocmd = {
+        render = {
+            "BufWinEnter",
+            "TabEnter",
+            "TermEnter",
+            "WinEnter",
+            "CmdwinLeave",
+            "TextChanged",
+            "VimResized",
+            "WinScrolled",
+        },
+        clear = {
+            "BufWinLeave",
+            "TabLeave",
+            "TermLeave",
+            "WinLeave",
+        },
+    },
+    handlers = {
+        diagnostic = true,
+        search = false, -- Requires hlslens to be loaded, will run require("scrollbar.handlers.search").setup() for you
+    },
+})
+EOF
+
+"==============================================================
+"======================= catppuccin ===========================
+"==============================================================
+
+let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
+
+lua << EOF
+require("catppuccin").setup()
+EOF
+
+colorscheme catppuccin
+
+"==============================================================
+"======================= lualine ==============================
+"==============================================================
+
+lua << END
+require('lualine').setup({
+ options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+})
+END
+
+"==============================================================
+"======================= ctrlp ================================
+"==============================================================
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|target\|dist\|obj\|bin\|build'
+let g:ctrlp_show_hidden = 1
+
+"==============================================================
+"======================= fugitive =============================
+"==============================================================
+
+function! GacceptBoth()
+  let lastTheirs = search('>\{7\}','bWn')
+  let ours = search('<\{7\}', 'b', lastTheirs ? lastTheirs : 1)
+
+  if (!ours)
+    return
+  endif
+
+  let theirs = search('>\{7\}', 'W')
+
+  execute ours . ',' theirs . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
+endfunction
+
+nnoremap <silent>cm :tabedit % \| Gvdiffsplit!<CR>
+nnoremap <silent>co :diffget //2<CR>
+nnoremap <silent>ct :diffget //3<CR>
+nnoremap <silent>cb :call GacceptBoth()<CR>
+nnoremap <silent>cs :only<CR>
+nnoremap <silent>cu :diffupdate<CR>
+
