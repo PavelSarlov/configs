@@ -214,19 +214,6 @@ vnoremap <leader>d "_d
 vnoremap <leader>p "_dP
 
 
-if executable("racer.exe")
-  let g:racer_cmd="${WINHOME}/.cargo/bin/racer.exe"
-endif
-
-if executable("rustc.exe")
-  let g:rustc_path="${WINHOME}/.cargo/bin/rustc"
-endif
-
-if exists(":NERDTree")
-  let g:NERDTreeShowHidden=1
-  let g:NERDTreeChDirMode=2
-endif
-
 "===========================================================
 "======================= coc configs =======================
 "===========================================================
