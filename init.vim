@@ -13,7 +13,7 @@ if has("win64") || has("win32")
   set shellquote=\"
   set shellxquote=
 
-  let g:VIMHOME = $HOME . g:DEFAULTSLASH . 'vimfiles'
+  let g:VIMHOME = $LOCALAPPDATA . g:DEFAULTSLASH . 'nvim'
 endif
 
 if has("unix")
@@ -30,7 +30,7 @@ if has("unix")
       augroup END
   endif
 
-  let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
+  let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.config/nvim'
 endif
 
 let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
@@ -142,8 +142,9 @@ autocmd BufReadPost * set autoindent
 autocmd BufReadPost * set smartindent
 autocmd BufReadPost * set cindent    
 set virtualedit=all
-set visualbell
 set t_vb=
+set novisualbell
+set belloff=all
 set hidden
 set updatetime=300
 set shortmess+=c
@@ -465,8 +466,7 @@ EOF
 "======================= templates =========================
 "===========================================================
 
-let g:templates_directory=[
-            \"~/.config/nvim/templates"]
+let g:templates_directory=[g:VIMHOME . "templates"]
 
 "===========================================================
 "======================= scrollbar =========================

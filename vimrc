@@ -136,9 +136,9 @@ autocmd BufReadPost * set autoindent
 autocmd BufReadPost * set smartindent
 autocmd BufReadPost * set cindent    
 set virtualedit=all
-set visualbell
 set t_vb=
 set novisualbell
+set belloff=all
 set hidden
 set updatetime=300
 set shortmess+=c
@@ -248,6 +248,12 @@ nnoremap <silent>ct :diffget //3<CR>
 nnoremap <silent>cb :call GacceptBoth()<CR>
 nnoremap <silent>cs :only<CR>
 nnoremap <silent>cu :diffupdate<CR>
+
+"===========================================================
+"======================= templates =========================
+"===========================================================
+
+let g:templates_directory=[g:VIMHOME . "templates"]
 
 "===========================================================
 "======================= coc configs =======================
