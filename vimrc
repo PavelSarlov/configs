@@ -35,6 +35,15 @@ if has("unix")
 endif
 
 let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
+let g:VIMUNDODIR = g:VIMHOME . g:DEFAULTSLASH . 'vimundo'
+
+if !isdirectory(g:VIMHOME)
+    call mkdir(g:VIMHOME, "p")
+endif
+
+if !isdirectory(g:VIMUNDODIR)
+    call mkdir(g:VIMUNDODIR, "p")
+endif
 
 " vim-plug
 call plug#begin(g:PLUGGEDDIR)
@@ -136,6 +145,8 @@ set shortmess+=c
 set signcolumn=yes
 set guifont=FontAwesome
 set relativenumber
+set undofile
+let &undodir=g:VIMUNDODIR
 
 " misc
 cmap w!! w !sudo tee % >/dev/null

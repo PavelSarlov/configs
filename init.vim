@@ -1,40 +1,48 @@
 if has("win64") || has("win32")
-    set ff=dos
+  set ff=dos
 
-    let g:DEFAULTSLASH="\\"
+  let g:DEFAULTSLASH="\\"
 
-    set shell=powershell
+  set shell=powershell
 
-    if executable('pwsh')
-      set shell=pwsh
-    endif
+  if executable('pwsh')
+    set shell=pwsh
+  endif
 
-    if executable('bash')
-      set shell=bash
-    endif
+  set shellcmdflag=-command
+  set shellquote=\"
+  set shellxquote=
 
-    set shellcmdflag=-command
-    set shellquote=\"
-    set shellxquote=
+  let g:VIMHOME = $HOME . g:DEFAULTSLASH . 'vimfiles'
 endif
 
 if has("unix")
-    set ff=unix
+  set ff=unix
 
-    let g:DEFAULTSLASH="/"
+  let g:DEFAULTSLASH="/"
 
-    " WSL yank support
-    let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-    if executable(s:clip)
-        augroup WSLYank
-            autocmd!
-            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-        augroup END
-    endif
+  " WSL yank support
+  let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+  if executable(s:clip)
+      augroup WSLYank
+          autocmd!
+          autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+      augroup END
+  endif
+
+  let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
 endif
 
-let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.vim'
 let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
+let g:VIMUNDODIR = g:VIMHOME . g:DEFAULTSLASH . 'vimundo'
+
+if !isdirectory(g:VIMHOME)
+    call mkdir(g:VIMHOME, "p")
+endif
+
+if !isdirectory(g:VIMUNDODIR)
+    call mkdir(g:VIMUNDODIR, "p")
+endif
 
 " vim-plug
 call plug#begin(g:PLUGGEDDIR)
@@ -143,6 +151,8 @@ set signcolumn=yes
 set guifont=FontAwesome
 set relativenumber
 set cul
+set undofile
+let &undodir=g:VIMUNDODIR
 
 " misc
 cmap w!! w !sudo tee % >/dev/null
