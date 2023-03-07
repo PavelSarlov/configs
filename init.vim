@@ -473,93 +473,7 @@ let g:templates_directory=[g:VIMHOME . "templates"]
 "===========================================================
 
 lua << EOF
-require("scrollbar").setup({
-    show = true,
-    show_in_active_only = false,
-    set_highlights = true,
-    folds = 1000, -- handle folds, set to number to disable folds if no. of lines in buffer exceeds this
-    max_lines = false, -- disables if no. of lines in buffer exceeds this
-    handle = {
-        text = " ",
-        color = nil,
-        cterm = nil,
-        highlight = "CursorColumn",
-        hide_if_all_visible = true, -- Hides handle if all lines are visible
-    },
-    marks = {
-        Search = {
-            text = { "-", "=" },
-            priority = 0,
-            color = nil,
-            cterm = nil,
-            highlight = "Search",
-        },
-        Error = {
-            text = { "-", "=" },
-            priority = 1,
-            color = nil,
-            cterm = nil,
-            highlight = "DiagnosticVirtualTextError",
-        },
-        Warn = {
-            text = { "-", "=" },
-            priority = 2,
-            color = nil,
-            cterm = nil,
-            highlight = "DiagnosticVirtualTextWarn",
-        },
-        Info = {
-            text = { "-", "=" },
-            priority = 3,
-            color = nil,
-            cterm = nil,
-            highlight = "DiagnosticVirtualTextInfo",
-        },
-        Hint = {
-            text = { "-", "=" },
-            priority = 4,
-            color = nil,
-            cterm = nil,
-            highlight = "DiagnosticVirtualTextHint",
-        },
-        Misc = {
-            text = { "-", "=" },
-            priority = 5,
-            color = nil,
-            cterm = nil,
-            highlight = "Normal",
-        },
-    },
-    excluded_buftypes = {
-        "terminal",
-    },
-    excluded_filetypes = {
-        "prompt",
-        "TelescopePrompt",
-    },
-    autocmd = {
-        render = {
-            "BufWinEnter",
-            "TabEnter",
-            "TermEnter",
-            "WinEnter",
-            "CmdwinLeave",
-            "TextChanged",
-            "VimResized",
-            "WinScrolled",
-        },
-        clear = {
-            "BufWinLeave",
-            "TabLeave",
-            "TermLeave",
-            "WinLeave",
-        },
-    },
-    handlers = {
-        diagnostic = true,
-        search = false, -- Requires hlslens to be loaded, will run require("scrollbar.handlers.search").setup() for you
-    },
-})
+require("scrollbar").setup()
 EOF
 
 "==============================================================
@@ -579,46 +493,7 @@ colorscheme catppuccin
 "==============================================================
 
 lua << END
-require('lualine').setup({
- options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-    }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
-})
+require('lualine').setup()
 END
 
 "==============================================================
