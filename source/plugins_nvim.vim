@@ -1,50 +1,3 @@
-if has("win64") || has("win32")
-  set ff=dos
-
-  let g:DEFAULTSLASH="\\"
-
-  set shell=powershell
-
-  if executable('pwsh')
-    set shell=pwsh
-  endif
-
-  set shellcmdflag=-command
-  set shellquote=\"
-  set shellxquote=
-
-  let g:VIMHOME = $LOCALAPPDATA . g:DEFAULTSLASH . 'nvim'
-endif
-
-if has("unix")
-  set ff=unix
-
-  let g:DEFAULTSLASH="/"
-
-  " WSL yank support
-  let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-  if executable(s:clip)
-      augroup WSLYank
-          autocmd!
-          autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-      augroup END
-  endif
-
-  let g:VIMHOME = $HOME . g:DEFAULTSLASH . '.config/nvim'
-endif
-
-let g:PLUGGEDDIR = g:VIMHOME . g:DEFAULTSLASH . 'plugged'
-let g:VIMUNDODIR = g:VIMHOME . g:DEFAULTSLASH . 'vimundo'
-
-if !isdirectory(g:VIMHOME)
-    call mkdir(g:VIMHOME, "p")
-endif
-
-if !isdirectory(g:VIMUNDODIR)
-    call mkdir(g:VIMUNDODIR, "p")
-endif
-
-" vim-plug
 call plug#begin(g:PLUGGEDDIR)
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-commentary' " For Commenting gcc & gc
@@ -69,168 +22,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'OmniSharp/omnisharp-vim'
 call plug#end()
 
-augroup filetypes
-    au!
-    au BufRead,BufNewFile *.ejs set filetype=html
-    au BufRead,BufNewFile *.json set filetype=jsonc
-augroup END
-
-set sessionoptions=curdir,help,tabpages
-
-let g:SESSIONDIR = g:VIMHOME . g:DEFAULTSLASH . 'sessions' 
-
-function! MakeSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
-  if (filewritable(g:SESSIONDIR) != 2)
-    call system('mkdir -p ' . g:SESSIONDIR)
-    redraw!
-  endif
-  exe "mksession! " . s:SESSIONPATH
-endfunction
-
-function! LoadSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:DEFAULTSLASH . sha256(getcwd()) . '.vim'
-  if (filereadable(s:SESSIONPATH))
-    exe 'source ' s:SESSIONPATH
-  else
-    echo "No session loaded."
-  endif
-endfunction
-
-" Adding automatons for when entering or leaving Vim
-if(argc() == 0)
-    au VimEnter * nested :call LoadSession()
-endif
-au VimLeave * :call MakeSession()
-
-
-" highlight and indent
-set nocompatible
-filetype plugin indent on
-syntax on
-
-set termguicolors
-set background=dark
-
-augroup file_change
-  au!
-  au FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
-  au FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
-augroup END
-
-" autocomplete features
-set omnifunc=syntaxcomplete#complete
-
-set encoding=utf-8 fileencoding=utf-8
-set nobackup nowritebackup noswapfile noundofile
-set ignorecase smartcase incsearch hlsearch
-set title ruler
-set wildmenu
-set showmode
-set splitbelow
-set wrap
-set number
-set clipboard+=unnamed,unnamedplus
-set tabstop=2 
-set softtabstop=2 
-set shiftwidth=2 
-set backspace=2
-set expandtab
-set smarttab
-set autoread
-autocmd BufReadPost * set autoindent
-autocmd BufReadPost * set smartindent
-autocmd BufReadPost * set cindent    
-set virtualedit=all
-set t_vb=
-set novisualbell
-set belloff=all
-set hidden
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-set guifont=FontAwesome
-set relativenumber
-set cul
-set undofile
-let &undodir=g:VIMUNDODIR
-
-" misc
-cmap w!! w !sudo tee % >/dev/null
-tnoremap <silent> <Esc> <C-\><C-n>
-nnoremap <silent> <C-s> :w!<CR>
-nnoremap <silent> <C-f> /
-nnoremap <silent> <A-a> <C-a>
-nnoremap <silent> <A-x> <C-x>
-nnoremap <silent> <S-Tab> :nohl \| redraw!<CR>
-nnoremap <silent> <C-a> ggVG
-nnoremap <silent> <C-t> :term<CR>i
-
-" tabs
-nnoremap <silent> <C-k> :tabnext<CR>
-nnoremap <silent> <C-j> :tabprevious<CR>
-tnoremap <silent> <A-t> <C-\><C-n>:tabedit %<CR>
-inoremap <silent> <A-t> <Esc>:tabedit %<CR>
-nnoremap <silent> <A-t> :tabedit %<CR>
-tnoremap <silent> <A-w> <C-\><C-n>:conf tabclose<CR>
-inoremap <silent> <A-w> <Esc>:conf tabclose<CR>
-nnoremap <silent> <A-w> :conf tabclose<CR>
-
-" splits management
-tnoremap <silent> <A-s> <C-\><C-n><C-w>s
-tnoremap <silent> <A-v> <C-\><C-n><C-w>v
-tnoremap <silent> <A-h> <C-\><C-n><C-w>h
-tnoremap <silent> <A-j> <C-\><C-n><C-w>j
-tnoremap <silent> <A-k> <C-\><C-n><C-w>k
-tnoremap <silent> <A-l> <C-\><C-n><C-w>l
-tnoremap <silent> <A-=> <C-\><C-n><C-w>+
-tnoremap <silent> <A--> <C-\><C-n><C-w>-
-tnoremap <silent> <A-r> <C-\><C-n><C-w>r
-tnoremap <silent> <A-,> <C-\><C-n><C-w><
-tnoremap <silent> <A-.> <C-\><C-n><C-w>>
-tnoremap <silent> <C-q> <C-\><C-n>:conf q<CR> 
-tnoremap <silent> <A-q> <C-\><C-n>:conf qa<CR>
-
-inoremap <silent> <A-s> <Esc><C-w>s
-inoremap <silent> <A-v> <Esc><C-w>v
-inoremap <silent> <A-h> <Esc><C-w>h
-inoremap <silent> <A-j> <Esc><C-w>j
-inoremap <silent> <A-k> <Esc><C-w>k
-inoremap <silent> <A-l> <Esc><C-w>l
-inoremap <silent> <A-=> <Esc><C-w>+
-inoremap <silent> <A--> <Esc><C-w>-
-inoremap <silent> <A-r> <Esc><C-w>r
-inoremap <silent> <A-,> <Esc><C-w><
-inoremap <silent> <A-.> <Esc><C-w>>
-inoremap <silent> <C-q> <Esc>:conf q<CR> 
-inoremap <silent> <A-q> <Esc>:conf qa<CR>
-
-nnoremap <silent> <A-s> <C-w>s
-nnoremap <silent> <A-v> <C-w>v
-nnoremap <silent> <A-h> <C-w>h
-nnoremap <silent> <A-j> <C-w>j
-nnoremap <silent> <A-k> <C-w>k
-nnoremap <silent> <A-l> <C-w>l
-nnoremap <silent> <A-=> <C-w>+
-nnoremap <silent> <A--> <C-w>-
-nnoremap <silent> <A-r> <C-w>r
-nnoremap <silent> <A-,> <C-w><
-nnoremap <silent> <A-.> <C-w>>
-nnoremap <silent> <C-q> :conf q<CR>
-nnoremap <silent> <A-q> :conf qa<CR>
-
-" no yanking
-nnoremap <leader>d "_d
-vnoremap <leader>d "_d
-vnoremap <leader>p "_dP
-
-
 "===========================================================
 "======================= coc configs =======================
 "===========================================================
 
 
-let g:coc_data_home = g:VIMHOME . g:DEFAULTSLASH . "coc"
+let g:coc_data_home = g:VIMHOME . g:SLASH . "coc"
 let g:coc_config_home = g:VIMHOME
 
 let g:coc_global_extensions = [
@@ -246,19 +43,19 @@ let g:coc_global_extensions = [
   \ 'coc-diagnostic',
   \ 'coc-explorer',
   \ 'coc-gitignore',
-  \ 'coc-css', 
-  \ 'coc-html', 
-  \ 'coc-json', 
+  \ 'coc-css',
+  \ 'coc-html',
+  \ 'coc-json',
   \ 'coc-lists',
   \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-snippets',
   \ 'coc-sourcekit',
   \ 'coc-stylelint',
-  \ 'coc-xml', 
-  \ 'coc-rls', 
-  \ 'coc-java', 
-  \ 'coc-java-lombok', 
+  \ 'coc-xml',
+  \ 'coc-rls',
+  \ 'coc-java',
+  \ 'coc-java-lombok',
   \ 'coc-phpls',
   \ 'coc-tslint-plugin',
   \ 'coc-tsserver',
@@ -269,13 +66,6 @@ let g:coc_global_extensions = [
   \ 'coc-elixir',
   \ 'coc-yank']
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: There's always complete item selected by default, you may want to enable
@@ -400,7 +190,7 @@ nnoremap <silent> <A-o> :OR<CR>
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+let g:
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -466,7 +256,7 @@ EOF
 "======================= templates =========================
 "===========================================================
 
-let g:templates_directory=[g:VIMHOME . "templates"]
+let g:templates_directory=[g:VIMHOME . g:SLASH . "templates"]
 
 "===========================================================
 "======================= scrollbar =========================
@@ -526,4 +316,3 @@ nnoremap <silent>ct :diffget //3<CR>
 nnoremap <silent>cb :call GacceptBoth()<CR>
 nnoremap <silent>cs :only<CR>
 nnoremap <silent>cu :diffupdate<CR>
-
