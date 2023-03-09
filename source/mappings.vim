@@ -1,5 +1,5 @@
 " source current
-nnoremap <silent> ! :source %<CR>
+nnoremap <silent> ! :silent source %<CR>
 
 nnoremap <silent> Y y$
 

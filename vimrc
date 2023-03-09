@@ -15,9 +15,9 @@ if has("win64") || has("win32")
   set shellxquote=
 
   if has("nvim")
-    let g:VIMHOME = $HOME . g:SLASH . 'vimfiles'
-  else
     let g:VIMHOME = $HOME . g:SLASH . 'AppData' . g:SLASH . 'Local' . g:SLASH . 'nvim'
+  else
+    let g:VIMHOME = $HOME . g:SLASH . 'vimfiles'
   endif
 endif
 
