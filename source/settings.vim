@@ -57,3 +57,5 @@ set display=truncate
 
 set guioptions=
 set guifont=FontAwesome
+
+set mouse=a
