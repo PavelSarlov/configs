@@ -8,6 +8,8 @@ cnoremap <silent> <C-p> <C-r>"
 
 nnoremap <silent> j gj
 nnoremap <silent> k gk
+xnoremap <silent> j gj
+xnoremap <silent> k gk
 
 " no yanking
 nnoremap <leader>d "_d
@@ -18,6 +20,10 @@ nnoremap <silent> J 5j
 nnoremap <silent> K 5k
 nnoremap <silent> L 5l
 nnoremap <silent> H 5h
+xnoremap <silent> J 5j
+xnoremap <silent> K 5k
+xnoremap <silent> L 5l
+xnoremap <silent> H 5h
 
 " misc
 cmap w!! w !sudo tee % >/dev/null
