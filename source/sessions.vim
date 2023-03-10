@@ -1,18 +1,18 @@
 set sessionoptions=curdir,help,tabpages
 
-let g:SESSIONDIR = $VIMHOME . g:SLASH . 'sessions' 
+let g:SESSIONPATH = $VIMHOME . g:SLASH . 'sessions' 
 
 function! MakeSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:SLASH . sha256(getcwd()) . '.vim'
-  if (filewritable(g:SESSIONDIR) != 2)
-    call system('mkdir -p ' . g:SESSIONDIR)
+  let s:SESSIONPATH = g:SESSIONPATH . g:SLASH . sha256(getcwd()) . '.vim'
+  if (filewritable(g:SESSIONPATH) != 2)
+    call system('mkdir -p ' . g:SESSIONPATH)
     redraw!
   endif
   exe "mksession! " . s:SESSIONPATH
 endfunction
 
 function! LoadSession()
-  let s:SESSIONPATH = g:SESSIONDIR . g:SLASH . sha256(getcwd()) . '.vim'
+  let s:SESSIONPATH = g:SESSIONPATH . g:SLASH . sha256(getcwd()) . '.vim'
   if (filereadable(s:SESSIONPATH))
     exe 'source ' s:SESSIONPATH
   else
