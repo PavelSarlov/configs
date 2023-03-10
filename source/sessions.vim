@@ -1,6 +1,6 @@
 set sessionoptions=curdir,help,tabpages
 
-let g:SESSIONDIR = g:VIMHOME . g:SLASH . 'sessions' 
+let g:SESSIONDIR = $VIMHOME . g:SLASH . 'sessions' 
 
 function! MakeSession()
   let s:SESSIONPATH = g:SESSIONDIR . g:SLASH . sha256(getcwd()) . '.vim'
