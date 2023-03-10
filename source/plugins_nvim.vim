@@ -7,7 +7,6 @@ Plug 'lambdalisue/nerdfont.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'aperezdc/vim-template'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'godlygeek/tabular'
