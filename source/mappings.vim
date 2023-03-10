@@ -28,7 +28,12 @@ nnoremap <silent> <A-a> <C-a>
 nnoremap <silent> <A-x> <C-x>
 nnoremap <silent> <S-Tab> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
-nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>
+
+if has("nvim")
+  nnoremap <silent> <C-t> :term<CR>
+else
+  nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>
+endif
 
 " tabs
 nnoremap <silent> <C-k> :tabnext<CR>

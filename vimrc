@@ -15,9 +15,9 @@ if has("win64") || has("win32")
   set shellxquote=
 
   if has("nvim")
-    let g:VIMHOME = $HOME . g:SLASH . 'AppData' . g:SLASH . 'Local' . g:SLASH . 'nvim'
+    let $VIMHOME = $HOME . g:SLASH . 'AppData' . g:SLASH . 'Local' . g:SLASH . 'nvim'
   else
-    let g:VIMHOME = $HOME . g:SLASH . 'vimfiles'
+    let $VIMHOME = $HOME . g:SLASH . 'vimfiles'
   endif
 endif
 
@@ -37,17 +37,17 @@ if has("unix")
   endif
 
   if has("nvim")
-    let g:VIMHOME = $HOME . g:SLASH . '.config' . g:SLASH . 'nvim'
+    let $VIMHOME = $HOME . g:SLASH . '.config' . g:SLASH . 'nvim'
   else
-    let g:VIMHOME = $HOME . g:SLASH . '.vim'
+    let $VIMHOME = $HOME . g:SLASH . '.vim'
   endif
 endif
 
-let g:PLUGGEDDIR = g:VIMHOME . g:SLASH . 'plugged'
-let g:VIMUNDODIR = g:VIMHOME . g:SLASH . 'vimundo'
+let g:PLUGGEDDIR = $VIMHOME . g:SLASH . 'plugged'
+let g:VIMUNDODIR = $VIMHOME . g:SLASH . 'vimundo'
 
-if !isdirectory(g:VIMHOME)
-    call mkdir(g:VIMHOME, "p")
+if !isdirectory($VIMHOME)
+    call mkdir($VIMHOME, "p")
 endif
 
 if !isdirectory(g:VIMUNDODIR)
@@ -56,7 +56,7 @@ endif
 
 
 " load local stuff
-let g:PLUGINDIR = g:VIMHOME . g:SLASH . 'source'
+let g:PLUGINDIR = $VIMHOME . g:SLASH . 'source'
 
 silent execute 'source' g:PLUGINDIR . g:SLASH . 'settings.vim'
 silent execute 'source' g:PLUGINDIR . g:SLASH . 'mappings.vim'

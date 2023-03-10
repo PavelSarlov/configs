@@ -50,14 +50,14 @@ nnoremap <silent>cu :diffupdate<CR>
 "======================= templates =========================
 "===========================================================
 
-let g:templates_directory=[g:VIMHOME . g:SLASH . "templates"]
+let g:templates_directory=[$VIMHOME . g:SLASH . "templates"]
 
 "===========================================================
 "======================= coc configs =======================
 "===========================================================
 
-let g:coc_data_home = g:VIMHOME . g:SLASH . "coc"
-let g:coc_config_home = g:VIMHOME
+let g:coc_data_home = $VIMHOME . g:SLASH . "coc"
+let g:coc_config_home = $VIMHOME
 
 let g:coc_global_extensions = [
   \ 'coc-db',
