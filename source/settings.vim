@@ -30,6 +30,7 @@ set wrap
 set number
 set clipboard+=unnamed,unnamedplus
 
+set laststatus=2
 set tabstop=2 
 set softtabstop=2 
 set shiftwidth=2 
@@ -40,6 +41,7 @@ set smarttab
 set autoread
 set virtualedit=all
 set t_vb=
+set t_u7=
 set novisualbell
 set belloff=all
 set hidden
