@@ -11,6 +11,8 @@ endif
 nnoremap <silent> ! :silent source %<CR>
 
 nnoremap <silent> Y y$
+nnoremap <silent> vv <S-v>
+nnoremap <silent> <S-v> viw
 
 inoremap <silent> <C-p> <Esc>pa
 cnoremap <silent> <C-p> <C-r>"
