@@ -23,7 +23,9 @@ set nrformats-=octal
 set title
 set ruler
 set wildmenu
+set wildoptions=pum
 set showmode
+set showcmd
 set splitbelow
 set splitright
 set wrap
@@ -53,6 +55,8 @@ set relativenumber
 set undofile
 let &undodir=g:VIMUNDODIR
 
+set timeout
+set timeoutlen=200
 set ttimeout
 set ttimeoutlen=50
 set display=truncate
@@ -61,3 +65,5 @@ set guioptions=
 set guifont=FontAwesome
 
 set mouse=a
+
+set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll
