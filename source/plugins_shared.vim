@@ -1,16 +1,3 @@
-Plug 'tpope/vim-commentary' " For Commenting gcc & gc
-Plug 'rust-lang/rust.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'aperezdc/vim-template'
-Plug 'godlygeek/tabular'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'ryanoasis/vim-devicons'
-
 "===========================================================
 "======================= coc configs =======================
 "===========================================================

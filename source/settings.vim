@@ -22,8 +22,6 @@ set hlsearch
 set nrformats-=octal
 set title
 set ruler
-set wildmenu
-set wildoptions=pum
 set showmode
 set showcmd
 set splitbelow
@@ -48,7 +46,7 @@ set novisualbell
 set belloff=all
 set hidden
 set updatetime=300
-set shortmess+=c
+set shortmess=a
 set signcolumn=yes
 set relativenumber
 
@@ -66,4 +64,6 @@ set guifont=FontAwesome
 
 set mouse=a
 
+set wildmenu
+set wildoptions=pum
 set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll
