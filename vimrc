@@ -21,7 +21,6 @@ if has("win64") || has("win32")
   endif
 endif
 
-
 if has("unix")
   set ff=unix
 
@@ -54,17 +53,21 @@ if !isdirectory(g:VIMUNDODIR)
     call mkdir(g:VIMUNDODIR, "p")
 endif
 
-
 " load local stuff
 let g:PLUGINDIR = $VIMHOME . g:SLASH . 'source'
 
-silent execute 'source' g:PLUGINDIR . g:SLASH . 'settings.vim'
-silent execute 'source' g:PLUGINDIR . g:SLASH . 'mappings.vim'
-silent execute 'source' g:PLUGINDIR . g:SLASH . 'augroups.vim'
-silent execute 'source' g:PLUGINDIR . g:SLASH . 'sessions.vim'
+call plug#begin(g:PLUGGEDDIR)
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins_shared.vim'
 
 if has("nvim")
   silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins_nvim.vim'
 else
   silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins.vim'
 endif
+call plug#end()
+
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'augroups.vim'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'sessions.vim'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'functions.vim'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'settings.vim'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'mappings.vim'
