@@ -62,38 +62,10 @@ silent execute 'source' g:PLUGINDIR . g:SLASH . 'functions.vim'
 silent execute 'source' g:PLUGINDIR . g:SLASH . 'settings.vim'
 silent execute 'source' g:PLUGINDIR . g:SLASH . 'mappings.vim'
 
-call plug#begin(g:PLUGGEDDIR)
-Plug 'tpope/vim-commentary' " For Commenting gcc & gc
-Plug 'rust-lang/rust.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'aperezdc/vim-template'
-Plug 'godlygeek/tabular'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'ryanoasis/vim-devicons'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins.vim'
+silent execute 'source' g:PLUGINDIR . g:SLASH . 'configs_shared.vim'
 if has("nvim")
-  Plug 'norcalli/nvim-colorizer.lua'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'petertriho/nvim-scrollbar'
-  Plug 'gpanders/editorconfig.nvim'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'sindrets/diffview.nvim'
-  Plug 'kyazdani42/nvim-web-devicons'
-  Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-  Plug 'nvim-lualine/lualine.nvim'
+  silent execute 'source' g:PLUGINDIR . g:SLASH . 'configs.lua'
 else
-  Plug 'itchyny/lightline.vim'
-  Plug 'sheerun/vim-polyglot'
-endif
-call plug#end()
-
-silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins_shared.vim'
-if has("nvim")
-  silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins_nvim.vim'
-else
-  silent execute 'source' g:PLUGINDIR . g:SLASH . 'plugins.vim'
+  silent execute 'source' g:PLUGINDIR . g:SLASH . 'configs.vim'
 endif

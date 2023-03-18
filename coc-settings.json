@@ -74,5 +74,8 @@
   "python.formatting.provider": "black",
 
   // powershell
-  "powershell.integratedConsole.showOnStartup": false
+  "powershell.integratedConsole.showOnStartup": false,
+
+  // elixir
+  "elixir.pathToElixirLS": "~/.elixi-ls"
 }
