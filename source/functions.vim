@@ -46,3 +46,19 @@ function! WindowMoveRight()
   let [win1, buf1, win2, buf2] = GetWindowAndAdjacent('l')
   call SwapWindowBuffers(win1, buf1, win2, buf2)
 endfunction
+
+function! TabMoveLeft()
+  if tabpagenr() == 1
+    execute 'tabm $'
+  else
+    execute 'tabm -1'
+  endif
+endfunction
+
+function! TabMoveRight()
+  if tabpagenr() == tabpagenr('$')
+    execute 'tabm 0'
+  else
+    execute 'tabm +1'
+  endif
+endfunction

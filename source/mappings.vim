@@ -48,9 +48,9 @@ nnoremap <silent> <A-A> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
 
 if has("nvim")
-  nnoremap <silent> <C-t> :term<CR>
+  nnoremap <silent> <C-t> :term<CR>i
 else
-  nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>
+  nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>i
 endif
 
 " tabs
@@ -58,6 +58,8 @@ nnoremap <silent> <C-k> :tabnext<CR>
 nnoremap <silent> <C-j> :tabprevious<CR>
 nnoremap <silent> <A-t> :tabedit %<CR>
 nnoremap <silent> <A-w> :conf tabclose<CR>
+nnoremap <silent> <A->> :call TabMoveRight()<CR>
+nnoremap <silent> <A-<> :call TabMoveLeft()<CR>
 
 " splits management
 tnoremap <silent> <C-q> <C-\><C-n>:conf q<CR> 
