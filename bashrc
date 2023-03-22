@@ -137,4 +137,6 @@ if [ -d ~/.asdf ]; then
   . "$HOME/.asdf/completions/asdf.bash"
 fi
 
-PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
+if [ -x wslpath ]; then
+  PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
+fi
