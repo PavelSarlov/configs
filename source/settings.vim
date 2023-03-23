@@ -28,6 +28,7 @@ set splitbelow
 set splitright
 set wrap
 set number
+set cursorline
 set clipboard+=unnamed,unnamedplus
 
 set laststatus=2
