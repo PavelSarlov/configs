@@ -58,8 +58,8 @@ nnoremap <silent> <C-k> :tabnext<CR>
 nnoremap <silent> <C-j> :tabprevious<CR>
 nnoremap <silent> <A-t> :tabedit %<CR>
 nnoremap <silent> <A-w> :conf tabclose<CR>
-nnoremap <silent> <A->> :call TabMoveRight()<CR>
-nnoremap <silent> <A-<> :call TabMoveLeft()<CR>
+nnoremap <silent> <A->> :call tabs#TabMoveRight()<CR>
+nnoremap <silent> <A-<> :call tabs#TabMoveLeft()<CR>
 
 " splits management
 tnoremap <silent> <C-q> <C-\><C-n>:conf q<CR> 
@@ -74,14 +74,14 @@ nnoremap <silent> <A-h> <C-w>h
 nnoremap <silent> <A-j> <C-w>j
 nnoremap <silent> <A-k> <C-w>k
 nnoremap <silent> <A-l> <C-w>l
-nnoremap <silent> <A-d> :call WindowDelete()<CR>
-nnoremap <silent> <A-y> :call WindowYank()<CR>
-nnoremap <silent> <A-p> :call WindowPaste('rightbelow')<CR>
-nnoremap <silent> <A-P> :call WindowPaste('leftabove')<CR>
-nnoremap <silent> <A-H> :call WindowMoveLeft()<CR> 
-nnoremap <silent> <A-J> :call WindowMoveDown()<CR>  
-nnoremap <silent> <A-K> :call WindowMoveUp()<CR>  
-nnoremap <silent> <A-L> :call WindowMoveRight()<CR>   
+nnoremap <silent> <A-d> :call windows#WindowDelete()<CR>
+nnoremap <silent> <A-y> :call windows#WindowYank()<CR>
+nnoremap <silent> <A-p> :call windows#WindowPaste('rightbelow')<CR>
+nnoremap <silent> <A-P> :call windows#WindowPaste('leftabove')<CR>
+nnoremap <silent> <A-H> :call windows#WindowMoveLeft()<CR> 
+nnoremap <silent> <A-J> :call windows#WindowMoveDown()<CR>  
+nnoremap <silent> <A-K> :call windows#WindowMoveUp()<CR>  
+nnoremap <silent> <A-L> :call windows#WindowMoveRight()<CR>   
 nnoremap <silent> <A-=> <C-w>+
 nnoremap <silent> <A--> <C-w>-
 nnoremap <silent> <A-r> <C-w>r

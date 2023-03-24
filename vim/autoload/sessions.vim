@@ -1,8 +1,6 @@
-set sessionoptions=curdir,help,tabpages
-
 let g:SESSIONPATH = $VIMHOME . g:SLASH . 'sessions' 
 
-function! MakeSession()
+function! sessions#MakeSession()
   let s:SESSIONPATH = g:SESSIONPATH . g:SLASH . sha256(getcwd()) . '.vim'
   if (filewritable(g:SESSIONPATH) != 2)
     call system('mkdir -p ' . g:SESSIONPATH)
@@ -11,7 +9,7 @@ function! MakeSession()
   exe "mksession! " . s:SESSIONPATH
 endfunction
 
-function! LoadSession()
+function! sessions#LoadSession()
   let s:SESSIONPATH = g:SESSIONPATH . g:SLASH . sha256(getcwd()) . '.vim'
   if (filereadable(s:SESSIONPATH))
     exe 'source ' s:SESSIONPATH
@@ -19,9 +17,3 @@ function! LoadSession()
     echo "No session loaded."
   endif
 endfunction
-
-" Adding automatons for when entering or leaving Vim
-if(argc() == 0)
-    au VimEnter * nested :call LoadSession()
-endif
-au VimLeave * :call MakeSession()
