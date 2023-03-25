@@ -1,5 +1,9 @@
 let g:SESSIONPATH = $VIMHOME . g:SLASH . 'sessions' 
 
+if !isdirectory(g:SESSIONPATH)
+    call mkdir(g:SESSIONPATH, "p")
+endif
+
 function! sessions#MakeSession()
   let s:SESSIONPATH = g:SESSIONPATH . g:SLASH . sha256(getcwd()) . '.vim'
   if (filewritable(g:SESSIONPATH) != 2)
