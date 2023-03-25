@@ -11,7 +11,7 @@ endif
 nnoremap / /\v
 
 " source current
-nnoremap <silent> ! :silent source %<CR>
+nnoremap <silent> ! :silent source $MYVIMRC<CR>
 
 nnoremap <silent> Y y$
 
@@ -95,3 +95,6 @@ xnoremap <silent> <A-N> :move'> +1<CR>gv
 xnoremap <silent> <A-M> :move -2<CR>gv
 nnoremap <silent> <A-N> :move +1<CR>
 nnoremap <silent> <A-M> :move -2<CR>
+
+xnoremap <silent> R :call helpers#ReverseSelection()<CR>
+
