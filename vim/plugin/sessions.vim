@@ -4,4 +4,4 @@ set sessionoptions=curdir,help,tabpages
 if(argc() == 0)
     au VimEnter * nested :call sessions#LoadSession()
 endif
-au VimLeave * :call sessions#MakeSessions()
+au VimLeave * :call sessions#MakeSession()
