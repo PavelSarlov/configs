@@ -128,6 +128,6 @@ if [ -d ~/.asdf ]; then
   . "$HOME/.asdf/completions/asdf.bash"
 fi
 
-if [ -x wslpath ]; then
+if $(which wslpath &>/dev/null); then
   PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 fi
