@@ -48,9 +48,9 @@ nnoremap <silent> <A-A> :nohl \| redraw!<CR>
 nnoremap <silent> <C-a> ggVG
 
 if has("nvim")
-  nnoremap <silent> <C-t> :term<CR>i
+  nnoremap <silent> <C-t> :term<CR>
 else
-  nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>i
+  nnoremap <silent> <C-t> :term ++curwin ++norestore ++kill=term<CR>
 endif
 
 " tabs
