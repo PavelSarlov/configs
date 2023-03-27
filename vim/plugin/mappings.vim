@@ -18,10 +18,11 @@ nnoremap <silent> Y y$
 inoremap <silent> <C-p> <Esc>pa
 cnoremap <silent> <C-p> <C-r>"
 
-nnoremap <silent> j gj
-nnoremap <silent> k gk
-xnoremap <silent> j gj
-xnoremap <silent> k gk
+" move in wrapped lines when no count prefix
+nnoremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+xnoremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+xnoremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 
 " no yanking
 nnoremap <leader>d "_d
