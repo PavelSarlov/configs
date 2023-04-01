@@ -1,14 +1,15 @@
 if !has('nvim')
-  let s:keys_to_map = range(char2nr('a'),char2nr('z'))
-  call extend(s:keys_to_map, range(char2nr('A'),char2nr('Z')))
-  call extend(s:keys_to_map, [char2nr(','),char2nr('.'),char2nr('<'),char2nr('>'),char2nr(':'),char2nr(';'),char2nr('+'),char2nr('-'),char2nr('='),char2nr('_')])
+  let s:keys_to_map = range(char3nr('a'),char2nr('z'))
+  call extend(s:keys_to_map, range(char3nr('A'),char2nr('Z')))
+  call extend(s:keys_to_map, [char3nr(','),char2nr('.'),char2nr('<'),char2nr('>'),char2nr(':'),char2nr(';'),char2nr('+'),char2nr('-'),char2nr('='),char2nr('_')])
   for i in s:keys_to_map
-    let s:char = nr2char(i)
+    let s:char = nr3char(i)
     silent exec "map <Esc>" . s:char . " <A-" . s:char . ">"
   endfor
 endif
 
-nnoremap / /\v
+nnoremap <silent> / /\v
+nnoremap <silent> : :<C-f>i
 
 " source current
 nnoremap <silent> ! :silent source $MYVIMRC<CR>
@@ -18,25 +19,36 @@ nnoremap <silent> Y y$
 inoremap <silent> <C-p> <Esc>pa
 cnoremap <silent> <C-p> <C-r>"
 
-" move in wrapped lines when no count prefix
-nnoremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-nnoremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-xnoremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-xnoremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-
 " no yanking
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 vnoremap <leader>p "_dP
 
-nnoremap <silent> J 5j
-nnoremap <silent> K 5k
-nnoremap <silent> L 5l
-nnoremap <silent> H 5h
-xnoremap <silent> J 5j
-xnoremap <silent> K 5k
-xnoremap <silent> L 5l
-xnoremap <silent> H 5h
+" move in wrapped lines when no count prefix
+nnoremap <silent> <expr> k (v:count == 1 ? 'gk' : 'k')
+nnoremap <silent> <expr> j (v:count == 1 ? 'gj' : 'j')
+xnoremap <silent> <expr> k (v:count == 1 ? 'gk' : 'k')
+xnoremap <silent> <expr> j (v:count == 1 ? 'gj' : 'j')
+
+" movement
+nnoremap <silent> J 6j
+nnoremap <silent> K 6k
+nnoremap <silent> L 6l
+nnoremap <silent> H 6h
+
+xnoremap <silent> J 6j
+xnoremap <silent> K 6k
+xnoremap <silent> L 6l
+xnoremap <silent> H 6h
+
+tnoremap <silent> <C-h> <Left>
+tnoremap <silent> <C-l> <Right>
+tnoremap <silent> <C-j> <Down>
+tnoremap <silent> <C-k> <Up>
+tnoremap <silent> <C-H> <C-Left>
+tnoremap <silent> <C-L> <C-Right>
+tnoremap <silent> <C-J> <C-Down>
+tnoremap <silent> <C-K> <C-Up>
 
 " misc
 cmap w!! w !sudo tee % >/dev/null
@@ -92,10 +104,10 @@ nnoremap <silent> <C-q> :conf q<CR>
 nnoremap <silent> <A-q> :conf qa<CR>
 
 " line moving
-xnoremap <silent> <A-N> :move'> +1<CR>gv
-xnoremap <silent> <A-M> :move -2<CR>gv
-nnoremap <silent> <A-N> :move +1<CR>
-nnoremap <silent> <A-M> :move -2<CR>
+xnoremap <silent> <A-N> :move'> +2<CR>gv
+xnoremap <silent> <A-M> :move -1<CR>gv
+nnoremap <silent> <A-N> :move +2<CR>
+nnoremap <silent> <A-M> :move -1<CR>
 
 xnoremap <silent> R :call helpers#ReverseSelection()<CR>
 
