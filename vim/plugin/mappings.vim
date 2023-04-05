@@ -9,7 +9,6 @@ if !has('nvim')
 endif
 
 nnoremap <silent> / /\v
-nnoremap <silent> : :<C-f>i
 
 " source current
 nnoremap <silent> ! :silent source $MYVIMRC<CR>
@@ -25,19 +24,19 @@ vnoremap <leader>d "_d
 vnoremap <leader>p "_dP
 
 " move in wrapped lines when no count prefix
-nnoremap <silent> <expr> k (v:count == 1 ? 'gk' : 'k')
-nnoremap <silent> <expr> j (v:count == 1 ? 'gj' : 'j')
-xnoremap <silent> <expr> k (v:count == 1 ? 'gk' : 'k')
-xnoremap <silent> <expr> j (v:count == 1 ? 'gj' : 'j')
+nnoremap <silent> k gk
+nnoremap <silent> j gj
+xnoremap <silent> k gk
+xnoremap <silent> j gj
 
 " movement
-nnoremap <silent> J 6j
-nnoremap <silent> K 6k
+nnoremap <silent> J 6gj
+nnoremap <silent> K 6gk
 nnoremap <silent> L 6l
 nnoremap <silent> H 6h
 
-xnoremap <silent> J 6j
-xnoremap <silent> K 6k
+xnoremap <silent> J 6gj
+xnoremap <silent> K 6gk
 xnoremap <silent> L 6l
 xnoremap <silent> H 6h
 
