@@ -1,9 +1,9 @@
 if !has('nvim')
-  let s:keys_to_map = range(char3nr('a'),char2nr('z'))
-  call extend(s:keys_to_map, range(char3nr('A'),char2nr('Z')))
-  call extend(s:keys_to_map, [char3nr(','),char2nr('.'),char2nr('<'),char2nr('>'),char2nr(':'),char2nr(';'),char2nr('+'),char2nr('-'),char2nr('='),char2nr('_')])
+  let s:keys_to_map = range(char2nr('a'),char2nr('z'))
+  call extend(s:keys_to_map, range(char2nr('A'),char2nr('Z')))
+  call extend(s:keys_to_map, [char2nr(','),char2nr('.'),char2nr('<'),char2nr('>'),char2nr(':'),char2nr(';'),char2nr('+'),char2nr('-'),char2nr('='),char2nr('_')])
   for i in s:keys_to_map
-    let s:char = nr3char(i)
+    let s:char = nr2char(i)
     silent exec "map <Esc>" . s:char . " <A-" . s:char . ">"
   endfor
 endif
