@@ -103,10 +103,10 @@ nnoremap <silent> <C-q> :conf q<CR>
 nnoremap <silent> <A-q> :conf qa<CR>
 
 " line moving
-xnoremap <silent> <A-N> :move'> +2<CR>gv
-xnoremap <silent> <A-M> :move -1<CR>gv
-nnoremap <silent> <A-N> :move +2<CR>
-nnoremap <silent> <A-M> :move -1<CR>
+xnoremap <silent> <A-N> :move'> +1<CR>gv
+xnoremap <silent> <A-M> :move -2<CR>gv
+nnoremap <silent> <A-N> :move +1<CR>
+nnoremap <silent> <A-M> :move -2<CR>
 
 xnoremap <silent> R :call helpers#ReverseSelection()<CR>
 
