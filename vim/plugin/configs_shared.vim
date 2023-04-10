@@ -186,9 +186,6 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" Search files
-nnoremap <silent><nowait> <A-S> :CocSearch --ignore-case 
-
 
 "===========================================================
 "======================= templates =========================
@@ -198,14 +195,23 @@ let g:templates_directory=[$VIMHOME . g:SLASH . "templates"]
 
 
 "==============================================================
-"======================= ctrlp ================================
+"======================= fzf-vim ==============================
 "==============================================================
 
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v((\.(git|hg|svn))|node_modules|DS_Store|target|dist|obj|build)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+
+nnoremap <silent><nowait> <C-p> :Files<CR>
+nnoremap <silent><nowait> <C-g> :GFiles<CR>
+nnoremap <silent><nowait> <C-l> :Buffers<CR>
+nnoremap <silent><nowait> <A-S> :Rg<CR>
+
+let g:fzf_layout = { 'down': '30%' }
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
+
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'  }
 
 
 "==============================================================
@@ -238,3 +244,10 @@ nnoremap <silent>cu :diffupdate<CR>
 "==============================================================
 
 let g:AutoPairsShortcutToggle = ''
+
+
+"==============================================================
+"======================= context ==============================
+"==============================================================
+
+let g:context_add_mappings = 0

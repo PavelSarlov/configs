@@ -62,6 +62,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 
+Plug 'wellle/context.vim'
+
 Plug 'rust-lang/rust.vim'
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -79,7 +81,8 @@ Plug 'OmniSharp/omnisharp-vim'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
