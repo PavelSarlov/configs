@@ -198,9 +198,20 @@ let g:templates_directory=[$VIMHOME . g:SLASH . "templates"]
 "======================= fzf-vim ==============================
 "==============================================================
 
+function! s:find_git_root()
+  let pwd = getcwd()
+  let dir = &ft ==# "netrw" ? expand('%') : expand('%:p:h')
+  exe 'cd' dir
+  let output = system('git rev-parse --show-toplevel')[:-2]
+  exe 'cd' pwd 
+  return v:shell_error || empty(output) ? '.' : output
+endfunction
+
+command! ProjectFiles execute 'Files' s:find_git_root()
+
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
-nnoremap <silent><nowait> <C-p> :Files<CR>
+nnoremap <silent><nowait> <C-p> :ProjectFiles<CR>
 nnoremap <silent><nowait> <C-g> :GFiles<CR>
 nnoremap <silent><nowait> <C-l> :Buffers<CR>
 nnoremap <silent><nowait> <A-S> :Rg<CR>
