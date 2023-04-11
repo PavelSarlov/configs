@@ -200,7 +200,7 @@ let g:templates_directory=[$VIMHOME . g:SLASH . "templates"]
 
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
-nnoremap <silent><nowait> <C-p> :exe 'Files ' . expand('%:h')<CR>
+nnoremap <silent><nowait> <C-p> :Files<CR>
 nnoremap <silent><nowait> <C-g> :GFiles<CR>
 nnoremap <silent><nowait> <C-l> :Buffers<CR>
 nnoremap <silent><nowait> <A-S> :Rg<CR>
