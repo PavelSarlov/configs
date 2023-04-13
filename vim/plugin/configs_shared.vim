@@ -209,7 +209,7 @@ endfunction
 
 command! ProjectFiles execute 'Files' s:find_git_root()
 
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+let $FZF_DEFAULT_COMMAND = (executable('fdfind') ? 'fdfind' : 'fd') . ' -HI -E ".git" -E ".hg" -E ".svn" -E "node_modules" -E "DS_Store" -E "target" -E "dist" -E "obj" -E "build"'
 
 nnoremap <silent><nowait> <C-p> :ProjectFiles<CR>
 nnoremap <silent><nowait> <C-g> :GFiles<CR>
