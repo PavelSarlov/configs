@@ -198,16 +198,7 @@ let g:templates_directory=[$VIMHOME . g:SLASH . "templates"]
 "======================= fzf-vim ==============================
 "==============================================================
 
-function! s:find_git_root()
-  let pwd = getcwd()
-  let dir = &ft ==# "netrw" ? expand('%') : expand('%:p:h')
-  exe 'cd' dir
-  let output = system('git rev-parse --show-toplevel')[:-2]
-  exe 'cd' pwd 
-  return v:shell_error || empty(output) ? '.' : output
-endfunction
-
-command! ProjectFiles execute 'Files' s:find_git_root()
+command! ProjectFiles execute 'Files' helpers#FindGitRoot()
 
 let $FZF_DEFAULT_COMMAND = (executable('fdfind') ? 'fdfind' : 'fd') . ' -HI -E ".git" -E ".hg" -E ".svn" -E "node_modules" -E "DS_Store" -E "target" -E "dist" -E "obj" -E "build"'
 
@@ -229,23 +220,10 @@ let g:fzf_action = {
 "======================= fugitive =============================
 "==============================================================
 
-function! GacceptBoth()
-  let lastTheirs = search('>\{7\}','bWn')
-  let ours = search('<\{7\}', 'b', lastTheirs ? lastTheirs : 1)
-
-  if (!ours)
-    return
-  endif
-
-  let theirs = search('>\{7\}', 'W')
-
-  execute ours . ',' theirs . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
-endfunction
-
 nnoremap <silent>cm :tabedit % \| Gvdiffsplit!<CR>
 nnoremap <silent>co :diffget //2<CR>
 nnoremap <silent>ct :diffget //3<CR>
-nnoremap <silent>cb :call GacceptBoth()<CR>
+nnoremap <silent>cb :call helpers#GacceptBoth()<CR>
 nnoremap <silent>cs :only<CR>
 nnoremap <silent>cu :diffupdate<CR>
 
