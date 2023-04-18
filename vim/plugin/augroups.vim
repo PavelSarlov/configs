@@ -12,7 +12,11 @@ augroup END
 
 augroup file_save
   au!
-  silent au BufWritePre * silent! %s/\r//
+  au BufWritePre * silent! %s/\r//
 augroup END
 
+augroup terminal_enter
+  au!
+  au TermOpen * set ft=terminal
+augroup END
 
