@@ -9,3 +9,10 @@ augroup file_change
   au FileChangedRO    * echohl WarningMsg | echo "File changed RO." | echohl None
   au FileChangedShell * echohl WarningMsg | echo "File "%" changed" | echohl None
 augroup END
+
+augroup file_save
+  au!
+  silent au BufWritePre * silent! %s/\r//
+augroup END
+
+
