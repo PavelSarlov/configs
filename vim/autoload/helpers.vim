@@ -19,7 +19,7 @@ endfunction
 
 function! helpers#FindGitRoot()
   let pwd = getcwd()
-  let dir = empty(&ft) ? '.' : &ft ==# "netrw" ? expand('%') : expand('%:p:h:h:h')
+  let dir = empty(&ft) || &ft ==# 'terminal' ? '.' : &ft ==# "netrw" ? expand('%') : expand('%:p:h')
   exe 'cd' dir
   let output = system('git rev-parse --show-toplevel')[:-2]
   exe 'cd' pwd 
