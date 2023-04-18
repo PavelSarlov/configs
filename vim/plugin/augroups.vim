@@ -12,7 +12,7 @@ augroup END
 
 augroup file_save
   au!
-  au BufWritePre * silent! %s/\r//
+  au BufWritePre * call helpers#RemoveCarriageReturn()
 augroup END
 
 augroup terminal_enter

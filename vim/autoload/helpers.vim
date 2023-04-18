@@ -39,3 +39,9 @@ function! helpers#GacceptBoth()
 
   execute ours . ',' theirs . ' g/^<\{7}\|^|\{7}\|^=\{7}\|^>\{7}/d'
 endfunction
+
+function! helpers#RemoveCarriageReturn()
+  let pos = getpos(".")
+  silent! %s/\r// 
+  call setpos(".", pos)
+endfunction
