@@ -53,7 +53,6 @@ tnoremap <silent> <C-K> <C-Up>
 cmap w!! w !sudo tee % >/dev/null
 tnoremap <silent><expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<C-\><C-N>"
 nnoremap <silent> <C-s> :w!<CR>
-nnoremap <silent> <C-f> /
 nnoremap <silent> <A-a> <C-a>
 nnoremap <silent> <A-x> <C-x>
 nnoremap <silent> <A-A> :nohl \| redraw!<CR>
