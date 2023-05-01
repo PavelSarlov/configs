@@ -1,4 +1,6 @@
 {
+  "diagnostic.checkCurrentLine": true,
+
   // java
   "codeLens.enable": true,
   "java.referencesCodeLens.enabled": true,
