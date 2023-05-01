@@ -17,6 +17,10 @@ augroup END
 
 augroup terminal_enter
   au!
-  au TermOpen * set ft=terminal
+  if has("nvim")
+    au TermOpen * set ft=terminal
+  else
+    au TerminalOpen * set ft=terminal
+  endif
 augroup END
 
