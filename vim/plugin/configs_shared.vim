@@ -163,6 +163,10 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 nnoremap <silent> <A-o> :OR<CR>
 
+" Disable diagnostics for current buffer
+command! -nargs=0 DiagnosticToggle   :call     CocActionAsync('diagnosticToggle')
+nnoremap <silent> td :DiagnosticToggle<CR>
+
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
