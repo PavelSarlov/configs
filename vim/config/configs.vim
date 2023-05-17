@@ -10,12 +10,18 @@ colorscheme catppuccin_macchiato
 " ==============================================================
 
 let g:lightline = {
-      \ 'colorscheme': 'catppuccin',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-\ }
+                  \ 'colorscheme': 'catppuccin_macchiato',
+                  \ 'active': {
+                  \   'left': [ [ 'mode', 'paste' ],
+                  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+                  \ },
+                  \ 'component_function': {
+                  \   'gitbranch': 'FugitiveHead'
+                  \ },
+                  \ }
+
+" ==============================================================
+" ======================= scrollbar ============================
+" ==============================================================
+
+let g:scrollbar_enable = 1

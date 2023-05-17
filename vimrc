@@ -97,6 +97,7 @@ if has("nvim")
   Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
   Plug 'nvim-tree/nvim-web-devicons'
 else
+  Plug 'PavelSarlov/scrollbar.vim'
   Plug 'sheerun/vim-polyglot'
 
   Plug 'itchyny/lightline.vim'
