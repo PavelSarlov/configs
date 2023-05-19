@@ -9,6 +9,8 @@ if has("win64") || has("win32")
   set shellcmdflag=-command
   set shellquote=\"
   set shellxquote=
+
+  let $VIMHOME = $HOME . g:SLASH . 'vimfiles'
 endif
 
 if has("unix")
@@ -24,9 +26,10 @@ if has("unix")
       autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
     augroup END
   endif
+
+  let $VIMHOME = $HOME . g:SLASH . '.vim'
 endif
 
-let $VIMHOME = $HOME . g:SLASH . '.vim'
 let s:after = $VIMHOME . g:SLASH . 'after' 
 set runtimepath^=$VIMHOME runtimepath+=s:after 
 let &packpath=&runtimepath
