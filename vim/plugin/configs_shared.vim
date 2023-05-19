@@ -231,7 +231,6 @@ nnoremap <silent>cb :call helpers#GacceptBoth()<CR>
 nnoremap <silent>cs :only<CR>
 nnoremap <silent>cu :diffupdate<CR>
 
-
 "==============================================================
 "======================= auto-pairs ===========================
 "==============================================================

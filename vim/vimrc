@@ -6,19 +6,9 @@ if has("win64") || has("win32")
 
   set shell=powershell
 
-  if executable('pwsh')
-    set shell=pwsh
-  endif
-
   set shellcmdflag=-command
   set shellquote=\"
   set shellxquote=
-
-  if has("nvim")
-    let $VIMHOME = $HOME . g:SLASH . 'AppData' . g:SLASH . 'Local' . g:SLASH . 'nvim'
-  else
-    let $VIMHOME = $HOME . g:SLASH . 'vimfiles'
-  endif
 endif
 
 if has("unix")
@@ -34,16 +24,15 @@ if has("unix")
       autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
     augroup END
   endif
-
-  if has("nvim")
-    let $VIMHOME = $HOME . g:SLASH . '.config' . g:SLASH . 'nvim'
-  else
-    let $VIMHOME = $HOME . g:SLASH . '.vim'
-  endif
 endif
 
+let $VIMHOME = $HOME . g:SLASH . '.vim'
+let s:after = $VIMHOME . g:SLASH . 'after' 
+set runtimepath^=$VIMHOME runtimepath+=s:after 
+let &packpath=&runtimepath
+
 let g:PLUGGEDDIR = $VIMHOME . g:SLASH . 'plugged'
-let g:VIMUNDODIR = $VIMHOME . g:SLASH . 'vimundo'
+let g:VIMUNDODIR = $VIMHOME . g:SLASH . 'vimundo' . (has('nvim') ? 'nvim' : 'vim')
 
 if !isdirectory($VIMHOME)
     call mkdir($VIMHOME, "p")
@@ -52,9 +41,6 @@ endif
 if !isdirectory(g:VIMUNDODIR)
     call mkdir(g:VIMUNDODIR, "p")
 endif
-
-" load configs
-let g:CONFIGDIR = $VIMHOME . g:SLASH . 'config'
 
 call plug#begin(g:PLUGGEDDIR)
 
@@ -94,27 +80,26 @@ if has("nvim")
   Plug 'sindrets/diffview.nvim'
 
   Plug 'nvim-lualine/lualine.nvim'
-  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin.nvim' }
   Plug 'nvim-tree/nvim-web-devicons'
 else
   Plug 'PavelSarlov/scrollbar.vim'
   Plug 'sheerun/vim-polyglot'
 
   Plug 'itchyny/lightline.vim'
-  Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+  Plug 'catppuccin/vim', { 'as': 'catppuccin.vim' }
   Plug 'ryanoasis/vim-devicons'
 endif
 
 call plug#end()
 
-function! s:SourcePlugins(dir)
+" load configs
+let g:CONFIGDIR = $VIMHOME . g:SLASH . 'config'
+
+function! s:SourceConfig(dir)
   for path in split(glob(a:dir), "\n")
     silent exe 'source ' . path
   endfor
 endfunction
 
-if has("nvim")
-  call s:SourcePlugins(g:CONFIGDIR . g:SLASH . '*.lua')
-else
-  call s:SourcePlugins(g:CONFIGDIR . g:SLASH . '*.vim')
-endif
+call s:SourceConfig(g:CONFIGDIR . g:SLASH . (has('nvim') ? '*.lua' : '*.vim'))
