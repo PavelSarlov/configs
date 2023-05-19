@@ -35,7 +35,7 @@ set runtimepath^=$VIMHOME runtimepath+=s:after
 let &packpath=&runtimepath
 
 let g:PLUGGEDDIR = $VIMHOME . g:SLASH . 'plugged'
-let g:VIMUNDODIR = $VIMHOME . g:SLASH . 'vimundo' . (has('nvim') ? 'nvim' : 'vim')
+let g:VIMUNDODIR = $VIMHOME . g:SLASH . 'vimundo' . g:SLASH . (has('nvim') ? 'nvim' : 'vim')
 
 if !isdirectory($VIMHOME)
     call mkdir($VIMHOME, "p")
