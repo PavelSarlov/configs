@@ -1,12 +1,22 @@
+let latin_alphabet = map(extend(range(char2nr('a'),char2nr('z')), range(char2nr('A'),char2nr('Z'))), { i, v -> nr2char(v) })
+let cyrillic_alphabet = split('абцдефгхийклмнопярстужвьъзАБЦДЕФГХИЙКЛМНОПЯРСТУЖВЬЪЗ', '\zs')
+
+for i in range(0, len(latin_alphabet) - 1)
+  let latin = get(latin_alphabet, i)
+  let cyrillic = get(cyrillic_alphabet, i)
+  silent exec "map " . cyrillic . " " . latin
+  silent exec "map " . cyrillic . " <A-" . latin . ">"
+endfor
+
 if !has('nvim')
-  let s:keys_to_map = range(char2nr('a'),char2nr('z'))
-  call extend(s:keys_to_map, range(char2nr('A'),char2nr('Z')))
-  call extend(s:keys_to_map, [char2nr(','),char2nr('.'),char2nr('<'),char2nr('>'),char2nr(':'),char2nr(';'),char2nr('+'),char2nr('-'),char2nr('='),char2nr('_')])
-  for i in s:keys_to_map
-    let s:char = nr2char(i)
-    silent exec "map <Esc>" . s:char . " <A-" . s:char . ">"
+  let chars = latin_alphabet
+  call extend(chars, split(',.<>:;+-=_', '\zs'))
+  call extend(chars, cyrillic_alphabet)
+  for char in chars
+    silent exec "map <Esc>" . char . " <A-" . char . ">"
   endfor
 endif
+
 
 nnoremap <silent> / /\v
 
