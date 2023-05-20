@@ -5,7 +5,7 @@ for i in range(0, len(latin_alphabet) - 1)
   let latin = get(latin_alphabet, i)
   let cyrillic = get(cyrillic_alphabet, i)
   silent exec "map " . cyrillic . " " . latin
-  silent exec "map " . cyrillic . " <A-" . latin . ">"
+  silent exec "map <Esc>" . cyrillic . " <A-" . latin . ">"
 endfor
 
 if !has('nvim')
