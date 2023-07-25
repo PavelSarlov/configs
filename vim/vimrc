@@ -73,9 +73,9 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-if has("nvim")
-  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'sheerun/vim-polyglot'
 
+if has("nvim")
   Plug 'norcalli/nvim-colorizer.lua'
   Plug 'petertriho/nvim-scrollbar'
   Plug 'gpanders/editorconfig.nvim'
@@ -88,7 +88,6 @@ if has("nvim")
 else
   Plug 'RRethy/vim-hexokinase'
   Plug 'PavelSarlov/scrollbar.vim'
-  Plug 'sheerun/vim-polyglot'
 
   Plug 'itchyny/lightline.vim'
   Plug 'catppuccin/vim', { 'as': 'catppuccin.vim' }
