@@ -85,6 +85,8 @@ if has("nvim")
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'catppuccin/nvim', { 'as': 'catppuccin.nvim' }
   Plug 'nvim-tree/nvim-web-devicons'
+
+  Plug 'glacambre/firenvim', { 'do': { -> firenvim#install(0) } }
 else
   Plug 'RRethy/vim-hexokinase'
   Plug 'PavelSarlov/scrollbar.vim'
