@@ -7,40 +7,40 @@ let g:coc_data_home = $VIMHOME . g:SLASH . "coc"
 let g:coc_config_home = $VIMHOME
 
 let g:coc_global_extensions = [
-  \ 'coc-db',
-  \ 'coc-omnisharp',
-  \ 'coc-powershell',
-  \ 'coc-cmake',
-  \ 'coc-emmet',
-  \ 'coc-highlight',
-  \ 'coc-sh',
-  \ 'coc-vimlsp',
-  \ 'coc-syntax',
-  \ 'coc-diagnostic',
-  \ 'coc-explorer',
-  \ 'coc-gitignore',
-  \ 'coc-css',
-  \ 'coc-html',
-  \ 'coc-json',
-  \ 'coc-lists',
-  \ 'coc-prettier',
-  \ 'coc-pyright',
-  \ 'coc-snippets',
-  \ 'coc-sourcekit',
-  \ 'coc-stylelint',
-  \ 'coc-xml',
-  \ 'coc-rls',
-  \ 'coc-java',
-  \ 'coc-java-lombok',
-  \ 'coc-phpls',
-  \ 'coc-tslint-plugin',
-  \ 'coc-tsserver',
-  \ 'coc-yaml',
-  \ 'coc-lua',
-  \ 'coc-webview',
-  \ 'coc-markdown-preview-enhanced',
-  \ 'coc-elixir',
-  \ 'coc-yank']
+      \ 'coc-db',
+      \ 'coc-omnisharp',
+      \ 'coc-powershell',
+      \ 'coc-cmake',
+      \ 'coc-emmet',
+      \ 'coc-highlight',
+      \ 'coc-sh',
+      \ 'coc-vimlsp',
+      \ 'coc-syntax',
+      \ 'coc-diagnostic',
+      \ 'coc-explorer',
+      \ 'coc-gitignore',
+      \ 'coc-css',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-lists',
+      \ 'coc-prettier',
+      \ 'coc-pyright',
+      \ 'coc-snippets',
+      \ 'coc-sourcekit',
+      \ 'coc-stylelint',
+      \ 'coc-xml',
+      \ 'coc-rls',
+      \ 'coc-java',
+      \ 'coc-java-lombok',
+      \ 'coc-phpls',
+      \ 'coc-tslint-plugin',
+      \ 'coc-tsserver',
+      \ 'coc-yaml',
+      \ 'coc-lua',
+      \ 'coc-webview',
+      \ 'coc-markdown-preview-enhanced',
+      \ 'coc-elixir',
+      \ 'coc-yank']
 
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -57,7 +57,7 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -152,8 +152,18 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
+function configs_shared#Format()
+  if CocHasProvider('format')
+    call CocActionAsync('format')
+  else
+    let v = winsaveview()
+    norm! gg=G
+    call winrestview(v)
+  endif
+endfunction
+
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=0 Format :call configs_shared#Format()
 nnoremap <silent> <A-f> :Format<CR>
 
 " Add `:Fold` command to fold current buffer.
