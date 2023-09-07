@@ -99,6 +99,8 @@ nnoremap <silent> <A-d> :call windows#WindowDelete()<CR>
 nnoremap <silent> <A-y> :call windows#WindowYank()<CR>
 nnoremap <silent> <A-p> :call windows#WindowPaste('rightbelow')<CR>
 nnoremap <silent> <A-P> :call windows#WindowPaste('leftabove')<CR>
+nnoremap <silent> <A-i> :call windows#WindowPaste('rightbelow', 1)<CR>
+nnoremap <silent> <A-I> :call windows#WindowPaste('leftabove', 1)<CR>
 nnoremap <silent> <A-H> :call windows#WindowMoveLeft()<CR> 
 nnoremap <silent> <A-J> :call windows#WindowMoveDown()<CR>  
 nnoremap <silent> <A-K> :call windows#WindowMoveUp()<CR>  
