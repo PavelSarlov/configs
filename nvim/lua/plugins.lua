@@ -43,12 +43,28 @@ return packer.startup(function(use)
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
 
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'quangnguyen30192/cmp-nvim-ultisnips',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-nvim-lsp'
+    },
+  }
+
+  use { 'SirVer/ultisnips',
+    requires = { { 'honza/vim-snippets', rtp = '.' } },
+    config = function()
+      vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
+      vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
+      vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
+      vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
+      vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    end
+  }
 
   use 'neovim/nvim-lspconfig'
 
@@ -62,17 +78,6 @@ return packer.startup(function(use)
   use 'jiangmiao/auto-pairs'
   use 'godlygeek/tabular'
   use 'OmniSharp/omnisharp-vim'
-
-  use { 'SirVer/ultisnips',
-    requires = { { 'honza/vim-snippets', rtp = '.' } },
-    config = function()
-      vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
-      vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
-      vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
-      vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
-      vim.g.UltiSnipsRemoveSelectModeMappings = 0
-    end
-  }
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'norcalli/nvim-colorizer.lua'
