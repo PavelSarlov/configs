@@ -30,7 +30,9 @@ vim.env.VIMHOME = table.concat({ vim.env.HOME, '.nvim' }, vim.g.SLASH)
 
 vim.cmd [[
   let s:after = $VIMHOME . g:SLASH . 'after'
-  set runtimepath^=$VIMHOME runtimepath+=s:after
+  let s:autoload = $VIMHOME . g:SLASH . 'autoload'
+  set runtimepath^=$VIMHOME 
+  let &runtimepath=&runtimepath . s:after
   let &packpath=&runtimepath
 ]]
 
@@ -48,6 +50,6 @@ require('settings')
 require('mappings')
 require('augroups')
 require('sessions')
-require('lspconfigs')
 require('plugins')
 require('configs')
+require('lspconfigs')

@@ -14,6 +14,7 @@ autocmd BufReadPost * set cindent
 
 " autocomplete features
 set omnifunc=syntaxcomplete#complete
+set completeopt=menu,menuone,noselect
 
 set history=1000
 set encoding=utf-8 fileencoding=utf-8
@@ -49,7 +50,7 @@ set novisualbell
 set belloff=all
 set hidden
 set updatetime=300
-set shortmess=a
+set shortmess=ac
 set signcolumn=yes
 set relativenumber
 

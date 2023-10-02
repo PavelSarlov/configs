@@ -1,5 +1,5 @@
 local install_path = table.concat({ vim.fn.stdpath('data'), 'site', 'pack', 'packer', 'start', 'packer.nvim' },
-vim.g.SLASH)
+  vim.g.SLASH)
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = vim.fn.system {
     'git',
@@ -42,7 +42,13 @@ return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
-  use 'nvim-lua/completion-nvim'
+
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
+  use 'quangnguyen30192/cmp-nvim-ultisnips'
 
   use 'neovim/nvim-lspconfig'
 
@@ -56,14 +62,24 @@ return packer.startup(function(use)
   use 'jiangmiao/auto-pairs'
   use 'godlygeek/tabular'
   use 'OmniSharp/omnisharp-vim'
-  use 'SirVer/ultisnips'
-  use 'honza/vim-snippets'
+
+  use { 'SirVer/ultisnips',
+    requires = { { 'honza/vim-snippets', rtp = '.' } },
+    config = function()
+      vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
+      vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
+      vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
+      vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
+      vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    end
+  }
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'norcalli/nvim-colorizer.lua'
   use 'petertriho/nvim-scrollbar'
   use 'gpanders/editorconfig.nvim'
   use 'sindrets/diffview.nvim'
+  use 'folke/neodev.nvim'
 
   use 'nvim-lualine/lualine.nvim'
   use { 'catppuccin/nvim', as = 'catppuccin.nvim' }
@@ -77,6 +93,11 @@ return packer.startup(function(use)
   use {
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     requires = { { 'nvim-lua/plenary.nvim' } }
+  }
+
+  use {
+    "pmizio/typescript-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   }
 
   if PACKER_BOOTSTRAP then

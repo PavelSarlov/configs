@@ -1,22 +1,21 @@
 vim.opt.sessionoptions = 'curdir,help,tabpages'
 
-vim.g.SESSIONPATH = table.concat({ vim.env.VIMHOME, 'sessions' }, vim.g.SLASH)
+vim.g.SESSIONLOC = table.concat({ vim.env.VIMHOME, 'sessions' }, vim.g.SLASH)
 
-if vim.fn.isdirectory(vim.g.SESSIONPATH) ~= 1 then
-  vim.fn.mkdir(vim.g.SESSIONPATH, "p")
+if vim.fn.isdirectory(vim.g.SESSIONLOC) ~= 1 then
+  vim.fn.mkdir(vim.g.SESSIONLOC, "p")
 end
 
-local function MakeSession()
-  local session_path = table.concat({ vim.g.SESSIONPATH, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
+function MakeSession()
+  local session_path = table.concat({ vim.g.SESSIONLOC, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
   if (vim.fn.filewritable(session_path) ~= 2) then
-    vim.fn.system('mkdir -p ' .. session_path)
+    vim.cmd('mksession! ' .. session_path)
     vim.cmd 'redraw!'
   end
-  vim.cmd('mksession! ' .. session_path)
 end
 
-local function LoadSession()
-  local session_path = table.concat({ vim.g.SESSIONPATH, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
+function LoadSession()
+  local session_path = table.concat({ vim.g.SESSIONLOC, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
   if (vim.fn.filereadable(session_path) == 1) then
     vim.cmd('source ' .. session_path)
   else
@@ -38,3 +37,8 @@ vim.api.nvim_create_autocmd({ 'VimLeave' }, {
     vim.cmd('sleep 10m')
   end
 })
+
+return {
+  make_session = MakeSession,
+  load_session = LoadSession,
+}

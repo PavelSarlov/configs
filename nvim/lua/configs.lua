@@ -98,7 +98,8 @@ if status_ok then
         }
       },
     },
-    file_ignore_patterns = { ".git/*" , ".hg/*'" , ".svn/*" , "node_modules/*" , "DS_Store/*" , "target/*" , "dist/*" , "obj/*" , "build/*" }
+    file_ignore_patterns = { ".git/*", ".hg/*'", ".svn/*", "node_modules/*", "DS_Store/*", "target/*", "dist/*", "obj/*",
+      "build/*" }
   })
 end
 
@@ -126,25 +127,131 @@ if status_ok then
 end
 
 -- ==============================================================
--- ======================= completion ===========================
+-- ======================= nvim-cmp =============================
 -- ==============================================================
 
-local status_ok, completion = pcall(require, 'completion')
+local status_ok, cmp = pcall(require, 'cmp')
 if status_ok then
-  vim.cmd [[ 
-    autocmd BufEnter * lua require'completion'.on_attach() 
-    " Use <Tab> and <S-Tab> to navigate through popup menu
-    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    imap <tab> <Plug>(completion_smart_tab)
-    imap <s-tab> <Plug>(completion_smart_s_tab)
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
 
-    " Set completeopt to have a better completion experience
-    set completeopt=menuone,noinsert,noselect
+  cmp.setup({
+    snippet = {
+      expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end
+    },
+    mapping = {
+      ["<Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+          else
+            cmp.complete()
+          end
+        end, { 'i', 's', 'c' }
+      ),
+      ["<S-Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+          elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+            return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), 'm', true)
+          else
+            fallback()
+          end
+        end, { 'i', 's', 'c' }
+      ),
+      ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { 'i' }),
+      ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { 'i' }),
+      ['<C-n>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end
+      }),
+      ['<C-p>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end
+      }),
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<Esc>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
+      ['<CR>'] = cmp.mapping({
+        i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+          else
+            fallback()
+          end
+        end
+      }),
+    },
+    completion = {
+      autocomplete = {
+        cmp.TriggerEvent.TextChanged,
+        cmp.TriggerEvent.InsertEnter,
+      },
+      completeopt = 'menu,menuone,noselect'
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
+      { name = 'buffer' },
+    },
+  })
 
-    " Avoid showing message extra message when using completion
-    set shortmess+=c
-  ]]
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'git' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
 end
 
 -- ==============================================================
@@ -176,8 +283,9 @@ if status_ok then
     view = {
       width = 30,
     },
-    renderer = {
-      group_empty = true,
+    update_focused_file = {
+      enable = true,
+      update_cwd = true,
     },
   })
 

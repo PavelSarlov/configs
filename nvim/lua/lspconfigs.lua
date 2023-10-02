@@ -1,26 +1,32 @@
+local status_ok, neodev = pcall(require, 'neodev')
+if status_ok then
+  neodev.setup()
+end
+
 local status_ok, lsp = pcall(require, 'lspconfig')
 if status_ok then
+  local lsp_defaults = lsp.util.default_config
+
+  lsp_defaults.capabilities = vim.tbl_deep_extend(
+    'force',
+    lsp_defaults.capabilities,
+    require('cmp_nvim_lsp').default_capabilities()
+  )
+
   lsp.lua_ls.setup({
     on_init = function(client)
       local path = client.workspace_folders[1].name
-      if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
         client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
           Lua = {
             runtime = {
-              -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
               version = 'LuaJIT'
             },
-            -- Make the server aware of Neovim runtime files
             workspace = {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
               }
-              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-              -- library = vim.api.nvim_get_runtime_file("", true)
             }
           }
         })
@@ -33,7 +39,6 @@ if status_ok then
   lsp.pyright.setup {}
   lsp.tsserver.setup {}
 
-
   -- Global mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -42,9 +47,9 @@ if status_ok then
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false
-    }
-  )
+    virtual_text = false,
+    update_in_insert = true
+  })
 
   -- Function to check if a floating dialog exists and if not
   -- then check for diagnostics under the cursor
@@ -67,6 +72,7 @@ if status_ok then
       },
     })
   end
+
   -- Show diagnostics under the cursor when holding position
   vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
   vim.api.nvim_create_autocmd({ "CursorHold" }, {
@@ -90,17 +96,17 @@ if status_ok then
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
       vim.keymap.set('n', 'gm', vim.lsp.buf.hover, opts)
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-      vim.keymap.set('n', '<space>wl', function()
+      vim.keymap.set('n', '<leader>m', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      vim.keymap.set('n', '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end, opts)
-      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-      vim.keymap.set('n', '<space>f', function()
+      vim.keymap.set('n', '<a-f>', function()
         vim.lsp.buf.format { async = true }
       end, opts)
     end,
