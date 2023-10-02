@@ -106,46 +106,51 @@ end
 -- ======================= fugitive =============================
 -- ==============================================================
 
-vim.keymap.set('n', 'cm', '<cmd>tabedit % | Gvdiffsplit!<CR>', { silent = true })
-vim.keymap.set('n', 'co', '<cmd>diffget //2<CR>', { silent = true })
-vim.keymap.set('n', 'ct', '<cmd>diffget //3<CR>', { silent = true })
-vim.keymap.set('n', 'cb', '<cmd>call helpers#GacceptBoth()<CR>', { silent = true })
-vim.keymap.set('n', 'cs', '<cmd>only<CR>', { silent = true })
-vim.keymap.set('n', 'cu', '<cmd>diffupdate<CR>', { silent = true })
+local status_ok, fugitive = pcall(require, 'fugitive')
+if status_ok then
+  vim.keymap.set('n', 'cm', '<cmd>tabedit % | Gvdiffsplit!<CR>', { silent = true })
+  vim.keymap.set('n', 'co', '<cmd>diffget //2<CR>', { silent = true })
+  vim.keymap.set('n', 'ct', '<cmd>diffget //3<CR>', { silent = true })
+  vim.keymap.set('n', 'cb', '<cmd>call helpers#GacceptBoth()<CR>', { silent = true })
+  vim.keymap.set('n', 'cs', '<cmd>only<CR>', { silent = true })
+  vim.keymap.set('n', 'cu', '<cmd>diffupdate<CR>', { silent = true })
+end
 
 -- ==============================================================
 -- ======================= auto-pairs ===========================
 -- ==============================================================
 
-vim.g.AutoPairsShortcutToggle = ''
+local status_ok, auto_pairs = pcall(require, 'auto-pairs')
+if status_ok then
+  vim.g.AutoPairsShortcutToggle = ''
+end
 
 -- ==============================================================
 -- ======================= completion ===========================
 -- ==============================================================
 
-vim.cmd [[ 
+local status_ok, completion = pcall(require, 'completion')
+if status_ok then
+  vim.cmd [[ 
+    autocmd BufEnter * lua require'completion'.on_attach() 
+    " Use <Tab> and <S-Tab> to navigate through popup menu
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    imap <tab> <Plug>(completion_smart_tab)
+    imap <s-tab> <Plug>(completion_smart_s_tab)
 
-autocmd BufEnter * lua require'completion'.on_attach() 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <tab> <Plug>(completion_smart_tab)
-imap <s-tab> <Plug>(completion_smart_s_tab)
+    " Set completeopt to have a better completion experience
+    set completeopt=menuone,noinsert,noselect
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-]]
+    " Avoid showing message extra message when using completion
+    set shortmess+=c
+  ]]
+end
 
 -- ==============================================================
 -- ======================= nvim-tree ============================
 -- ==============================================================
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -160,15 +165,21 @@ local function nvim_tree_on_attach(bufnr)
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 end
 
-require("nvim-tree").setup({
-  on_attach = nvim_tree_on_attach,
-  sort_by = "case_sensitive",
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-})
+local status_ok, nvim_tree = pcall(require, 'nvim-tree')
+if status_ok then
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
 
-vim.keymap.set('n', '<space>e', '<cmd>NvimTreeOpen<cr>', { silent = true, nowait = true, noremap = true })
+  nvim_tree.setup({
+    on_attach = nvim_tree_on_attach,
+    sort_by = "case_sensitive",
+    view = {
+      width = 30,
+    },
+    renderer = {
+      group_empty = true,
+    },
+  })
+
+  vim.keymap.set('n', '<space>e', '<cmd>NvimTreeOpen<cr>', { silent = true, nowait = true, noremap = true })
+end
