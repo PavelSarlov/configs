@@ -99,9 +99,6 @@ if status_ok then
       },
     },
     file_ignore_patterns = { ".git/*" , ".hg/*'" , ".svn/*" , "node_modules/*" , "DS_Store/*" , "target/*" , "dist/*" , "obj/*" , "build/*" }
-    extensions = {
-
-    }
   })
 end
 

@@ -1,13 +1,13 @@
 vim.opt.sessionoptions = 'curdir,help,tabpages'
 
-vim.g.SESSIONDIR = table.concat({ vim.env.VIMHOME, 'sessions' }, vim.g.SLASH)
+vim.g.SESSIONPATH = table.concat({ vim.env.VIMHOME, 'sessions' }, vim.g.SLASH)
 
-if vim.fn.isdirectory(vim.g.SESSIONDIR) ~= 1 then
-  vim.fn.mkdir(vim.g.SESSIONDIR, "p")
+if vim.fn.isdirectory(vim.g.SESSIONPATH) ~= 1 then
+  vim.fn.mkdir(vim.g.SESSIONPATH, "p")
 end
 
 local function MakeSession()
-  local session_path = table.concat({ vim.g.SESSIONDIR, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
+  local session_path = table.concat({ vim.g.SESSIONPATH, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
   if (vim.fn.filewritable(session_path) ~= 2) then
     vim.fn.system('mkdir -p ' .. session_path)
     vim.cmd 'redraw!'
@@ -16,7 +16,7 @@ local function MakeSession()
 end
 
 local function LoadSession()
-  local session_path = table.concat({ vim.g.SESSIONDIR, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
+  local session_path = table.concat({ vim.g.SESSIONPATH, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
   if (vim.fn.filereadable(session_path) == 1) then
     vim.cmd('source ' .. session_path)
   else
