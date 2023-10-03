@@ -44,3 +44,9 @@ function! helpers#RemoveCarriageReturn()
   silent! %s/\r// 
   call setpos(".", pos)
 endfunction
+
+function! helpers#CreateDirRecursive(dir)
+  if !isdirectory(a:dir)
+    call mkdir(a:dir, "p")
+  end
+endfunction

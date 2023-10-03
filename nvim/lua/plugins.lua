@@ -27,6 +27,8 @@ end
 
 vim.g.PACKERDIR = table.concat({ vim.env.VIMHOME, 'packer' }, vim.g.SLASH)
 
+vim.fn['helpers#CreateDirRecursive'](vim.g.PACKERDIR)
+
 vim.opt.runtimepath:append(table.concat({ vim.g.PACKERDIR, '*', 'start', '*' }, vim.g.SLASH))
 
 packer.init({
@@ -58,6 +60,7 @@ return packer.startup(function(use)
 
 
   use 'neovim/nvim-lspconfig'
+  use 'jose-elias-alvarez/null-ls.nvim'
 
   use 'tpope/vim-commentary'
   use 'tpope/vim-surround'
@@ -91,10 +94,7 @@ return packer.startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
-  use {
-    "pmizio/typescript-tools.nvim",
-    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  }
+  use { 'williamboman/mason.nvim', requires = { 'williamboman/mason-lspconfig.nvim' } }
 
   if PACKER_BOOTSTRAP then
     require('packer').sync()

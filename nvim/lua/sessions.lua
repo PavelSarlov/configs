@@ -2,9 +2,7 @@ vim.opt.sessionoptions = 'curdir,help,tabpages'
 
 vim.g.SESSIONLOC = table.concat({ vim.env.VIMHOME, 'sessions' }, vim.g.SLASH)
 
-if vim.fn.isdirectory(vim.g.SESSIONLOC) ~= 1 then
-  vim.fn.mkdir(vim.g.SESSIONLOC, "p")
-end
+vim.fn['helpers#CreateDirRecursive'](vim.g.SESSIONLOC)
 
 function MakeSession()
   local session_path = table.concat({ vim.g.SESSIONLOC, vim.fn.sha256(vim.fn.getcwd()) .. '.vim' }, vim.g.SLASH)
