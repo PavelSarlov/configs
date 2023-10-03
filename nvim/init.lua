@@ -31,20 +31,13 @@ vim.env.VIMHOME = table.concat({ vim.env.HOME, '.nvim' }, vim.g.SLASH)
 vim.cmd [[
   let s:after = $VIMHOME . g:SLASH . 'after'
   let s:autoload = $VIMHOME . g:SLASH . 'autoload'
-  set runtimepath^=$VIMHOME 
+  set runtimepath^=$VIMHOME
   let &runtimepath=&runtimepath . s:after
   let &packpath=&runtimepath
 ]]
 
 vim.g.VIMUNDODIR = table.concat({ vim.env.VIMHOME, 'vimundo' }, vim.g.SLASH)
-
-if vim.fn.isdirectory(vim.env.VIMHOME) ~= 1 then
-  vim.fn.mkdir(vim.env.VIMHOME, "p")
-end
-
-if vim.fn.isdirectory(vim.g.VIMUNDODIR) ~= 1 then
-  vim.fn.mkdir(vim.g.VIMUNDODIR, "p")
-end
+vim.fn['helpers#CreateDirRecursive'](vim.env.VIMUNDODIR)
 
 require('settings')
 require('mappings')

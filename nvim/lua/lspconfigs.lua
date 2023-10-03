@@ -65,11 +65,13 @@ if status_ok then
   end
   local on_attach = function(ev)
     local opts = opts_func(ev.buf)
+    local ok_telescope, telescope = pcall(require, "telescope.builtin")
 
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "gm", vim.lsp.buf.hover, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "gr", (ok_telescope and telescope.lsp_references) or vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<leader>m", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
@@ -79,7 +81,6 @@ if status_ok then
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<a-f>", function()
       vim.lsp.buf.format({ async = true })
     end, opts)

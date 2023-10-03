@@ -87,7 +87,14 @@ if status_ok then
   end, { silent = true, nowait = true, noremap = true })
   vim.keymap.set("n", "<a-S>", function()
     local git_root = vim.fn["helpers#FindGitRoot"]()
-    builtin.grep_string({ word_match = "-w", only_sort_text = true, search = "", cwd = git_root })
+    builtin.grep_string({
+      shorten_names = true,
+      word_match = "-w",
+      only_sort_text = false,
+      search = "",
+      cwd = git_root,
+      additional_args = { '-u' }
+    })
   end, { silent = true, nowait = true, noremap = true })
   vim.keymap.set("n", "<c-l>", builtin.buffers, { silent = true, nowait = true, noremap = true })
   vim.keymap.set("n", "<c-g>", builtin.help_tags, { silent = true, nowait = true, noremap = true })
@@ -174,7 +181,7 @@ if status_ok then
       end,
     },
     mapping = {
-      ["<Tab>"] = cmp.mapping(function(fallback)
+      ["<Tab>"] = cmp.mapping(function()
         if cmp.visible() then
           cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
         elseif luasnip.jumpable(-1) then
@@ -212,8 +219,8 @@ if status_ok then
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
       ["<CR>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+        if cmp.visible() and cmp.get_active_entry() ~= nil then
+          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
         else
           fallback()
         end
@@ -251,6 +258,7 @@ if status_ok then
     sources = {
       { name = "cmdline" },
       { name = "path" },
+      { name = "buffer" },
     },
   })
 end
@@ -296,59 +304,4 @@ if status_ok then
   })
 
   vim.keymap.set("n", "<space>e", "<cmd>NvimTreeOpen<cr>", { silent = true, nowait = true, noremap = true })
-end
-
--- ==============================================================
--- ======================= null-ls ==============================
--- ==============================================================
-
-local status_ok, null_ls = pcall(require, "null-ls")
-if status_ok then
-  local sources = {
-    null_ls.builtins.formatting.prettier.with({
-      filetypes = {
-        "css",
-        "graphql",
-        "html",
-        "javascript",
-        "javascriptreact",
-        "json",
-        "less",
-        "markdown",
-        "scss",
-        "typescript",
-        "typescriptreact",
-        "yaml",
-      },
-      only_local = "node_modules/.bin",
-    }),
-    null_ls.builtins.formatting.stylua.with({
-      filetypes = {
-        "lua",
-      },
-      args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
-    }),
-    null_ls.builtins.diagnostics.stylelint.with({
-      filetypes = {
-        "css",
-        "scss",
-      },
-    }),
-  }
-
-  null_ls.setup({
-    sources = sources,
-    on_attach = function(client, bufnr)
-      if client.supports_method("textDocument/formatting") then
-        vim.keymap.set("n", "<a-f>", function()
-          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-        end, { buffer = bufnr, desc = "[lsp] format" })
-      end
-      if client.supports_method("textDocument/rangeFormatting") then
-        vim.keymap.set("x", "<a-f>", function()
-          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-        end, { buffer = bufnr, desc = "[lsp] format" })
-      end
-    end,
-  })
 end

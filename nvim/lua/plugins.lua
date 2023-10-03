@@ -31,14 +31,7 @@ vim.fn["helpers#CreateDirRecursive"](vim.g.PACKERDIR)
 
 vim.opt.runtimepath:append(table.concat({ vim.g.PACKERDIR, "*", "start", "*" }, vim.g.SLASH))
 
-packer.init({
-  display = {
-    open_fn = function()
-      return require("packer.util").float({ border = "rounded" })
-    end,
-  },
-  package_root = vim.g.PACKERDIR,
-})
+packer.init({ package_root = vim.g.PACKERDIR, })
 
 return packer.startup(function(use)
   use("wbthomason/packer.nvim")
@@ -59,7 +52,6 @@ return packer.startup(function(use)
   })
 
   use("neovim/nvim-lspconfig")
-  use("jose-elias-alvarez/null-ls.nvim")
 
   use("tpope/vim-commentary")
   use("tpope/vim-surround")
