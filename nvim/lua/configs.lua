@@ -221,7 +221,7 @@ if status_ok then
         cmp.TriggerEvent.TextChanged,
         cmp.TriggerEvent.InsertEnter,
       },
-      completeopt = 'menu,menuone,noinsert'
+      completeopt = 'menu,menuone,noinsert,noselect'
     },
     window = {
       completion = cmp.config.window.bordered(),
@@ -284,6 +284,15 @@ if status_ok then
       enable = true,
       update_cwd = true,
     },
+    diagnostics = {
+      enable = true,
+      show_on_dirs = true,
+    },
+    modified = {
+      enabled = true
+    },
+    disable_netrw = true,
+    hijack_netrw = true
   })
 
   vim.keymap.set('n', '<space>e', '<cmd>NvimTreeOpen<cr>', { silent = true, nowait = true, noremap = true })
