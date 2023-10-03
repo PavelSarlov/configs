@@ -118,12 +118,12 @@ if status_ok then
 end
 
 -- ==============================================================
--- ======================= auto-pairs ===========================
+-- ======================= nvim-autopairs =======================
 -- ==============================================================
 
-local status_ok, auto_pairs = pcall(require, 'auto-pairs')
+local status_ok, autopairs = pcall(require, 'nvim-autopairs')
 if status_ok then
-  vim.g.AutoPairsShortcutToggle = ''
+  autopairs.setup {}
 end
 
 -- ==============================================================
@@ -132,12 +132,23 @@ end
 
 local status_ok, cmp = pcall(require, 'cmp')
 if status_ok then
+  local luasnip = require('luasnip')
+
+  require('cmp_nvim_lsp').setup({})
+
   cmp.register_source('buffer', require('cmp_buffer'))
   cmp.register_source('cmdline', require('cmp_cmdline').new())
-  cmp.register_source('ultisnips', require('cmp_nvim_ultisnips'))
-  cmp.register_source('nvim_lsp', require('cmp_nvim_lsp'))
+  cmp.register_source('path', require('cmp_path'))
   cmp.register_source('nvim_lua', require('cmp_nvim_lua').new())
-  cmp.register_source('path', require('cmp_path').new())
+  cmp.register_source('luasnip', require('cmp_luasnip').new())
+
+  local status_ok_autopairs, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
+  if status_ok_autopairs then
+    cmp.event:on(
+      'confirm_done',
+      cmp_autopairs.on_confirm_done()
+    )
+  end
 
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -145,15 +156,17 @@ if status_ok then
 
   cmp.setup({
     snippet = {
-      expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end
     },
     mapping = {
       ["<Tab>"] = cmp.mapping(
-        function()
+        function(fallback)
           if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-            vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
           else
             cmp.complete()
           end
@@ -163,8 +176,8 @@ if status_ok then
         function(fallback)
           if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-          elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-            return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), 'm', true)
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
           else
             fallback()
           end
@@ -192,11 +205,11 @@ if status_ok then
       ),
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<Esc>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
+      ['<C-e>'] = cmp.mapping(cmp.mapping.close(), { 'i', 'c' }),
       ['<CR>'] = cmp.mapping(
         function(fallback)
           if cmp.visible() then
-            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
           else
             fallback()
           end
@@ -208,6 +221,7 @@ if status_ok then
         cmp.TriggerEvent.TextChanged,
         cmp.TriggerEvent.InsertEnter,
       },
+      completeopt = 'menu,menuone,noinsert'
     },
     window = {
       completion = cmp.config.window.bordered(),
@@ -215,23 +229,24 @@ if status_ok then
     },
     sources = {
       { name = 'nvim_lsp' },
-      { name = 'ultisnips' },
+      { name = 'luasnip' },
       { name = 'buffer' },
-      { name = 'nvim_lua' },
+      { name = 'nvim_lua', option = { include_deprecated = true } },
     },
   })
 
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'buffer' }
+      { name = 'buffer' },
     }
   })
 
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'cmdline' }
+      { name = 'cmdline' },
+      { name = 'path' }
     }
   })
 end
@@ -239,7 +254,6 @@ end
 -- ==============================================================
 -- ======================= nvim-tree ============================
 -- ==============================================================
-
 
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")

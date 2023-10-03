@@ -14,7 +14,7 @@ autocmd BufReadPost * set cindent
 
 " autocomplete features
 set omnifunc=syntaxcomplete#complete
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noselect,noinsert
 
 set history=1000
 set encoding=utf-8 fileencoding=utf-8
