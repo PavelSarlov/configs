@@ -123,6 +123,18 @@ if status_ok then
           },
         }))
       end,
+      ["lua_ls"] = function(ev)
+        lsp.lua_ls.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+                library = { vim.env.VIMRUNTIME },
+              },
+            },
+          },
+        }))
+      end,
     })
   end
 end
