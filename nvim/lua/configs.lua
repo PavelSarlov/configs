@@ -232,6 +232,7 @@ if status_ok then
       { name = 'luasnip' },
       { name = 'buffer' },
       { name = 'nvim_lua', option = { include_deprecated = true } },
+      { name = 'path' }
     },
   })
 
