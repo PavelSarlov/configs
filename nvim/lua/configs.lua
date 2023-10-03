@@ -110,6 +110,8 @@ if status_ok then
       "build/*",
     },
   })
+
+  telescope.load_extension("fzf")
 end
 
 -- ==============================================================
@@ -345,4 +347,3 @@ if status_ok then
     end,
   })
 end
-
