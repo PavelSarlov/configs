@@ -88,12 +88,11 @@ if status_ok then
   vim.keymap.set("n", "<a-S>", function()
     local git_root = vim.fn["helpers#FindGitRoot"]()
     builtin.grep_string({
-      shorten_names = true,
       word_match = "-w",
       only_sort_text = false,
       search = "",
       cwd = git_root,
-      additional_args = { '-u' }
+      additional_args = { '--hidden' }
     })
   end, { silent = true, nowait = true, noremap = true })
   vim.keymap.set("n", "<c-l>", builtin.buffers, { silent = true, nowait = true, noremap = true })
@@ -101,6 +100,7 @@ if status_ok then
 
   telescope.setup({
     defaults = {
+      path_display = { 'smart' },
       mappings = {
         i = {
           ["<esc>"] = actions.close,
