@@ -37,7 +37,7 @@ vim.cmd [[
 ]]
 
 vim.g.VIMUNDODIR = table.concat({ vim.env.VIMHOME, 'vimundo' }, vim.g.SLASH)
-vim.fn['helpers#CreateDirRecursive'](vim.env.VIMUNDODIR)
+vim.fn['helpers#CreateDirRecursive'](vim.g.VIMUNDODIR)
 
 require('settings')
 require('mappings')
