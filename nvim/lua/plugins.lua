@@ -82,13 +82,24 @@ return packer.startup(function(use)
       vim.fn["firenvim#install"](0)
     end,
   })
-  use {
-    "ibhagwan/fzf-lua",
+  -- use {
+  --   "ibhagwan/fzf-lua",
+  --   requires = {
+  --     "nvim-tree/nvim-web-devicons",
+  --     { "junegunn/fzf", run = "./install --bin" },
+  --   }
+  -- }     
+  use({
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
     requires = {
-      "nvim-tree/nvim-web-devicons",
-      { "junegunn/fzf", run = "./install --bin" },
-    }
-  }
+      { "nvim-lua/plenary.nvim" },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make",
+      },
+    },
+  })
 
   use({ "williamboman/mason.nvim", requires = { "williamboman/mason-lspconfig.nvim" } })
   use {
