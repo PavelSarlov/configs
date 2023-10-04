@@ -65,13 +65,13 @@ if status_ok then
   end
   local on_attach = function(ev)
     local opts = opts_func(ev.buf)
-    local ok_telescope, telescope = pcall(require, "telescope.builtin")
+    local ok_fzf, fzf = pcall(require, "fzf-lua")
 
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "gm", vim.lsp.buf.hover, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "gr", (ok_telescope and telescope.lsp_references) or vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "gr", (ok_fzf and fzf.lsp_references) or vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<leader>m", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
