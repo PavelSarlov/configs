@@ -293,7 +293,7 @@ if status_ok then
     },
     update_focused_file = {
       enable = true,
-      update_cwd = true,
+      update_cwd = false,
     },
     diagnostics = {
       enable = true,
