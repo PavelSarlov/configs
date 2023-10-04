@@ -84,15 +84,20 @@ return packer.startup(function(use)
   })
   use {
     "ibhagwan/fzf-lua",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
     requires = {
+      "nvim-tree/nvim-web-devicons",
       { "junegunn/fzf", run = "./install --bin" },
     }
   }
 
   use({ "williamboman/mason.nvim", requires = { "williamboman/mason-lspconfig.nvim" } })
+  use {
+    "jay-babu/mason-null-ls.nvim",
+    requires = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+  }
 
   if PACKER_BOOTSTRAP then
     require("packer").sync()
