@@ -106,7 +106,7 @@ return packer.startup(function(use)
     "jay-babu/mason-null-ls.nvim",
     requires = {
       "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
     },
   }
 

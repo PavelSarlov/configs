@@ -66,7 +66,7 @@ if status_ok then
   local on_attach = function(ev)
     local opts = opts_func(ev.buf)
     -- local ok_fzf, fzf = pcall(require, "fzf-lua")
-       local ok_telescope, telescope = pcall(require, "telescope.builtin")
+    local ok_telescope, telescope = pcall(require, "telescope.builtin")
 
     -- vim.keymap.set("n", "gD", (ok_fzf and fzf.lsp_declarations or vim.lsp.buf.declaration), opts)
     -- vim.keymap.set("n", "gd", (ok_fzf and fzf.lsp_definitions or vim.lsp.buf.definition), opts)
@@ -116,7 +116,11 @@ if status_ok then
     mason_lsp.setup()
     mason_lsp.setup_handlers({
       function(server)
-        lsp[server].setup({})
+        lsp[server].setup({
+          on_attach = function(client)
+            client.resolved_capabilities.document_formatting = false
+          end,
+        })
       end,
       ["tsserver"] = function(ev)
         lsp.tsserver.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
@@ -140,6 +144,43 @@ if status_ok then
           },
         }))
       end,
+    })
+  end
+
+
+  -- ==============================================================
+  -- ======================= null-ls ==============================
+  -- ==============================================================
+
+  local status_ok, mason_null_ls = pcall(require, "mason-null-ls")
+  if status_ok then
+    local null_ls = require("null-ls")
+    null_ls.setup({})
+
+    mason_null_ls.setup({
+      automatic_installation = false,
+      handlers = {
+        function() end, -- disables automatic setup of all null-ls sources
+        prettierd = function()
+          null_ls.register(null_ls.builtins.formatting.prettierd.with({
+            filetypes = {
+              "css",
+              "graphql",
+              "html",
+              "javascript",
+              "javascriptreact",
+              "json",
+              "less",
+              "markdown",
+              "scss",
+              "typescript",
+              "typescriptreact",
+              "yaml",
+            },
+            prefer_local = "node_modules/.bin",
+          }))
+        end,
+      },
     })
   end
 end

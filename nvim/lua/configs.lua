@@ -345,37 +345,3 @@ if status_ok then
 
   vim.keymap.set("n", "<space>e", "<cmd>NvimTreeOpen<cr>", { silent = true, nowait = true, noremap = true })
 end
-
--- ==============================================================
--- ======================= null-ls ==============================
--- ==============================================================
-
-local status_ok, mason_null_ls = pcall(require, "mason-null-ls")
-if status_ok then
-  local null_ls = require('null-ls')
-
-  mason_null_ls.setup({
-    ensure_installed = { 'prettierd' },
-    handlers = {
-      prettierd = function(source_name, methods)
-        null_ls.register(null_ls.builtins.formatting.prettierd.with({
-          filetypes = {
-            "css",
-            "graphql",
-            "html",
-            "javascript",
-            "javascriptreact",
-            "json",
-            "less",
-            "markdown",
-            "scss",
-            "typescript",
-            "typescriptreact",
-            "yaml",
-          },
-          only_local = "node_modules/.bin",
-        }))
-      end,
-    },
-  })
-end
