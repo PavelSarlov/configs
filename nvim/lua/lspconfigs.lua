@@ -86,7 +86,12 @@ if status_ok then
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
     vim.keymap.set("n", "<a-f>", function()
-      vim.lsp.buf.format({ async = true })
+      vim.lsp.buf.format({
+        async = true,
+        filter = function(client)
+          return client.name == "null-ls"
+        end
+      })
     end, opts)
     vim.keymap.set("n", "<a-o>", "<cmd>OrganizeImports<cr>", opts)
   end
@@ -116,11 +121,7 @@ if status_ok then
     mason_lsp.setup()
     mason_lsp.setup_handlers({
       function(server)
-        lsp[server].setup({
-          on_attach = function(client)
-            client.resolved_capabilities.document_formatting = false
-          end,
-        })
+        lsp[server].setup({})
       end,
       ["tsserver"] = function(ev)
         lsp.tsserver.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
