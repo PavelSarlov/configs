@@ -121,7 +121,7 @@ if status_ok then
 		local git_root = vim.fn["helpers#FindGitRoot"]()
 		builtin.grep_string({
 			word_match = "-w",
-			only_sort_text = false,
+			only_sort_text = true,
 			search = "",
 			cwd = git_root,
 			additional_args = { "--hidden" },
@@ -132,7 +132,7 @@ if status_ok then
 
 	telescope.setup({
 		defaults = {
-			path_display = { "smart" },
+			path_display = { "shorten" },
 			mappings = {
 				i = {
 					["<esc>"] = actions.close,
