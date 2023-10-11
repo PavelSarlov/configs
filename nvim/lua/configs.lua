@@ -351,3 +351,12 @@ if status_ok then
 
 	vim.keymap.set("n", "<space>e", "<cmd>NvimTreeOpen<cr>", { silent = true, nowait = true, noremap = true })
 end
+
+-- ==============================================================
+-- ======================= comment.nvim =========================
+-- ==============================================================
+
+local status_ok, comment = pcall(require, "Comment")
+if status_ok then
+	comment.setup()
+end
