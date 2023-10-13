@@ -131,6 +131,12 @@ if status_ok then
 							description = "Organize Imports",
 						},
 					},
+					init_options = {
+						preferences = {
+							importModuleSpecifierPreference = "relative",
+							importModuleSpecifierEnding = "minimal",
+						},
+					},
 				}))
 			end,
 			["lua_ls"] = function(ev)
