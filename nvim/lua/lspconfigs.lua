@@ -166,6 +166,9 @@ if status_ok then
 		mason_null_ls.setup({
 			automatic_installation = false,
 			handlers = {
+				xmlformatter = function()
+					null_ls.register(null_ls.builtins.formatting.xmlformat)
+				end,
 				prettierd = function()
 					null_ls.register(null_ls.builtins.formatting.prettierd.with({
 						filetypes = {

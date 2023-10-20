@@ -64,6 +64,7 @@ return packer.startup(function(use)
 
 	use("numToStr/Comment.nvim")
 	use("nvim-treesitter/nvim-treesitter")
+  use("windwp/nvim-ts-autotag")
 	use("norcalli/nvim-colorizer.lua")
 	use("petertriho/nvim-scrollbar")
 	use("gpanders/editorconfig.nvim")

@@ -68,6 +68,9 @@ if status_ok then
 			end,
 			additional_vim_regex_highlighting = false,
 		},
+		autotag = {
+			enable = true,
+		},
 	})
 end
 
@@ -298,7 +301,6 @@ if status_ok then
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
 			{ name = "cmdline" },
-			{ name = "path" },
 			{ name = "buffer" },
 		},
 	})
