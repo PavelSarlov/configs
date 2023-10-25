@@ -349,6 +349,11 @@ if status_ok then
 		},
 		disable_netrw = true,
 		hijack_netrw = true,
+		actions = {
+			open_file = {
+				quit_on_open = true,
+			},
+		},
 	})
 
 	vim.keymap.set("n", "<space>e", "<cmd>NvimTreeOpen<cr>", { silent = true, nowait = true, noremap = true })
