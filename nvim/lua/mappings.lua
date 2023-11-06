@@ -27,8 +27,8 @@ nnoremap <silent> ! :silent source $MYVIMRC<CR>
 
 nnoremap <silent> Y y$
 
-inoremap <silent> <C-p> <Esc>pa
-cnoremap <silent> <C-p> <C-r>"
+inoremap <silent> <A-p> <Esc>pa
+cnoremap <silent> <A-p> <C-r>"
 
 " no yanking
 nnoremap <leader>d "_d
