@@ -135,6 +135,7 @@ if status_ok then
 
 	telescope.setup({
 		defaults = {
+			preview = { hide_on_startup = true },
 			path_display = { "shorten" },
 			mappings = {
 				i = {
@@ -264,7 +265,7 @@ if status_ok then
 			["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
 			["<CR>"] = cmp.mapping(function(fallback)
 				if cmp.visible() and cmp.get_active_entry() ~= nil then
-					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+					cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
 				else
 					fallback()
 				end
