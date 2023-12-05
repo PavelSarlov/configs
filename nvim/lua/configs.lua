@@ -96,11 +96,11 @@ if status_ok then
 
 	vim.keymap.set("n", "<c-p>", function()
 		local git_root = vim.fn["helpers#FindGitRoot"]()
-		fzf.files({ path_shorten = true, no_ignore = true, cwd = git_root })
+		fzf.files({ no_ignore = true, cwd = git_root })
 	end, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<a-S>", function()
 		local git_root = vim.fn["helpers#FindGitRoot"]()
-		fzf.grep_project({ cwd = git_root, path_shorten = true })
+		fzf.grep_project({ cwd = git_root })
 	end, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-l>", fzf.buffers, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-g>", fzf.tags, { silent = true, nowait = true, noremap = true })
@@ -136,7 +136,7 @@ if status_ok then
 	telescope.setup({
 		defaults = {
 			preview = { hide_on_startup = true },
-			path_display = { "shorten" },
+			path_display = { "smart" },
 			mappings = {
 				i = {
 					["<esc>"] = actions.close,

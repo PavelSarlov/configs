@@ -14,13 +14,15 @@ function! helpers#GetVisualSelection()
   endif
   let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][column_start - 1:]
-  return join(lines, "\n")endfunction
+  return join(lines, "\n")
 endfunction
 
 function! helpers#FindGitRoot()
   let pwd = getcwd()
   let dir = empty(&ft) || &ft ==# 'terminal' ? '.' : &ft ==# "netrw" ? expand('%') : expand('%:p:h')
-  exe 'cd' dir
+  if isdirectory(dir)
+    exe 'cd' dir
+  endif
   let output = system('git rev-parse --show-toplevel')[:-2]
   exe 'cd' pwd 
   return v:shell_error || empty(output) ? dir : output
@@ -48,5 +50,5 @@ endfunction
 function! helpers#CreateDirRecursive(dir)
   if !isdirectory(a:dir)
     call mkdir(a:dir, "p")
-  end
+  endif
 endfunction
