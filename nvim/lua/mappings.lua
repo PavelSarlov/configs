@@ -123,5 +123,9 @@ nnoremap <silent> <A-M> :move -2<CR>
 
 xnoremap <silent> R :call helpers#ReverseSelection()<CR>
 
+tnoremap <silent> <C-h> <Left>
+tnoremap <silent> <C-l> <Right>
+tnoremap <silent> <C-j> <Down>
+tnoremap <silent> <C-k> <Up>
 
 ]]
