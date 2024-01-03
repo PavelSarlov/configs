@@ -21,6 +21,12 @@ if status_ok then
 		update_in_insert = true,
 	})
 
+	local ok_telescope, telescope = pcall(require, "telescope.builtin")
+	vim.lsp.handlers["textDocument/declaration"] = ok_telescope and telescope.lsp_declarations
+		or vim.lsp.buf.declaration
+	vim.lsp.handlers["textDocument/definition"] = ok_telescope and telescope.lsp_definitions or vim.lsp.buf.definition
+	vim.lsp.handlers["textDocument/references"] = ok_telescope and telescope.lsp_references or vim.lsp.buf.references
+
 	-- Function to check if a floating dialog exists and if not
 	-- then check for diagnostics under the cursor
 	function OpenDiagnosticIfNoFloat()
@@ -66,14 +72,13 @@ if status_ok then
 	local on_attach = function(ev)
 		local opts = opts_func(ev.buf)
 		-- local ok_fzf, fzf = pcall(require, "fzf-lua")
-		local ok_telescope, telescope = pcall(require, "telescope.builtin")
 
 		-- vim.keymap.set("n", "gD", (ok_fzf and fzf.lsp_declarations or vim.lsp.buf.declaration), opts)
 		-- vim.keymap.set("n", "gd", (ok_fzf and fzf.lsp_definitions or vim.lsp.buf.definition), opts)
-		-- vim.keymap.set("n", "gr", (ok_fzf and fzf.lsp_references) or vim.lsp.buf.references, opts)
-		vim.keymap.set("n", "gD", (ok_telescope and telescope.lsp_declarations or vim.lsp.buf.declaration), opts)
-		vim.keymap.set("n", "gd", (ok_telescope and telescope.lsp_definitions or vim.lsp.buf.definition), opts)
-		vim.keymap.set("n", "gr", (ok_telescope and telescope.lsp_references) or vim.lsp.buf.references, opts)
+		-- vim.keymap.set("n", "gr", (ok_fzf and fzf.lsp_references or vim.lsp.buf.references), opts)
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "gm", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "<leader>m", vim.lsp.buf.signature_help, opts)
@@ -113,7 +118,7 @@ if status_ok then
 
 	local status_ok, mason = pcall(require, "mason")
 	if status_ok then
-		mason_lsp = require("mason-lspconfig")
+		local mason_lsp = require("mason-lspconfig")
 
 		mason.setup({
 			install_root_dir = vim.g.MASONDIR,
@@ -148,6 +153,15 @@ if status_ok then
 								library = { vim.env.VIMRUNTIME },
 							},
 						},
+					},
+				}))
+			end,
+			["omnisharp"] = function(ev)
+				local omnisharp_extended = require("omnisharp_extended")
+				lsp.omnisharp.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
+					handlers = {
+						["textDocument/definition"] = ok_telescope and omnisharp_extended.telescope_lsp_definitions
+							or omnisharp_extended.lsp_definitions,
 					},
 				}))
 			end,
