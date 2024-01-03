@@ -38,6 +38,7 @@ return packer.startup(function(use)
 	use("nvim-lua/popup.nvim")
 	use("nvim-lua/plenary.nvim")
 
+	use("rafamadriz/friendly-snippets")
 	use({
 		"hrsh7th/nvim-cmp",
 		requires = {
@@ -102,7 +103,7 @@ return packer.startup(function(use)
 		},
 	})
 
-  use("Hoffs/omnisharp-extended-lsp.nvim")
+	use("Hoffs/omnisharp-extended-lsp.nvim")
 	use({ "williamboman/mason.nvim", requires = { "williamboman/mason-lspconfig.nvim" } })
 	use({
 		"jay-babu/mason-null-ls.nvim",

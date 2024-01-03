@@ -194,6 +194,8 @@ local status_ok, cmp = pcall(require, "cmp")
 if status_ok then
 	local luasnip = require("luasnip")
 
+	require("luasnip.loaders.from_vscode").lazy_load()
+
 	require("cmp_nvim_lsp").setup({})
 
 	cmp.register_source("buffer", require("cmp_buffer"))
