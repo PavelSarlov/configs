@@ -53,7 +53,7 @@ if status_ok then
 
 	treesitter.setup({
 		sync_install = false,
-		auto_install = true,
+		auto_install = false,
 
 		parser_install_dir = vim.g.PARSERDIR,
 
