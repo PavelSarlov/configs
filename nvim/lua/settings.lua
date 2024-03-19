@@ -71,6 +71,4 @@ set mouse=a
 set wildmenu
 set wildoptions=pum
 set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll
-
-set cmdheight=3
 ]]
