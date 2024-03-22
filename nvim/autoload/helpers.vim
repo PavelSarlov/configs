@@ -21,11 +21,10 @@ function! helpers#FindGitRoot()
   let pwd = getcwd()
   let dir = empty(&ft) || &ft ==# 'terminal' ? '.' : &ft ==# "netrw" ? expand('%') : expand('%:p:h')
   if isdirectory(dir)
-    exe 'cd' dir
+    let pwd = dir
   endif
-  let output = system('git rev-parse --show-toplevel')[:-2]
-  exe 'cd' pwd 
-  return v:shell_error || empty(output) ? dir : output
+  let output = system('cd ' . pwd . ' git rev-parse --show-toplevel')[:-2]
+  return v:shell_error || empty(output) ? pwd : output
 endfunction
 
 function! helpers#GacceptBoth()
