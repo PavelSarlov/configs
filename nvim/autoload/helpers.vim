@@ -23,7 +23,7 @@ function! helpers#FindGitRoot()
   if isdirectory(dir)
     let pwd = dir
   endif
-  let output = system('cd ' . pwd . ' git rev-parse --show-toplevel')[:-2]
+  let output = system('cd "' . pwd . '"; git rev-parse --show-toplevel')[:-2]
   return v:shell_error || empty(output) ? pwd : output
 endfunction
 
