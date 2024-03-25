@@ -17,3 +17,8 @@ function prompt
 
   $prompt
 }
+
+if (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+# set user home dir
+}

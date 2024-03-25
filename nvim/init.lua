@@ -3,11 +3,13 @@ if vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
 
   vim.g.SLASH = '\\'
 
-  vim.opt.shell = 'powershell'
-
-  vim.opt.shellcmdflag = '-command'
-  vim.opt.shellquote = '"'
-  vim.opt.shellxquote = ''
+	vim.opt.shell = vim.fn["executable"]("pwsh") and "pwsh" or "powershell"
+	vim.opt.shellcmdflag =
+		"-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+	vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+	vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+	vim.opt.shellquote = nil
+	vim.opt.shellxquote = nil
 end
 
 if vim.fn.has("unix") == 1 then
