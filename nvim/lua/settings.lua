@@ -71,4 +71,6 @@ set mouse=a
 set wildmenu
 set wildoptions=pum
 set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll
+
+let g:editorconfig = v:true
 ]]

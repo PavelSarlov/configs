@@ -135,6 +135,7 @@ if status_ok then
 
 	telescope.setup({
 		defaults = {
+			dynamic_preview_title = true,
 			preview = { hide_on_startup = true },
 			path_display = { "smart" },
 			mappings = {
@@ -220,6 +221,19 @@ if status_ok then
 	end
 
 	cmp.setup({
+		sorting = {
+			comparators = {
+				cmp.config.compare.score,
+				cmp.config.compare.locality,
+				cmp.config.compare.recently_used,
+				cmp.config.compare.offest,
+				cmp.config.compare.exact,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
+			},
+		},
 		snippet = {
 			expand = function(args)
 				luasnip.lsp_expand(args.body)
@@ -303,6 +317,7 @@ if status_ok then
 	cmp.setup.cmdline(":", {
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
+			{ name = "path" },
 			{ name = "cmdline" },
 			{ name = "buffer" },
 		},
