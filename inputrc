@@ -1,2 +1,16 @@
 set completion-ignore-case on
 set bell-style none
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set menu-complete-display-prefix on
+set colored-completion-prefix on
+set colored-stats on
+
+TAB:menu-complete
+"\e[Z":menu-complete-backward
+"\C-j":history-search-forward
+"\C-k":history-search-backward
+"\C-f":forward-word
+"\C-b":backward-word
+"\C-l":forward-char
+"\C-h":backward-char
