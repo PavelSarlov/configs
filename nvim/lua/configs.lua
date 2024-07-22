@@ -301,7 +301,14 @@ if status_ok then
 		sources = {
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
-			{ name = "buffer" },
+			{
+				name = "buffer",
+				options = {
+					get_bufnrs = function()
+						return vim.api.nvim_list_bufs()
+					end,
+				},
+			},
 			{ name = "nvim_lua", option = { include_deprecated = true } },
 			{ name = "path" },
 		},
@@ -310,7 +317,14 @@ if status_ok then
 	cmp.setup.cmdline({ "/", "?" }, {
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
-			{ name = "buffer" },
+			{
+				name = "buffer",
+				options = {
+					get_bufnrs = function()
+						return vim.api.nvim_list_bufs()
+					end,
+				},
+			},
 		},
 	})
 
@@ -319,7 +333,14 @@ if status_ok then
 		sources = {
 			{ name = "path" },
 			{ name = "cmdline" },
-			{ name = "buffer" },
+			{
+				name = "buffer",
+				options = {
+					get_bufnrs = function()
+						return vim.api.nvim_list_bufs()
+					end,
+				},
+			},
 		},
 	})
 end
