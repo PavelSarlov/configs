@@ -192,6 +192,7 @@ if status_ok then
 							"javascript",
 							"javascriptreact",
 							"json",
+							"jsonc",
 							"less",
 							"markdown",
 							"scss",
