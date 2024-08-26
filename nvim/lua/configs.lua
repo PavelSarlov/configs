@@ -127,7 +127,7 @@ if status_ok then
 			only_sort_text = true,
 			search = "",
 			cwd = git_root,
-			additional_args = { "--hidden" },
+			additional_args = { "--hidden", "--max-filesize", "10M" },
 		})
 	end, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-l>", builtin.buffers, { silent = true, nowait = true, noremap = true })
