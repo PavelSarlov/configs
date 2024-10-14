@@ -220,6 +220,18 @@ if status_ok then
 		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 	end
 
+	local filter_large_buffers = function()
+		local bufs = vim.api.nvim_list_bufs()
+		local filtered_bufs = {}
+		for _, buf in pairs(bufs) do
+			local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+			if byte_size <= 1024 ^ 2 then -- 1 MB max
+				table.insert(filtered_bufs, buf)
+			end
+		end
+		return filtered_bufs
+	end
+
 	cmp.setup({
 		sorting = {
 			comparators = {
@@ -304,9 +316,7 @@ if status_ok then
 			{
 				name = "buffer",
 				options = {
-					get_bufnrs = function()
-						return vim.api.nvim_list_bufs()
-					end,
+					get_bufnrs = filter_large_buffers,
 				},
 			},
 			{ name = "nvim_lua", option = { include_deprecated = true } },
@@ -320,9 +330,7 @@ if status_ok then
 			{
 				name = "buffer",
 				options = {
-					get_bufnrs = function()
-						return vim.api.nvim_list_bufs()
-					end,
+					get_bufnrs = filter_large_buffers,
 				},
 			},
 		},
@@ -336,9 +344,7 @@ if status_ok then
 			{
 				name = "buffer",
 				options = {
-					get_bufnrs = function()
-						return vim.api.nvim_list_bufs()
-					end,
+					get_bufnrs = filter_large_buffers,
 				},
 			},
 		},

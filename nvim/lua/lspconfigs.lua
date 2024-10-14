@@ -129,7 +129,7 @@ if status_ok then
 				lsp[server].setup({})
 			end,
 			["tsserver"] = function(ev)
-				lsp.tsserver.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
+				lsp.ts_ls.setup(vim.tbl_deep_extend("force", opts_func(ev.buf), {
 					commands = {
 						OrganizeImports = {
 							organize_imports,
