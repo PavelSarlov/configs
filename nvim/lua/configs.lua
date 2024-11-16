@@ -360,11 +360,11 @@ if status_ok then
 			enable = true,
 			show_on_dirs = true,
 		},
-		disable_netrw = true,
+		disable_netrw = false,
 		hijack_netrw = true,
 		actions = {
 			open_file = {
-				quit_on_open = true,
+				quit_on_open = false,
 			},
 		},
 	})
