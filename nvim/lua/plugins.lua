@@ -78,19 +78,6 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-tree.lua")
 
 	use({
-		"glacambre/firenvim",
-		run = function()
-			vim.fn["firenvim#install"](0)
-		end,
-	})
-	-- use {
-	--   "ibhagwan/fzf-lua",
-	--   requires = {
-	--     "nvim-tree/nvim-web-devicons",
-	--     { "junegunn/fzf", run = "./install --bin" },
-	--   }
-	-- }
-	use({
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
 		requires = {

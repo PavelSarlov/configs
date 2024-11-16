@@ -71,11 +71,7 @@ if status_ok then
 	end
 	local on_attach = function(ev)
 		local opts = opts_func(ev.buf)
-		-- local ok_fzf, fzf = pcall(require, "fzf-lua")
 
-		-- vim.keymap.set("n", "gD", (ok_fzf and fzf.lsp_declarations or vim.lsp.buf.declaration), opts)
-		-- vim.keymap.set("n", "gd", (ok_fzf and fzf.lsp_definitions or vim.lsp.buf.definition), opts)
-		-- vim.keymap.set("n", "gr", (ok_fzf and fzf.lsp_references or vim.lsp.buf.references), opts)
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)

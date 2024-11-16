@@ -75,38 +75,6 @@ if status_ok then
 end
 
 -- ==============================================================
--- ======================= fzf-lua ==============================
--- ==============================================================
-
-local status_ok, fzf = pcall(require, "fzf-lua")
-if status_ok then
-	fzf.setup({
-		winopts = {
-			preview = {
-				horizontal = "right:40%",
-			},
-		},
-		keymap = {
-			builtin = {
-				["<C-d>"] = "preview-page-down",
-				["<C-u>"] = "preview-page-up",
-			},
-		},
-	})
-
-	vim.keymap.set("n", "<c-p>", function()
-		local git_root = vim.fn["helpers#FindGitRoot"]()
-		fzf.files({ no_ignore = true, cwd = git_root })
-	end, { silent = true, nowait = true, noremap = true })
-	vim.keymap.set("n", "<a-S>", function()
-		local git_root = vim.fn["helpers#FindGitRoot"]()
-		fzf.grep_project({ cwd = git_root })
-	end, { silent = true, nowait = true, noremap = true })
-	vim.keymap.set("n", "<c-l>", fzf.buffers, { silent = true, nowait = true, noremap = true })
-	vim.keymap.set("n", "<c-g>", fzf.tags, { silent = true, nowait = true, noremap = true })
-end
-
--- ==============================================================
 -- ======================= telescope ============================
 -- ==============================================================
 
