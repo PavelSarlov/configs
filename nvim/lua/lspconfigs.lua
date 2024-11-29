@@ -90,7 +90,7 @@ if status_ok then
 			vim.lsp.buf.format({
 				async = true,
 				filter = function(client)
-					return client.name == "null-ls" or client.name == "omnisharp"
+					return client.name == "null-ls" or client.name == "omnisharp" or client.name == 'lemminx'
 				end,
 			})
 		end, opts)
@@ -134,7 +134,7 @@ if status_ok then
 					},
 					init_options = {
 						preferences = {
-							importModuleSpecifierPreference = "relative",
+							importModuleSpecifierPreference = "non-relative",
 							importModuleSpecifierEnding = "minimal",
 						},
 					},
@@ -177,7 +177,7 @@ if status_ok then
 			automatic_installation = false,
 			handlers = {
 				xmlformatter = function()
-					null_ls.register(null_ls.builtins.formatting.xmlformat)
+					null_ls.register(null_ls.builtins.formatting.xmllint)
 				end,
 				prettierd = function()
 					null_ls.register(null_ls.builtins.formatting.prettierd.with({
