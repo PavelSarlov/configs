@@ -90,7 +90,7 @@ if status_ok then
 			vim.lsp.buf.format({
 				async = true,
 				filter = function(client)
-					return client.name == "null-ls" or client.name == "omnisharp" or client.name == 'lemminx'
+					return client.name == "null-ls" or client.name == "omnisharp" or client.name == "lemminx"
 				end,
 			})
 		end, opts)

@@ -29,18 +29,6 @@ set showcmd
 set splitbelow splitright
 set wrap linebreak number cursorline
 set clipboard+=unnamed,unnamedplus
-let g:clipboard = {
-        \	 'name': 'wsl-yank',
-        \	 'copy': {
-        \	 	'+': 'win32yank.exe -i --crlf',
-        \	 	'*': 'win32yank.exe -i --crlf',
-        \	 },
-        \	 'paste': {
-        \	 	'+': 'win32yank.exe -o --lf',
-        \	 	'*': 'win32yank.exe -o --lf',
-        \	 },
-        \	 'cache_enabled': 0,
-        \}
 
 set laststatus=2
 set tabstop=2 softtabstop=2 shiftwidth=2
