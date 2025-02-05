@@ -199,6 +199,15 @@ if status_ok then
 						prefer_local = "node_modules/.bin",
 					}))
 				end,
+				eslint_d = function()
+					null_ls.register(require("none-ls.diagnostics.eslint_d").with({
+						diagnostics = {
+							enable = true,
+							report_unused_disable_directives = false,
+							run_on = "type", -- or `save`
+						},
+					}))
+				end,
 			},
 		})
 	end
