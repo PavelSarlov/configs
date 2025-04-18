@@ -8,7 +8,7 @@ if status_ok then
 	local lsp_defaults = lsp.util.default_config
 
 	lsp_defaults.capabilities =
-		vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+		vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("coq").lsp_ensure_capabilities())
 
 	-- Global mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
