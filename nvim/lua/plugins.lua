@@ -38,19 +38,8 @@ return packer.startup(function(use)
 	use("nvim-lua/popup.nvim")
 	use("nvim-lua/plenary.nvim")
 
-	use("rafamadriz/friendly-snippets")
-	use({
-		"hrsh7th/nvim-cmp",
-		requires = {
-			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-nvim-lsp",
-			{ "L3MON4D3/LuaSnip", tag = "v2.*" },
-		},
-	})
+	use({ "ms-jpq/coq_nvim", branch = "coq" })
+	use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
 
 	use("neovim/nvim-lspconfig")
 
