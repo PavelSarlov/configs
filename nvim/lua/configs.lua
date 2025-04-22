@@ -84,12 +84,14 @@ if status_ok then
 	local actions = require("telescope.actions")
 	local actions_layout = require("telescope.actions.layout")
 
+	local helpers = require("helpers")
+
 	vim.keymap.set("n", "<c-p>", function()
-		local git_root = vim.fn["helpers#FindGitRoot"]()
+		local git_root = helpers.find_git_root()
 		builtin.find_files({ hidden = true, no_ignore = true, cwd = git_root, additional_args = { "--sort" } })
 	end, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<a-S>", function()
-		local git_root = vim.fn["helpers#FindGitRoot"]()
+		local git_root = helpers.find_git_root()
 		builtin.grep_string({
 			word_match = "-w",
 			only_sort_text = true,
@@ -160,7 +162,7 @@ end
 -- ==============================================================
 
 vim.g.coq_settings = {
-  auto_start = true
+	auto_start = true,
 }
 
 -- ==============================================================

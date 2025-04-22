@@ -17,16 +17,6 @@ function! helpers#GetVisualSelection()
     return join(lines, "\n")
 endfunction
 
-function! helpers#FindGitRoot()
-  let pwd = getcwd()
-  let dir = empty(&ft) || &ft ==# 'terminal' ? '.' : &ft ==# "netrw" ? expand('%') : expand('%:p:h')
-  exe 'cd' dir
-  let output = system('git rev-parse --show-toplevel')[:-2]
-  exe 'cd' pwd 
-  return v:shell_error || empty(output) ? dir : output
-endfunction
-
-
 function! helpers#GacceptBoth()
   let lastTheirs = search('>\{7\}','bWn')
   let ours = search('<\{7\}', 'b', lastTheirs ? lastTheirs : 1)
