@@ -97,6 +97,11 @@ if status_ok then
 				context = { diagnostics = {}, only = { "source.organizeImports" } },
 				apply = true,
 			})
+			vim.lsp.buf.code_action({
+				context = { diagnostics = {}, only = { "source.removeUnused.ts" } },
+				apply = true,
+			})
+			vim.lsp.buf.code_action({ context = { diagnostics = {}, only = { "source.fixAll" } }, apply = true })
 		end, opts)
 	end
 
