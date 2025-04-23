@@ -12,20 +12,18 @@ if status_ok then
 
 	-- Global mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-	vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+	vim.keymap.set("n", "[d", function()
+		vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_prev() })
+	end)
+	vim.keymap.set("n", "]d", function()
+		vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_next() })
+	end)
 	vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
 	vim.diagnostic.config({
 		virtual_text = false,
 		update_in_insert = true,
 	})
-
-	local ok_telescope, telescope = pcall(require, "telescope.builtin")
-	vim.lsp.handlers["textDocument/declaration"] = ok_telescope and telescope.lsp_declarations
-		or vim.lsp.buf.declaration
-	vim.lsp.handlers["textDocument/definition"] = ok_telescope and telescope.lsp_definitions or vim.lsp.buf.definition
-	vim.lsp.handlers["textDocument/references"] = ok_telescope and telescope.lsp_references or vim.lsp.buf.references
 
 	-- Function to check if a floating dialog exists and if not
 	-- then check for diagnostics under the cursor
@@ -36,7 +34,7 @@ if status_ok then
 			end
 		end
 		-- THIS IS FOR BUILTIN LSP
-		vim.diagnostic.open_float(0, {
+		vim.diagnostic.open_float({}, {
 			scope = "cursor",
 			focusable = false,
 			close_events = {
@@ -63,8 +61,10 @@ if status_ok then
 			arguments = { vim.api.nvim_buf_get_name(0) },
 			title = "",
 		}
-		vim.lsp.buf.execute_command(params)
+    Client:exec_cmd(params)
 	end
+
+	local ok_telescope, telescope = pcall(require, "telescope.builtin")
 
 	local opts_func = function(buf)
 		return { buffer = buf }
@@ -72,18 +72,18 @@ if status_ok then
 	local on_attach = function(ev)
 		local opts = opts_func(ev.buf)
 
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "gD", ok_telescope and telescope.lsp_declarations or vim.lsp.buf.declaration, opts)
+		vim.keymap.set("n", "gd", ok_telescope and telescope.lsp_definitions or vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "gr", ok_telescope and telescope.lsp_references or vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "gm", vim.lsp.buf.hover, opts)
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+		vim.keymap.set("n", "gi", ok_telescope and telescope.lsp_implementations or vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader>m", vim.lsp.buf.signature_help, opts)
 		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
 		vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
 		vim.keymap.set("n", "<leader>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, opts)
-		vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+		vim.keymap.set("n", "<leader>D", ok_telescope and telescope.lsp_implementations or vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "<a-f>", function()
@@ -185,6 +185,7 @@ if status_ok then
 							"css",
 							"graphql",
 							"html",
+							"htmlangular",
 							"javascript",
 							"javascriptreact",
 							"json",
