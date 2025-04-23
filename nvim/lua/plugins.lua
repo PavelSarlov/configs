@@ -50,7 +50,6 @@ return packer.startup(function(use)
 	use("AndrewRadev/linediff.vim")
 	use("lambdalisue/nerdfont.vim")
 	use("godlygeek/tabular")
-	use("OmniSharp/omnisharp-vim")
 
 	use("numToStr/Comment.nvim")
 	use("nvim-treesitter/nvim-treesitter")
