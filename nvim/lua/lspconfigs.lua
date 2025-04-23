@@ -56,12 +56,10 @@ if status_ok then
 	})
 
 	local function organize_imports()
-		local params = {
-			command = "_typescript.organizeImports",
-			arguments = { vim.api.nvim_buf_get_name(0) },
-			title = "",
-		}
-    Client:exec_cmd(params)
+		vim.lsp.client.exec_cmd(
+			{ command = "_typescript.organizeImports", title = "" },
+			{ bufnr = vim.api.nvim_buf_get_number(0) }
+		)
 	end
 
 	local ok_telescope, telescope = pcall(require, "telescope.builtin")
@@ -94,7 +92,12 @@ if status_ok then
 				end,
 			})
 		end, opts)
-		vim.keymap.set("n", "<a-o>", "<cmd>OrganizeImports<cr>", opts)
+		vim.keymap.set("n", "<a-o>", function()
+			vim.lsp.buf.code_action({
+				context = { diagnostics = {}, only = { "source.organizeImports" } },
+				apply = true,
+			})
+		end, opts)
 	end
 
 	-- Use LspAttach autocommand to only map the following keys
