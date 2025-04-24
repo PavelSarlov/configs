@@ -48,6 +48,7 @@ return packer.startup(function(use)
 	use("rust-lang/rust.vim")
 	use("AndrewRadev/splitjoin.vim")
 	use("AndrewRadev/linediff.vim")
+	use("AndrewRadev/bufferize.vim")
 	use("lambdalisue/nerdfont.vim")
 	use("godlygeek/tabular")
 

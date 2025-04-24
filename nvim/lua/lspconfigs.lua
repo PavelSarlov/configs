@@ -118,6 +118,19 @@ if status_ok then
 		function(server)
 			vim.lsp.enable(server)
 		end,
+		["angularls"] = function(ev)
+			vim.lsp.config(ev, {
+				cmd = {
+					"ngserver",
+					"--stdio",
+					"--tsProbeLocations",
+					vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
+					"--ngProbeLocations",
+					vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
+				},
+			})
+			vim.lsp.enable(ev)
+		end,
 		["ts_ls"] = function(ev)
 			vim.lsp.config(ev, {
 				on_attach = function(client, buf)
