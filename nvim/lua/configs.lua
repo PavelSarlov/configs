@@ -226,3 +226,12 @@ local status_ok, comment = pcall(require, "Comment")
 if status_ok then
 	comment.setup()
 end
+
+-- ==============================================================
+-- ======================= csvview.nvim =========================
+-- ==============================================================
+
+local status_ok, csvview = pcall(require, "csvview")
+if status_ok then
+	csvview.setup()
+end

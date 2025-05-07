@@ -110,92 +110,66 @@ local status_ok, mason = pcall(require, "mason")
 if status_ok then
 	local mason_lsp = require("mason-lspconfig")
 
+	vim.lsp.config("angularls", {
+		cmd = {
+			"ngserver",
+			"--stdio",
+			"--tsProbeLocations",
+			vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
+			"--ngProbeLocations",
+			vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
+		},
+	})
+	vim.lsp.config("ts_ls", {
+		on_attach = function(client, buf)
+			on_attach({ buf = buf })
+			vim.api.nvim_buf_create_user_command(buf, "OrganizeImports", function()
+				organize_imports(client)
+			end, {})
+		end,
+		init_options = {
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+				importModuleSpecifierEnding = "minimal",
+			},
+		},
+	})
+	vim.lsp.config("lua_ls", {
+		settings = {
+			Lua = {
+				workspace = {
+					checkThirdParty = false,
+					library = { vim.env.VIMRUNTIME },
+				},
+			},
+		},
+	})
+	local ext = require("omnisharp_extended")
+	vim.lsp.config("omnisharp", {
+		on_attach = function(_, buf)
+			on_attach({ buf = buf })
+			local opts = { buffer = buf }
+			vim.keymap.set("n", "gd", ok_telescope and ext.telescope_lsp_definition or vim.lsp.buf.definition, opts)
+			vim.keymap.set(
+				"n",
+				"<leader>D",
+				ok_telescope and ext.telescope_lsp_type_definition or vim.lsp.buf.type_definition,
+				opts
+			)
+			vim.keymap.set("n", "gr", ok_telescope and ext.telescope_lsp_references or vim.lsp.buf.references, opts)
+			vim.keymap.set(
+				"n",
+				"gi",
+				ok_telescope and ext.telescope_lsp_implementation or vim.lsp.buf.implementation,
+				opts
+			)
+		end,
+	})
+
 	mason.setup({
 		install_root_dir = vim.g.MASONDIR,
 	})
 	mason_lsp.setup()
-	mason_lsp.setup_handlers({
-		function(server)
-			vim.lsp.enable(server)
-		end,
-		["angularls"] = function(ev)
-			vim.lsp.config(ev, {
-				cmd = {
-					"ngserver",
-					"--stdio",
-					"--tsProbeLocations",
-					vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
-					"--ngProbeLocations",
-					vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
-				},
-			})
-			vim.lsp.enable(ev)
-		end,
-		["ts_ls"] = function(ev)
-			vim.lsp.config(ev, {
-				on_attach = function(client, buf)
-					on_attach({ buf = buf })
-					vim.api.nvim_buf_create_user_command(buf, "OrganizeImports", function()
-						organize_imports(client)
-					end, {})
-				end,
-				init_options = {
-					preferences = {
-						importModuleSpecifierPreference = "non-relative",
-						importModuleSpecifierEnding = "minimal",
-					},
-				},
-			})
-			vim.lsp.enable(ev)
-		end,
-		["lua_ls"] = function(ev)
-			vim.lsp.config(ev, {
-				settings = {
-					Lua = {
-						workspace = {
-							checkThirdParty = false,
-							library = { vim.env.VIMRUNTIME },
-						},
-					},
-				},
-			})
-			vim.lsp.enable(ev)
-		end,
-		["omnisharp"] = function(ev)
-			local ext = require("omnisharp_extended")
-			vim.lsp.config(ev, {
-				on_attach = function(_, buf)
-					on_attach({ buf = buf })
-					local opts = { buffer = buf }
-					vim.keymap.set(
-						"n",
-						"gd",
-						ok_telescope and ext.telescope_lsp_definition or vim.lsp.buf.definition,
-						opts
-					)
-					vim.keymap.set(
-						"n",
-						"<leader>D",
-						ok_telescope and ext.telescope_lsp_type_definition or vim.lsp.buf.type_definition,
-						opts
-					)
-					vim.keymap.set(
-						"n",
-						"gr",
-						ok_telescope and ext.telescope_lsp_references or vim.lsp.buf.references,
-						opts
-					)
-					vim.keymap.set(
-						"n",
-						"gi",
-						ok_telescope and ext.telescope_lsp_implementation or vim.lsp.buf.implementation,
-						opts
-					)
-				end,
-			})
-			vim.lsp.enable(ev)
-		end,
-	})
 end
 
 -- ==============================================================

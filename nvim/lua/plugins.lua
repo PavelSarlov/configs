@@ -60,6 +60,7 @@ return packer.startup(function(use)
 	use("sindrets/diffview.nvim")
 	use("folke/neodev.nvim")
 	use("windwp/nvim-autopairs")
+	use("hat0uma/csvview.nvim")
 
 	use("nvim-lualine/lualine.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin.nvim" })
