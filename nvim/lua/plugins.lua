@@ -38,8 +38,12 @@ return packer.startup(function(use)
 	use("nvim-lua/popup.nvim")
 	use("nvim-lua/plenary.nvim")
 
-	use({ "ms-jpq/coq_nvim", branch = "coq" })
-	use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
+	use({
+		"saghen/blink.cmp",
+		requires = {
+			"rafamadriz/friendly-snippets",
+		},
+	})
 
 	use("neovim/nvim-lspconfig")
 
