@@ -59,7 +59,7 @@ if status_ok then
 
 		highlight = {
 			enable = true,
-			disable = function(lang, buf)
+			disable = function(_, buf)
 				local max_filesize = 10 * 1024 * 1024 -- 10 MB
 				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 				if ok and stats and stats.size > max_filesize then
@@ -201,56 +201,40 @@ if status_ok then
 end
 
 -- ==============================================================
--- ======================= nvim-tree ============================
+-- ======================= neo-tree =============================
 -- ==============================================================
 
-local function nvim_tree_on_attach(bufnr)
-	local api = require("nvim-tree.api")
-
-	local function opts(desc)
-		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-	end
-
-	api.config.mappings.default_on_attach(bufnr)
-
-	vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Horizontal Split"))
-	vim.keymap.set("n", "e", api.node.open.edit, opts("Open"))
-	vim.keymap.set("n", "E", api.node.open.vertical, opts("Open: Vertical Split"))
-	vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
-	vim.keymap.set("n", "F", api.tree.search_node, opts("Search"))
-	vim.keymap.set("n", "S", api.node.run.system, opts("Run System"))
-	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
-end
-
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
+local status_ok, neo = pcall(require, "neo-tree")
 if status_ok then
-	vim.g.loaded_netrw = 1
-	vim.g.loaded_netrwPlugin = 1
-
-	nvim_tree.setup({
-		on_attach = nvim_tree_on_attach,
-		sort_by = "case_sensitive",
-		view = {
-			width = 30,
+	neo.setup({
+		use_libuv_file_watcher = true,
+		filesystem = {
+			follow_current_file = { enabled = true },
+			hijack_netrw_behavior = "open_default",
+			window = {
+				mappings = {
+					["e"] = "open_with_window_picker",
+					["s"] = "split_with_window_picker",
+					["E"] = "vsplit_with_window_picker",
+				},
+			},
 		},
-		update_focused_file = {
-			enable = true,
-			update_cwd = false,
-		},
-		diagnostics = {
-			enable = true,
-			show_on_dirs = true,
-		},
-		disable_netrw = false,
-		hijack_netrw = true,
-		actions = {
-			open_file = {
-				quit_on_open = true,
+		container = {
+			width = "100%",
+			right_padding = 1,
+			content = {
+				{
+					"name",
+					use_git_status_colors = true,
+					zindex = 10,
+				},
+				{ "diagnostics", zindex = 20, align = "right" },
+				{ "git_status", zindex = 20, align = "right" },
 			},
 		},
 	})
 
-	vim.keymap.set("n", "<space>e", "<cmd>NvimTreeOpen<cr>", { silent = true, nowait = true, noremap = true })
+	vim.keymap.set("n", "<space>e", "<cmd>Neotree<cr>", { silent = true, nowait = true, noremap = true })
 end
 
 -- ==============================================================

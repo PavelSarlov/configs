@@ -68,8 +68,16 @@ return packer.startup(function(use)
 
 	use("nvim-lualine/lualine.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin.nvim" })
-	use("nvim-tree/nvim-web-devicons")
-	use("nvim-tree/nvim-tree.lua")
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"s1n7ax/nvim-window-picker",
+		},
+	})
 
 	use({
 		"nvim-telescope/telescope.nvim",
