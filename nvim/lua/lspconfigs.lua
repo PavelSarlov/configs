@@ -3,6 +3,22 @@ if status_ok then
 	neodev.setup()
 end
 
+local status_ok_lsp, lspconfig = pcall(require, "lspconfig")
+local status_ok_lsp_file_op, lsp_file_op = pcall(require, "lsp-file-operations")
+if status_ok_lsp and status_ok_lsp_file_op then
+	lsp_file_op.setup({})
+
+	lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+		capabilities = vim.tbl_deep_extend(
+			"force",
+			vim.lsp.protocol.make_client_capabilities(),
+			-- returns configured operations if setup() was already called
+			-- or default operations if not
+			lsp_file_op.default_capabilities()
+		),
+	})
+end
+
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "[d", function()

@@ -78,6 +78,12 @@ return packer.startup(function(use)
 			"s1n7ax/nvim-window-picker",
 		},
 	})
+	use({
+		"antosha417/nvim-lsp-file-operations",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
 
 	use({
 		"nvim-telescope/telescope.nvim",

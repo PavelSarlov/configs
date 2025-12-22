@@ -131,7 +131,10 @@ if status_ok then
 		},
 	})
 
-	telescope.load_extension("fzf")
+  local status_ext, err = pcall(telescope.load_extension, "fzf")
+  if not status_ext then
+    print('failed to load fzf extension', err)
+  end
 end
 
 -- ==============================================================
