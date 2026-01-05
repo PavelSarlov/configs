@@ -131,10 +131,10 @@ if status_ok then
 		},
 	})
 
-  local status_ext, err = pcall(telescope.load_extension, "fzf")
-  if not status_ext then
-    print('failed to load fzf extension', err)
-  end
+	local status_ext, err = pcall(telescope.load_extension, "fzf")
+	if not status_ext then
+		print("failed to load fzf extension", err)
+	end
 end
 
 -- ==============================================================
@@ -219,6 +219,35 @@ if status_ok then
 					["e"] = "open_with_window_picker",
 					["s"] = "split_with_window_picker",
 					["E"] = "vsplit_with_window_picker",
+					["Y"] = function(state)
+						-- NeoTree is based on [NuiTree](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree)
+						-- The node is based on [NuiNode](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree#nuitreenode)
+						local node = state.tree:get_node()
+						local filepath = node:get_id()
+						local filename = node.name
+						local modify = vim.fn.fnamemodify
+
+						local results = {
+							filepath,
+							modify(filepath, ":."),
+							modify(filepath, ":~"),
+							filename,
+							modify(filename, ":r"),
+							modify(filename, ":e"),
+						}
+
+						vim.ui.select({
+							"Absolute path: " .. results[1],
+							"Path relative to CWD: " .. results[2],
+							"Path relative to HOME: " .. results[3],
+							"Filename: " .. results[4],
+							"Filename without extension: " .. results[5],
+							"Extension of the filename: " .. results[6],
+						}, { prompt = "Choose to copy to clipboard:" }, function(_, i)
+							local result = results[i]
+							vim.fn.setreg('+', result)
+						end)
+					end,
 				},
 			},
 		},
