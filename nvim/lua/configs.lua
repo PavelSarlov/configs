@@ -131,9 +131,11 @@ if status_ok then
 		},
 	})
 
-	local status_ext, err = pcall(telescope.load_extension, "fzf")
-	if not status_ext then
-		print("failed to load fzf extension", err)
+	for _, extension in ipairs({ "fzf", "ui-select" }) do
+		local status_ext, err = pcall(telescope.load_extension, extension)
+		if not status_ext then
+			print("failed to load " .. extension .. " extension", err)
+		end
 	end
 end
 
@@ -141,7 +143,7 @@ end
 -- ======================= fugitive =============================
 -- ==============================================================
 
-local status_ok, fugitive = pcall(require, "fugitive")
+local status_ok, _ = pcall(require, "fugitive")
 if status_ok then
 	vim.keymap.set("n", "cm", "<cmd>tabedit % | Gvdiffsplit!<CR>", { silent = true })
 	vim.keymap.set("n", "co", "<cmd>diffget //2<CR>", { silent = true })
@@ -245,7 +247,7 @@ if status_ok then
 							"Extension of the filename: " .. results[6],
 						}, { prompt = "Choose to copy to clipboard:" }, function(_, i)
 							local result = results[i]
-							vim.fn.setreg('+', result)
+							vim.fn.setreg("+", result)
 						end)
 					end,
 				},

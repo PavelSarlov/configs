@@ -96,6 +96,7 @@ return packer.startup(function(use)
 			},
 		},
 	})
+	use({ "nvim-telescope/telescope-ui-select.nvim", requires = { "nvim-telescope/telescope.nvim" } })
 
 	use("Hoffs/omnisharp-extended-lsp.nvim")
 	use({ "williamboman/mason.nvim", requires = { "williamboman/mason-lspconfig.nvim" } })
