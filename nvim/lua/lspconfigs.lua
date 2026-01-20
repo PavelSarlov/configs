@@ -3,22 +3,6 @@ if status_ok then
 	neodev.setup()
 end
 
-local status_ok_lsp, lspconfig = pcall(require, "lspconfig")
-local status_ok_lsp_file_op, lsp_file_op = pcall(require, "lsp-file-operations")
-if status_ok_lsp and status_ok_lsp_file_op then
-	lsp_file_op.setup({})
-
-	lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
-		capabilities = vim.tbl_deep_extend(
-			"force",
-			vim.lsp.protocol.make_client_capabilities(),
-			-- returns configured operations if setup() was already called
-			-- or default operations if not
-			lsp_file_op.default_capabilities()
-		),
-	})
-end
-
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "[d", function()
@@ -126,6 +110,17 @@ local status_ok, mason = pcall(require, "mason")
 if status_ok then
 	local mason_lsp = require("mason-lspconfig")
 
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+	local status_ok_lsp_file_op, lsp_file_op = pcall(require, "lsp-file-operations")
+	if status_ok_lsp and status_ok_lsp_file_op then
+		lsp_file_op.setup({})
+
+		capabilities = vim.tbl_deep_extend("force", capabilities, lsp_file_op.default_capabilities())
+	end
+
+	vim.lsp.config("*", { capabilities = capabilities })
+
 	vim.lsp.config("angularls", {
 		cmd = {
 			"ngserver",
@@ -136,6 +131,7 @@ if status_ok then
 			vim.g.MASONDIR .. "/packages/angular-language-server/node_modules/@angular/language-server",
 		},
 	})
+
 	vim.lsp.config("ts_ls", {
 		on_attach = function(client, buf)
 			on_attach({ buf = buf })
@@ -150,6 +146,7 @@ if status_ok then
 			},
 		},
 	})
+
 	vim.lsp.config("lua_ls", {
 		settings = {
 			Lua = {
@@ -160,6 +157,7 @@ if status_ok then
 			},
 		},
 	})
+
 	local ext = require("omnisharp_extended")
 	vim.lsp.config("omnisharp", {
 		on_attach = function(_, buf)
