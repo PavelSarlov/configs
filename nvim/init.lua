@@ -35,14 +35,14 @@ end
 
 vim.env.VIMHOME = table.concat({ vim.env.HOME, ".nvim" }, vim.g.SLASH)
 
-function setup_runtimepath() 
-vim.cmd([[
-  let s:after = $VIMHOME . g:SLASH . 'after'
-  let s:autoload = $VIMHOME . g:SLASH . 'autoload'
-  set runtimepath^=$VIMHOME
-  let &runtimepath=&runtimepath . s:after
-  let &packpath=&runtimepath
-]])
+function setup_runtimepath()
+	vim.cmd([[
+    let s:after = $VIMHOME . g:SLASH . 'after'
+    let s:autoload = $VIMHOME . g:SLASH . 'autoload'
+    set runtimepath^=$VIMHOME
+    let &runtimepath=&runtimepath . s:after
+    let &packpath=&runtimepath
+  ]])
 end
 
 setup_runtimepath()
@@ -51,6 +51,7 @@ vim.g.VIMUNDODIR = table.concat({ vim.env.VIMHOME, "vimundo" }, vim.g.SLASH)
 vim.fn["helpers#CreateDirRecursive"](vim.g.VIMUNDODIR)
 
 require("plugins")
+
 setup_runtimepath()
 
 require("settings")
@@ -59,3 +60,4 @@ require("augroups")
 require("sessions")
 require("configs")
 require("lspconfigs")
+

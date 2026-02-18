@@ -68,3 +68,7 @@ set wildignore+=*\\tmp\\*,*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll
 let g:editorconfig = v:true
 
 ]])
+
+vim.g.mapleader = "\\"
+vim.g.maplocalleader = " "
+
