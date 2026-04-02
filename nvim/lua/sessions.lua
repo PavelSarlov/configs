@@ -1,11 +1,15 @@
 vim.o.sessionoptions = "blank,buffers,curdir,folds,tabpages,winsize,winpos,help,localoptions"
 
-vim.g.SESSIONLOC = table.concat({ vim.env.VIMHOME, "sessions" }, vim.g.SLASH)
+vim.g.SESSIONLOC = vim.fn.fnamemodify(vim.env.VIMHOME, ":p") .. "sessions"
 
 vim.fn["helpers#CreateDirRecursive"](vim.g.SESSIONLOC)
 
+local function GetSessionPath()
+  return vim.fn.fnamemodify(vim.g.SESSIONLOC, ":p") .. (vim.fn.sha256(vim.fn.getcwd()) .. ".vim")
+end
+
 function MakeSession()
-	local session_path = table.concat({ vim.g.SESSIONLOC, vim.fn.sha256(vim.fn.getcwd()) .. ".vim" }, vim.g.SLASH)
+	local session_path = GetSessionPath()
 	if vim.fn.filewritable(session_path) ~= 2 then
 		vim.cmd("mksession! " .. session_path)
 		vim.cmd("redraw!")
@@ -13,7 +17,7 @@ function MakeSession()
 end
 
 function LoadSession()
-	local session_path = table.concat({ vim.g.SESSIONLOC, vim.fn.sha256(vim.fn.getcwd()) .. ".vim" }, vim.g.SLASH)
+	local session_path = GetSessionPath()
 	if vim.fn.filereadable(session_path) == 1 then
 		vim.cmd("source " .. session_path)
 	else

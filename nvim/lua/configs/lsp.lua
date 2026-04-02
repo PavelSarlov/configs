@@ -102,7 +102,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- ======================= mason ================================
 -- ==============================================================
 
-vim.g.MASONDIR = table.concat({ vim.env.VIMHOME, "mason" }, vim.g.SLASH)
+vim.g.MASONDIR = vim.fn.fnamemodify(vim.env.VIMHOME, ":p") .. "mason"
 
 vim.fn["helpers#CreateDirRecursive"](vim.g.MASONDIR)
 

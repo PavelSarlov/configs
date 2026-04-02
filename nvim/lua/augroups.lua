@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
   augroup file_types
     au!
     au BufRead,BufNewFile *.ejs  set filetype=html
@@ -26,4 +26,4 @@ vim.cmd [[
       au TerminalOpen * set ft=terminal
     endif
   augroup END
-]]
+]])

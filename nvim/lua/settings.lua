@@ -71,4 +71,3 @@ let g:editorconfig = v:true
 
 vim.g.mapleader = "\\"
 vim.g.maplocalleader = " "
-

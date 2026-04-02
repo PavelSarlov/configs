@@ -51,16 +51,6 @@ if status then
 
 			"nvim-lualine/lualine.nvim",
 			{
-				"nvim-neo-tree/neo-tree.nvim",
-				branch = "v3.x",
-				dependencies = {
-					"nvim-lua/plenary.nvim",
-					"MunifTanjim/nui.nvim",
-					"nvim-tree/nvim-web-devicons",
-					"s1n7ax/nvim-window-picker",
-				},
-			},
-			{
 				"antosha417/nvim-lsp-file-operations",
 				dependencies = {
 					"nvim-lua/plenary.nvim",
@@ -94,7 +84,7 @@ if status then
 
 			"dstein64/vim-startuptime",
 
-			{ "nvim-treesitter/nvim-treesitter", lazy = false, branch = "master" },
+			{ "nvim-treesitter/nvim-treesitter", lazy = false, branch = "master", build = ":TSUpdate" },
 			{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 		},
 

@@ -1,9 +1,7 @@
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
 	vim.opt.ff = "dos"
 
-	vim.g.SLASH = "\\"
-
-	vim.opt.shell = vim.fn["executable"]("pwsh") and "pwsh" or "powershell"
+	vim.opt.shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
 	vim.opt.shellcmdflag =
 		"-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering='plaintext';Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
 	vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
@@ -14,8 +12,6 @@ end
 
 if vim.fn.has("unix") == 1 then
 	vim.opt.ff = "unix"
-
-	vim.g.SLASH = "/"
 
 	if vim.fn.executable("win32yank.exe") == 1 then
 		vim.g.clipboard = {
@@ -33,12 +29,12 @@ if vim.fn.has("unix") == 1 then
 	end
 end
 
-vim.env.VIMHOME = table.concat({ vim.env.HOME, ".nvim" }, vim.g.SLASH)
+vim.env.VIMHOME = vim.fn.fnamemodify(vim.env.HOME, ":p") .. ".nvim"
 
-function setup_runtimepath()
+local function setup_runtimepath()
 	vim.cmd([[
-    let s:after = $VIMHOME . g:SLASH . 'after'
-    let s:autoload = $VIMHOME . g:SLASH . 'autoload'
+    let s:after = fnamemodify($VIMHOME, ":p") . 'after'
+    let s:autoload = fnamemodify($VIMHOME, ":p") . 'autoload'
     set runtimepath^=$VIMHOME
     let &runtimepath=&runtimepath . s:after
     let &packpath=&runtimepath
@@ -47,7 +43,7 @@ end
 
 setup_runtimepath()
 
-vim.g.VIMUNDODIR = table.concat({ vim.env.VIMHOME, "vimundo" }, vim.g.SLASH)
+vim.g.VIMUNDODIR = vim.fn.fnamemodify(vim.env.VIMHOME, ":p") .. "vimundo"
 vim.fn["helpers#CreateDirRecursive"](vim.g.VIMUNDODIR)
 
 require("plugins")
@@ -59,5 +55,3 @@ require("mappings")
 require("augroups")
 require("sessions")
 require("configs")
-require("lspconfigs")
-

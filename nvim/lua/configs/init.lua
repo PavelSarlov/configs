@@ -1,0 +1,13 @@
+require("configs.blink-cmp")
+require("configs.colorizer")
+require("configs.comment")
+require("configs.csvview")
+require("configs.gruvbox")
+require("configs.lualine")
+require("configs.nvim-autopairs")
+require("configs.nvim-scrollbar")
+require("configs.nvim-telescope")
+require("configs.nvim-treesitter")
+require("configs.vim-fugitive")
+
+require("configs.lsp")
