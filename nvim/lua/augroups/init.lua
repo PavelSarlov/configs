@@ -1,0 +1,6 @@
+require("augroups.file-changed")
+require("augroups.file-save")
+require("augroups.file-types")
+require("augroups.indent")
+require("augroups.large-files-ts-disable")
+require("augroups.terminal-enter")

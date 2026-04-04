@@ -8,10 +8,6 @@ syntax on
 set termguicolors
 set background=dark
 
-autocmd BufReadPost * set autoindent
-autocmd BufReadPost * set smartindent
-autocmd BufReadPost * set cindent
-
 " autocomplete features
 set omnifunc=syntaxcomplete#complete
 set completeopt=menu,menuone,noselect,noinsert

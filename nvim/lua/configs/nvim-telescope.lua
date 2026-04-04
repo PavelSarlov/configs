@@ -22,8 +22,21 @@ if status_ok then
 	end, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-l>", builtin.buffers, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-g>", builtin.help_tags, { silent = true, nowait = true, noremap = true })
+	vim.keymap.set("n", "<space>e", "<cmd>Telescope file_browser<CR>", { noremap = true })
 
 	telescope.setup({
+		extensions = {
+			file_browser = {
+				mappings = {
+					i = {
+						["<bs>"] = false,
+						["<C-s>"] = actions.select_horizontal,
+						["<C-v>"] = actions.select_vertical,
+						["<C-t>"] = actions.select_tab,
+					},
+				},
+			},
+		},
 		defaults = {
 			dynamic_preview_title = true,
 			preview = { hide_on_startup = true },
@@ -51,7 +64,7 @@ if status_ok then
 		},
 	})
 
-	for _, extension in ipairs({ "fzf", "ui-select" }) do
+	for _, extension in ipairs({ "fzf", "ui-select", "file_browser" }) do
 		local status_ext, err = pcall(telescope.load_extension, extension)
 		if not status_ext then
 			print("failed to load " .. extension .. " extension", err)

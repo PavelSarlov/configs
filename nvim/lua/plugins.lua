@@ -27,6 +27,7 @@ if status then
 				dependencies = {
 					"rafamadriz/friendly-snippets",
 				},
+				build = "cargo build --release",
 			},
 
 			"neovim/nvim-lspconfig",
@@ -42,9 +43,9 @@ if status then
 
 			"numToStr/Comment.nvim",
 			"windwp/nvim-ts-autotag",
-			"norcalli/nvim-colorizer.lua",
 			"petertriho/nvim-scrollbar",
 			"sindrets/diffview.nvim",
+			"nvim-tree/nvim-web-devicons",
 			"folke/neodev.nvim",
 			"windwp/nvim-autopairs",
 			"hat0uma/csvview.nvim",
@@ -66,6 +67,10 @@ if status then
 					"nvim-telescope/telescope-ui-select.nvim",
 				},
 			},
+			{
+				"nvim-telescope/telescope-file-browser.nvim",
+				dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+			},
 
 			"Hoffs/omnisharp-extended-lsp.nvim",
 
@@ -84,7 +89,7 @@ if status then
 
 			"dstein64/vim-startuptime",
 
-			{ "nvim-treesitter/nvim-treesitter", lazy = false, branch = "master", build = ":TSUpdate" },
+			{ "nvim-treesitter/nvim-treesitter", lazy = false, branch = "main", build = ":TSUpdate" },
 			{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 		},
 

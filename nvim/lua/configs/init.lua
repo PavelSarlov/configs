@@ -1,5 +1,4 @@
 require("configs.blink-cmp")
-require("configs.colorizer")
 require("configs.comment")
 require("configs.csvview")
 require("configs.gruvbox")

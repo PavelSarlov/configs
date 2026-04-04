@@ -26,7 +26,7 @@ if status_ok then
 			},
 		},
 
-		fuzzy = { implementation = "lua" },
+		fuzzy = { implementation = "prefer_rust_with_warning" },
 
 		keymap = {
 			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
