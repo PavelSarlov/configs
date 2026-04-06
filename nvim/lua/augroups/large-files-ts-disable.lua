@@ -6,24 +6,17 @@ local function try_disable_buf(file, buf)
 	if ok and stats and stats.size > max_filesize then
 		vim.b[buf].ts_disabled = true
 		vim.treesitter.stop(buf)
+	else
+		pcall(vim.treesitter.start, buf)
 	end
 end
 
 vim.api.nvim_create_augroup(augroup_name, { clear = true })
 
-vim.api.nvim_create_autocmd("BufReadPre", {
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufReadPost", "FileType", "BufWinEnter" }, {
 	group = augroup_name,
 	callback = function(args)
 		try_disable_buf(args.file, args.buf)
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "BufReadPost", "FileType", "BufWinEnter" }, {
-	group = augroup_name,
-	callback = function(args)
-		if vim.b[args.buf].ts_disabled then
-			vim.treesitter.stop(args.buf)
-		end
 	end,
 })
 
@@ -33,7 +26,6 @@ vim.schedule(function()
 			local file = vim.api.nvim_buf_get_name(buf)
 			if file ~= "" then
 				try_disable_buf(file, buf)
-				vim.treesitter.stop(buf)
 			end
 		end
 	end
