@@ -18,8 +18,6 @@ local status, lazy = pcall(require, "lazy")
 if status then
 	lazy.setup({
 		spec = {
-			"wbthomason/packer.nvim",
-			"nvim-lua/popup.nvim",
 			"nvim-lua/plenary.nvim",
 
 			{
@@ -28,16 +26,19 @@ if status then
 					"rafamadriz/friendly-snippets",
 				},
 				build = "cargo build --release",
+				branch = "v1",
 			},
 
 			"neovim/nvim-lspconfig",
+			"Hoffs/omnisharp-extended-lsp.nvim",
 
 			"tpope/vim-surround",
 			"tpope/vim-fugitive",
-			"rust-lang/rust.vim",
+
 			"AndrewRadev/splitjoin.vim",
 			"AndrewRadev/linediff.vim",
 			"AndrewRadev/bufferize.vim",
+
 			"lambdalisue/nerdfont.vim",
 			"godlygeek/tabular",
 
@@ -46,7 +47,6 @@ if status then
 			"petertriho/nvim-scrollbar",
 			"sindrets/diffview.nvim",
 			"nvim-tree/nvim-web-devicons",
-			"folke/neodev.nvim",
 			"windwp/nvim-autopairs",
 			"hat0uma/csvview.nvim",
 
@@ -71,8 +71,6 @@ if status then
 				dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 			},
 
-			"Hoffs/omnisharp-extended-lsp.nvim",
-
 			{
 				"williamboman/mason.nvim",
 				dependencies = { "williamboman/mason-lspconfig.nvim" },
@@ -88,7 +86,6 @@ if status then
 
 			"dstein64/vim-startuptime",
 
-			{ "nvim-treesitter/nvim-treesitter", lazy = false, branch = "main", build = ":TSUpdate" },
 			{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 		},
 

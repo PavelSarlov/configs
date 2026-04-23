@@ -6,6 +6,19 @@ if status_ok then
 
 	local helpers = require("helpers")
 
+	local focus_preview = function(prompt_bufnr)
+		local action_state = require("telescope.actions.state")
+		local picker = action_state.get_current_picker(prompt_bufnr)
+		local prompt_win = picker.prompt_win
+		local previewer = picker.previewer
+		local bufnr = previewer.state.bufnr or previewer.state.termopen_bufnr
+		local winid = previewer.state.winid or vim.fn.win_findbuf(bufnr)[1]
+		vim.keymap.set("n", "<Tab>", function()
+			vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", prompt_win))
+		end, { buffer = bufnr })
+		vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", winid))
+	end
+
 	vim.keymap.set("n", "<c-p>", function()
 		local git_root = helpers.find_git_root()
 		builtin.find_files({ hidden = true, no_ignore = true, cwd = git_root, additional_args = { "--sort" } })
@@ -43,9 +56,11 @@ if status_ok then
 			path_display = { "smart" },
 			mappings = {
 				i = {
-					["<esc>"] = actions.close,
 					["<a-p>"] = actions_layout.toggle_preview,
 					["<c-s>"] = actions.select_horizontal,
+				},
+				n = {
+					["<tab>"] = focus_preview,
 				},
 			},
 			file_ignore_patterns = {
