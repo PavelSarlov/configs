@@ -36,6 +36,7 @@ if status_ok then
 	vim.keymap.set("n", "<c-l>", builtin.buffers, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<c-g>", builtin.help_tags, { silent = true, nowait = true, noremap = true })
 	vim.keymap.set("n", "<space>e", "<cmd>Telescope file_browser<CR>", { noremap = true })
+	vim.keymap.set("n", "<space><s-e>", "<cmd>Telescope file_browser path=%:p:h<CR>", { noremap = true })
 
 	telescope.setup({
 		extensions = {

@@ -87,6 +87,13 @@ if status then
 			"dstein64/vim-startuptime",
 
 			{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+
+			{
+				"romus204/tree-sitter-manager.nvim",
+				config = function()
+					require("tree-sitter-manager").setup({})
+				end,
+			},
 		},
 
 		checker = { enabled = true, notify = false },
